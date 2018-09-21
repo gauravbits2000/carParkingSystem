@@ -16,7 +16,7 @@ public class MarkitCarParkingController {
 	@Autowired
 	private MarkitCarParkingService service;
 	
-	@PostMapping("/markit-car-parking/employee/registration")
+	@PostMapping("/markit-car-parking/employee-registration")
 	public List<Employee> registerEmployee(@RequestBody Employee employee){
 		return service.registerEmployee(employee);
 	}
