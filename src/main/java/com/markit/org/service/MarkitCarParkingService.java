@@ -54,4 +54,9 @@ public class MarkitCarParkingService {
 		return winnersList;
 	}
 
+	public List<Employee> viewEmployeeList() {
+		List<Employee> employeeList = employeeRepository.findAll();
+		return employeeList;
+	}
+
 }
