@@ -1,24 +1,110 @@
-<div class="container">
-    <div class="row">
-        <button class="btn btn-primary" type="submit" (click)="startDraw()" >Start</button>
-      </div>
-  
-    <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Employee Name</th>
-            <th scope="col">Employee ID</th>
-            <th scope="col">Vehicle Registration Number</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of employeeList; let i = index;">
-            <th scope="row">{{i+ 1}}</th>
-            <td>{{employee.employeeName}}</td>
-            <td>{{employee.employeeId}}</td>
-            <td>{{employee.vehicleRegistrationNumber}}</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="container" style="border:1px solid black">
+  <form class="form-inline">
+    <div class="md-form form-group">
+
+      <input mdbInputDirective type="text" size="30" value="70" class="form-control" id="form9" name="available">
+      <label for="form9">Total Parkings Slots Available</label>
     </div>
+    <div class="md-form form-group">
+      <i class="fa prefix"></i>
+      <input mdbInputDirective type="text" value="25" class="form-control" id="form10" name="reserved">
+      <label for="form10">Reserved Parking Slots</label>
+    </div>
+
+    <div class="md-form form-group">
+      <button mdbBtn color="primary" size="md" class="waves-light" mdbWavesEffect [disabled]="startDraw" id="startBtn" (click)="Start()">Start</button>
+    </div>
+
+  </form>
+
+  <div class="inner-container">
+
+    <div class="card card-cascade narrower mt-4">
+
+      <div class="px-4">
+        <!--Table-->
+        <table class="table table-hover table-responsive-md mb-0" style="font-size: 40px;">
+
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th scope="row">Employee Id</th>
+              <th class="th-lg">Name</th>
+              <th class="th-lg">Email</th>
+              <th class="th-lg">Vehicle Registration Number</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody class="text-small">
+            <tr *ngFor="let data of employeeList let i = index">
+
+              <th px-3 *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex" scope="row">{{data.employeeId}}</th>
+              <td *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex">{{data.employeeName}}</td>
+              <td *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex">{{data.email}}</td>
+              <td *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex">{{data.vehicleRegistrationNumber}}</td>
+
+            </tr>
+          </tbody>
+          <!--Table body-->
+        </table>
+
+      </div>
+
+      <hr class="my-0">
+
+      <!--Bottom Table UI-->
+      <div class="d-flex justify-content-center lower-div" style="padding:0; ">
+
+        <!--Pagination -->
+        <nav class="my-4 pt-1">
+          <ul class="pagination pagination-circle pg-blue mb-0">
+
+            <!--First-->
+            <li class="page-item clearfix d-none d-md-block" (click)="firstPage()" [ngClass]="{disabled: activePage == 1 || startDraw}">
+              <a class="page-link">First</a>
+            </li>
+
+            <!--Arrow left-->
+            <li class="page-item" (click)="previousPage($event)" [ngClass]="{disabled: activePage == 1 || startDraw}">
+              <a class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+
+            <!--Numbers-->
+            <li #pages *ngFor="let page of paginators | slice:firstVisiblePaginator:lastVisiblePaginator; let i = index" class="page-item"
+              [ngClass]="{active: i + firstVisiblePaginator + 1 == activePage, disabled: startDraw}">
+              <a class="page-link waves-light" (click)="changePage($event)" mdbWavesEffect>{{page}}</a>
+            </li>
+
+
+
+            <!--Arrow right-->
+            <li class="page-item" (click)="nextPage($event)" [ngClass]="{disabled: activePage == numberOfPaginators || startDraw}">
+              <a class="page-link" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+
+            <!--First-->
+            <li class="page-item clearfix d-none d-md-block" (click)="lastPage()" [ngClass]="{disabled: activePage == numberOfPaginators || startDraw}">
+              <a class="page-link">Last</a>
+            </li>
+
+          </ul>
+        </nav>
+        <!--/Pagination -->
+
+      </div>
+      <!--Bottom Table UI-->
+
+    </div>
+
+    <img src="../assets/box.png">
+
+  </div>
+</div>
