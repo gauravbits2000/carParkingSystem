@@ -3,4 +3,5 @@ export class Employee {
     employeeId: string;
     email: string;
     vehicleRegistrationNumber: string;
+    isAuthorize: string;
 }
