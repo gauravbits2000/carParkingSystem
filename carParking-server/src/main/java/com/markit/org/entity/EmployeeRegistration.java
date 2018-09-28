@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EMPLOYEE_REGISTRATION_DETAILS")
-public class Employee {
+public class EmployeeRegistration {
 	
 	@Id
 	@Column(name="EMPLOYEE_ID")
@@ -22,11 +22,11 @@ public class Employee {
 	@Column(name="VEHICLE_REGISTRATION_NUMBER")
 	private String vehicleRegistrationNumber;
 	
-	public Employee() {
+	public EmployeeRegistration() {
 		super();
 	}
 
-	public Employee(String employeeId, String employeeName, String vehicleRegistrationNumber) {
+	public EmployeeRegistration(String employeeId, String employeeName, String vehicleRegistrationNumber) {
 		super();
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.markit.org.entity.Employee;
+import com.markit.org.entity.EmployeeRegistration;
+import com.markit.org.entity.LoginBean;
 import com.markit.org.service.MarkitCarParkingService;
 
 @RestController
@@ -20,18 +22,24 @@ public class MarkitCarParkingController {
 	private MarkitCarParkingService service;
 	
 	@PostMapping("/markit-car-parking/employee-registration")
-	public List<Employee> registerEmployee(@RequestBody Employee employee){
+	public List<EmployeeRegistration> registerEmployee(@RequestBody EmployeeRegistration employee){
 		return service.registerEmployee(employee);
 	}
 	
 	@GetMapping("/markit-car-parking/lucky-draw/")
-	public List<Employee> doCarParkingDraw(){
+	public List<EmployeeRegistration> doCarParkingDraw(){
 		return service.doCarParkingDraw();
 	}
 	
 	@GetMapping("/fetch-employees")
-	public List<Employee> viewEmployee(){
+	public List<EmployeeRegistration> viewEmployee(){
 		return service.viewEmployeeList();
+	}
+	
+	@PostMapping("/markit-car-parking/login")
+	public Employee verifyLogin(@RequestBody LoginBean loginBean){
+		return service.verifyLogin(loginBean);
+		
 	}
 
 }

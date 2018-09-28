@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.markit.org.entity.Employee;
+import com.markit.org.entity.EmployeeRegistration;
+import com.markit.org.entity.LoginBean;
 import com.markit.org.repository.EmployeeRepository;
 
 @Service
@@ -22,7 +24,7 @@ public class MarkitCarParkingService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	public List<Employee> registerEmployee(Employee employee){
+	public List<EmployeeRegistration> registerEmployee(EmployeeRegistration employee){
 		if(employee == null) {
 			return null;
 		}
@@ -30,17 +32,17 @@ public class MarkitCarParkingService {
 		return employeeRepository.findAll();
 	}
 
-	public List<Employee> doCarParkingDraw(){
+	public List<EmployeeRegistration> doCarParkingDraw(){
 		
 		log.info("Getting all registered Employees");
 		
-		List<Employee> employeeList = employeeRepository.findAll();
+		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
 		
 		if(employeeList == null) {
 			return null;
 		}
 		
-		List<Employee> winnersList = new ArrayList<Employee>();
+		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
 		IntStream.range(1, 4).forEach(i -> {
 			log.info("START : Shuffling " + i + " Times");
 			Collections.shuffle(employeeList, new SecureRandom());
@@ -54,9 +56,14 @@ public class MarkitCarParkingService {
 		return winnersList;
 	}
 
-	public List<Employee> viewEmployeeList() {
-		List<Employee> employeeList = employeeRepository.findAll();
+	public List<EmployeeRegistration> viewEmployeeList() {
+		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
 		return employeeList;
+	}
+
+	public Employee verifyLogin(LoginBean loginBean) {
+		return LDAPService.doLDAPAuthetication(loginBean.getUsername(),loginBean.getPassword());
+		
 	}
 
 }
