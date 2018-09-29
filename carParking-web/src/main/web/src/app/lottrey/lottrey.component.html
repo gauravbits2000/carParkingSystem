@@ -1,4 +1,4 @@
-<div class="container" style="border:1px solid black">
+<div class="container">
   <form class="form-inline">
     <div class="md-form form-group">
 
@@ -40,10 +40,10 @@
           <tbody class="text-small">
             <tr *ngFor="let data of employeeList let i = index">
 
-              <th px-3 *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex" scope="row">{{data.employeeId}}</th>
-              <td *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex">{{data.employeeName}}</td>
-              <td *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex">{{data.email}}</td>
-              <td *ngIf="data.employeeId >= firstVisibleIndex && data.employeeId <= lastVisibleIndex">{{data.vehicleRegistrationNumber}}</td>
+              <th px-3 *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex" scope="row">{{data.employeeId}}</th>
+              <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.employeeName}}</td>
+              <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.email}}</td>
+              <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.vehicleRegistrationNumber}}</td>
 
             </tr>
           </tbody>

@@ -14,6 +14,11 @@ export class EmployeeService {
     getEmployeeDetails(baseURL: string): Observable<any>{
      return this.httpClient.get(baseURL);
       }
+      
+     getEmployeeDetailsAll(baseURL: string): Observable<Employee[]>
+     {
+     	return this.httpClient.get<Employee[]>(baseURL);
+     }
 
     getParkingDraw(baseURL: string): Observable<any>{
     return this.httpClient.get(baseURL);       

@@ -1,19 +1,18 @@
 .card{
     width:100%;    
-    height: 90%;   
+    min-height: 90%;   
     overflow:visible;   
     transition: width 2s, height 2s, transform 2s;      
 }
 
 .inner-container{
-    
+    min-height:100%;
     width:100%;  
    overflow: auto;
     padding-top:0px;   
     padding:0;
-    white-space: nowrap;
-    
     position: relative;
+    border:1px solid black;
 }
 
 .inner-container-animate1{

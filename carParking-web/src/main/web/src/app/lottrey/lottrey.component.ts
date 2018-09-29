@@ -92,16 +92,11 @@ changePage(event: any) {
 
  	ngOnInit() 
  	{
- 	
- 	   this.employeeService.getEmployeeDetails("http://localhost:8080//fetch-employees").subscribe((data: any[]) => 
+ 	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080//fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	   console.log(data);
-	      this.employeeList = <Employee[]>data;
-	       }, err => {
-	      console.log(err);
-	       })
-    
-    	console.log(this.employeeList);
+	      this.employeeList = data;
+	        console.log(this.employeeList);
     
 	    this.startDraw = false;
 	    if (this.employeeList.length % this.itemsPerPage === 0) {
@@ -114,6 +109,11 @@ changePage(event: any) {
 	    for (let i = 1; i <= this.numberOfPaginators; i++) {
 	      this.paginators.push(i);
 	    }
+	       }, err => {
+	      console.log(err);
+	       })
+    
+
   }
   
     Start() 
