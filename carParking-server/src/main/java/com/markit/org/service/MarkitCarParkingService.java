@@ -61,9 +61,6 @@ public class MarkitCarParkingService {
 		return employeeList;
 	}
 
-	public Employee verifyLogin(LoginBean loginBean) {
-		return LDAPService.doLDAPAuthetication(loginBean.getUsername(),loginBean.getPassword());
-		
-	}
+	
 
 }

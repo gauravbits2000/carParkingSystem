@@ -1,6 +1,7 @@
 package com.markit.org.service;
 
 import java.util.Hashtable;
+import java.util.Optional;
 
 import javax.naming.CompositeName;
 import javax.naming.Context;
@@ -15,9 +16,19 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
-import com.markit.org.entity.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.markit.org.entity.Employee;
+import com.markit.org.entity.EmployeeRegistration;
+import com.markit.org.repository.EmployeeRepository;
+
+
+@Service
 public  class LDAPService {
+	
+	@Autowired
+	private  EmployeeRepository employeeRepository;
 	
 	private static final String contextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
     private static final String connectionURL = "ldap://ams5ldap.markit.partners:389";
@@ -36,7 +47,7 @@ public  class LDAPService {
     public static final String SEARCH_GROUP_BY_GROUP_CN = "(&(objectCategory=group)(cn={0}))";
     private static String userBase = "DC=markit,DC=partners";
 
-	public static Employee doLDAPAuthetication(String username, String password) {
+	public  Employee doLDAPAuthetication(String username, String password) {
 		
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
@@ -115,6 +126,10 @@ public  class LDAPService {
 			employee.setEmail(email);
 			employee.setEmployeeId(employeeID);
 			employee.setIsAuthorize("True");
+			Optional<EmployeeRegistration> registeredEmployee = employeeRepository.findById(employeeID);
+			if(registeredEmployee.isPresent()){
+				employee.setVehicleRegistrationNumber(registeredEmployee.get().getVehicleRegistrationNumber());
+			}
 			return employee;
 			
 		} catch (NamingException e) {

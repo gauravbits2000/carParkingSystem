@@ -5,6 +5,7 @@ public class Employee {
 	private String employeeId;
 	private String email;
 	private String employeeName;
+	private String vehicleRegistrationNumber;
 	private String isAuthorize;
 	
 	public String getEmployeeId() {
@@ -32,6 +33,12 @@ public class Employee {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getVehicleRegistrationNumber() {
+		return vehicleRegistrationNumber;
+	}
+	public void setVehicleRegistrationNumber(String vehicleRegistrationNumber) {
+		this.vehicleRegistrationNumber = vehicleRegistrationNumber;
 	}
 	
 	
