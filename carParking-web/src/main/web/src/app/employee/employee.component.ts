@@ -23,7 +23,7 @@ export class EmployeeComponent implements OnInit {
       employeeName: new FormControl(this.employee.employeeName),
       employeeId: new FormControl(this.employee.employeeId),
       email: new FormControl(this.employee.email),
-      vehicleRegistrationNumber: new FormControl('')
+      vehicleRegistrationNumber: new FormControl(this.employee.vehicleRegistrationNumber)
 });
     
   }
