@@ -45,5 +45,10 @@ public class MarkitCarParkingController {
 		return ldapService.doLDAPAuthetication(loginBean.getUsername(),loginBean.getPassword());
 		
 	}
+	
+	@PostMapping("/markit-car-parking/fetch-markit-employees")
+	public List<String> fetchMarkitEmployees(@RequestBody LoginBean loginBean){
+		return ldapService.fetchMarkitEmployees(loginBean.getUsername(),loginBean.getPassword());
+	}
 
 }
