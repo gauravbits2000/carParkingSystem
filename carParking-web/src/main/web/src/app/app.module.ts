@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, APP_INITIALIZER} from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MatAutocompleteModule, MatInputModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
@@ -13,9 +15,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AdminloginComponent } from './adminlogin/adminlogin.component';
+import { StartupService } from './startup.service';
 
 
-
+export function startupServiceFactory(startupService: StartupService): Function {
+  return () => startupService.load();
+}
 
 
 
@@ -32,14 +37,25 @@ import { AdminloginComponent } from './adminlogin/adminlogin.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    MatAutocompleteModule,
+    MatInputModule
   ],
   schemas : [NO_ERRORS_SCHEMA],
-  providers: [EmployeeService],
+  providers: [EmployeeService,
+    StartupService,
+    {
+         provide: APP_INITIALIZER,
+         useFactory: startupServiceFactory,
+         deps: [StartupService],
+         multi: true
+       }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
