@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Transient;
+
 @Entity
 @Table(name="EMPLOYEE_REGISTRATION_DETAILS")
 public class EmployeeRegistration {
@@ -21,6 +23,15 @@ public class EmployeeRegistration {
 	
 	@Column(name="VEHICLE_REGISTRATION_NUMBER")
 	private String vehicleRegistrationNumber;
+	
+	@Column(name="IS_AUTHORIZED")
+	private String isAuthorize;
+	
+	@Column(name="IS_CAR_POOL")
+	private String isCarPool;
+	
+	@Column(name="CAR_PARKING_ID")
+	private String carParkingId;
 	
 	public EmployeeRegistration() {
 		super();
@@ -75,6 +86,30 @@ public class EmployeeRegistration {
 		this.email = email;
 	}
 	
+	public String getIsAuthorize() {
+		return isAuthorize;
+	}
+	public void setIsAuthorize(String isAuthorize) {
+		this.isAuthorize = isAuthorize;
+	}
+
+
+
+	public String getIsCarPool() {
+		return isCarPool;
+	}
+
+	public void setIsCarPool(String isCarPool) {
+		this.isCarPool = isCarPool;
+	}
+
+	public String getCarParkingId() {
+		return carParkingId;
+	}
+
+	public void setCarParkingId(String carParkingId) {
+		this.carParkingId = carParkingId;
+	}
 	
 	
 }

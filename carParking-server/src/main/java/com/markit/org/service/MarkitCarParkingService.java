@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.markit.org.entity.Employee;
+
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.LoginBean;
 import com.markit.org.repository.EmployeeRepository;

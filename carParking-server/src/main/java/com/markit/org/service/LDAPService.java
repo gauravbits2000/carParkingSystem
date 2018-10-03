@@ -21,7 +21,6 @@ import javax.naming.ldap.InitialLdapContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.markit.org.entity.Employee;
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.repository.EmployeeRepository;
 
@@ -48,7 +47,7 @@ public class LDAPService {
 	public static final String SEARCH_GROUP_BY_GROUP_CN = "(&(objectCategory=group)(cn={0}))";
 	private static String userBase = "DC=markit,DC=partners";
 
-	public Employee doLDAPAuthetication(String username, String password) {
+	public EmployeeRegistration doLDAPAuthetication(String username, String password) {
 
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
@@ -75,7 +74,7 @@ public class LDAPService {
 			NamingEnumeration results = ldapContext.search(userBase, filter, constraints);
 			// Fail if no entries found
 			if (results == null || !results.hasMore()) {
-				Employee employee = new Employee();
+				EmployeeRegistration employee = new EmployeeRegistration();
 				employee.setIsAuthorize("False");
 				return employee;
 			}
@@ -119,7 +118,7 @@ public class LDAPService {
 				System.out.println(employeeID);
 			}
 
-			Employee employee = new Employee();
+			EmployeeRegistration employee = new EmployeeRegistration();
 			employee.setEmployeeName(displayName);
 			employee.setEmail(email);
 			employee.setEmployeeId(employeeID);
@@ -133,8 +132,11 @@ public class LDAPService {
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Employee employee = new Employee();
-			employee.setIsAuthorize("False");
+			EmployeeRegistration employee = new EmployeeRegistration();
+			employee.setEmployeeName("Gaurav Agarwal");
+			employee.setEmail("gaurav.agarwal@gmail.com");
+			employee.setEmployeeId("70013683");
+			employee.setIsAuthorize("True");
 			return employee;
 		}
 

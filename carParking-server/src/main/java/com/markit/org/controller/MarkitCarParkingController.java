@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.markit.org.entity.Employee;
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.LoginBean;
 import com.markit.org.service.LDAPService;
@@ -41,7 +40,7 @@ public class MarkitCarParkingController {
 	}
 	
 	@PostMapping("/markit-car-parking/login")
-	public Employee verifyLogin(@RequestBody LoginBean loginBean){
+	public EmployeeRegistration verifyLogin(@RequestBody LoginBean loginBean){
 		return ldapService.doLDAPAuthetication(loginBean.getUsername(),loginBean.getPassword());
 		
 	}
