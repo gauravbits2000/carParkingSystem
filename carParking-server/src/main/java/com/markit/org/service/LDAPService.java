@@ -143,6 +143,10 @@ public class LDAPService {
 	public List<String> fetchMarkitEmployees(String username, String password) {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
+		// For testing Purpose Only
+		//username = "gaurav.agarwal";
+		//password = "*******";
+		
 		// Configure our directory context environment.
 		String ldapusername = username + "@markit.partners";
 		env.put(Context.INITIAL_CONTEXT_FACTORY, contextFactory);
@@ -182,10 +186,24 @@ public class LDAPService {
 				SearchResult sr = (SearchResult) fetchData.next();
 				totalResults++;
 
-				String names[] = sr.getName().split(",");
-				String name[] = names[0].split("=");
-				usersList.add(name[1]);
-
+/*				String names[] = sr.getName().split(",");
+				String name[] = names[0].split("=");*/
+				
+				Attributes attributes = sr.getAttributes();
+	           
+				if(attributes.get(attrIdsToSearch[2]) == null || attributes.get(attrIdsToSearch[4]) == null)
+				{
+					// Filter out invalid entries where email Id or Employee Id is missing like CN=Markit India CR
+					System.out.println("Email/EmployeeId not found for "+ sr.getName());
+				}
+				else
+				{
+		            //String email = attributes.get(attrIdsToSearch[2]).get().toString();
+		            String displayNname = attributes.get(attrIdsToSearch[3]).get().toString();
+		            //String employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
+		            
+					usersList.add(displayNname);
+				}				
 			}
 			
             return usersList;
