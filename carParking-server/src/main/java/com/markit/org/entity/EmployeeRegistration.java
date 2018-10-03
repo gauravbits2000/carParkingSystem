@@ -26,11 +26,21 @@ public class EmployeeRegistration {
 		super();
 	}
 
-	public EmployeeRegistration(String employeeId, String employeeName, String vehicleRegistrationNumber) {
+	public EmployeeRegistration(String employeeId, String employeeName, String vehicleRegistrationNumber) 
+	{
 		super();
 		this.employeeId = employeeId;
 		this.employeeName = employeeName;
 		this.vehicleRegistrationNumber = vehicleRegistrationNumber;
+	}
+	
+	public EmployeeRegistration(String employeeId, String employeeName, String vehicleRegistrationNumber, String email) 
+	{
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.vehicleRegistrationNumber = vehicleRegistrationNumber;
+		this.email = email;
 	}
 
 	public String getEmployeeId() {
@@ -56,4 +66,15 @@ public class EmployeeRegistration {
 	public void setVehicleRegistrationNumber(String vehicleRegistrationNumber) {
 		this.vehicleRegistrationNumber = vehicleRegistrationNumber;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+	
 }
