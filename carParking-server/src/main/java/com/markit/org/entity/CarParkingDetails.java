@@ -14,19 +14,23 @@ public class CarParkingDetails
 	@Id
 	@Column(name="CAR_PARKING_ID")
 	private String carParkingId;
-
+	
 	@Column(name="PARKING_FLOOR")
 	private String parkingfloor;
-		
+
+	@Column(name="PARKING_TYPE")
+	private String parkingType;
+	
 	public CarParkingDetails() {
 		super();
 	}
 
-	public CarParkingDetails(String carParkingId, String parkingfloor) 
+	public CarParkingDetails(String carParkingId, String parkingfloor, String parkingType) 
 	{
 		super();
 		this.carParkingId = carParkingId;
 		this.parkingfloor = parkingfloor;
+		this.parkingType  = parkingType;
 		
 	}
 
@@ -45,9 +49,13 @@ public class CarParkingDetails
 	public void setParkingfloor(String parkingfloor) {
 		this.parkingfloor = parkingfloor;
 	}
-	
 
+	public String getParkingType() {
+		return parkingType;
+	}
 
-	
+	public void setParkingType(String parkingType) {
+		this.parkingType = parkingType;
+	}
 	
 }
