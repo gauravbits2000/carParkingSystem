@@ -29,15 +29,16 @@ export class EmployeeComponent implements OnInit {
     this.employee = this.employeeService.getEmployee();
     
     this.userNames = this.startupService.getAllMarkitEmployee();
+    this.myControl.setValue(this.employee.poolEmployee);
     
     this.employeeForm = new FormGroup({
       employeeName: new FormControl(this.employee.employeeName),
       employeeId: new FormControl(this.employee.employeeId),
       email: new FormControl(this.employee.email),
       vehicleRegistrationNumber: new FormControl(this.employee.vehicleRegistrationNumber),
-      poolparking: new FormControl(''),
-      poolemployee: new FormControl(''),
-      poolemployeevehicle: new FormControl('')
+      isCarPool: new FormControl(this.employee.isCarPool),
+      poolEmployee: this.myControl,//new FormControl(''),
+      poolEmployeeVehicle: new FormControl(this.employee.poolEmployeeVehicle)
 });
 
   this.filteredOptions = this.myControl.valueChanges
@@ -49,8 +50,8 @@ export class EmployeeComponent implements OnInit {
   }
   
    private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
 
+    const filterValue = value.toLowerCase();
     return this.userNames.filter(user => user.toLowerCase().includes(filterValue));
   }
 

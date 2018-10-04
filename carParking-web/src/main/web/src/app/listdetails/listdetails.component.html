@@ -9,6 +9,9 @@
           <th scope="col">Employee Name</th>
           <th scope="col">Employee ID</th>
           <th scope="col">Vehicle Registration Number</th>
+          <th scope="col">Car Pool Opted</th>
+          <th scope="col">Pool Employee Name</th>
+          <th scope="col">Pool Employee Vehicle Registration Number</th>
         </tr>
       </thead>
       <tbody>
@@ -17,6 +20,12 @@
           <td>{{employee.employeeName}}</td>
           <td>{{employee.employeeId}}</td>
           <td>{{employee.vehicleRegistrationNumber}}</td>
+          <td *ngIf="employee.isCarPool === 'true'">Y</td>
+          <td *ngIf="employee.isCarPool !== 'true'">N</td>
+          <td *ngIf="employee.poolEmployee !== null">{{employee.poolEmployee}}</td>
+          <td *ngIf="employee.poolEmployee === null">--</td>
+          <td *ngIf="employee.poolEmployeeVehicle !== null">{{employee.poolEmployeeVehicle}}</td>
+          <td *ngIf="employee.poolEmployeeVehicle === null">--</td>
         </tr>
       </tbody>
     </table>

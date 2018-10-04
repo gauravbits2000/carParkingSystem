@@ -6,17 +6,14 @@ import { Observable } from 'rxjs';
 export class StartupService {
 
     userNames: string[];
-    username : string = 'XXXX';
-    password : string = 'XXXXX';
 
     constructor(private httpClient: HttpClient) { }
 
         load(): Promise<any> {
 
         this.userNames = null;
-        const params = {username: this.username, password: this.password};
         return this.httpClient
-            .post('http://localhost:8080//markit-car-parking/fetch-markit-employees',params)
+            .get('http://localhost:8080//markit-car-parking/fetch-markit-employees')
             .toPromise()
             .then((data: any) => this.userNames = data)
             .catch((err: any) => Promise.resolve());
