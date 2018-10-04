@@ -7,4 +7,5 @@ export class Employee {
     isCarPool: string;
     poolEmployee: string;
     poolEmployeeVehicle: string;
+    poolEmployeeId 	   : string;
 }

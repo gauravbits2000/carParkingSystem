@@ -38,7 +38,8 @@ export class EmployeeComponent implements OnInit {
       vehicleRegistrationNumber: new FormControl(this.employee.vehicleRegistrationNumber),
       isCarPool: new FormControl(this.employee.isCarPool),
       poolEmployee: this.myControl,//new FormControl(''),
-      poolEmployeeVehicle: new FormControl(this.employee.poolEmployeeVehicle)
+      poolEmployeeVehicle: new FormControl(this.employee.poolEmployeeVehicle),
+      poolEmployeeId: new FormControl(this.employee.poolEmployeeId)      
 });
 
   this.filteredOptions = this.myControl.valueChanges

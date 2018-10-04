@@ -35,6 +35,9 @@ public class EmployeeRegistration {
 	
 	@Column(name="Pool_Employee")
 	private String poolEmployee;
+
+	@Column(name="Pool_Employee_ID")
+	private String poolEmployeeId;
 	
 	@Column(name="Pool_Employee_Vehicle")
 	private String poolEmployeeVehicle;
@@ -131,6 +134,14 @@ public class EmployeeRegistration {
 
 	public void setCarParkingId(String carParkingId) {
 		this.carParkingId = carParkingId;
+	}
+
+	public String getPoolEmployeeId() {
+		return poolEmployeeId;
+	}
+
+	public void setPoolEmployeeId(String poolEmployeeId) {
+		this.poolEmployeeId = poolEmployeeId;
 	}
 	
 	
