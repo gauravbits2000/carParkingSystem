@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 
 import com.markit.org.entity.EmployeeRegistration;
+import com.markit.org.entity.EmployeesDetails;
 import com.markit.org.entity.LoginBean;
+import com.markit.org.repository.EmployeeDetailsRepository;
 import com.markit.org.repository.EmployeeRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class MarkitCarParkingService {
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	@Autowired
+	private EmployeeDetailsRepository empDetailsepository;
 	
 	public List<EmployeeRegistration> registerEmployee(EmployeeRegistration employee){
 		if(employee == null) {
@@ -59,6 +64,14 @@ public class MarkitCarParkingService {
 	public List<EmployeeRegistration> viewEmployeeList() {
 		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
 		return employeeList;
+	}
+
+	public List<String> fetchMarkitEmployees() {
+		List<EmployeesDetails> empDetailsList = empDetailsepository.findAll();
+		List<String> empNameList = new ArrayList<String>();
+		empDetailsList.forEach(empDetail ->  empNameList.add(empDetail.getEmployeeName()));
+		return  empNameList;
+		
 	}
 
 	

@@ -33,6 +33,12 @@ public class EmployeeRegistration {
 	@Column(name="CAR_PARKING_ID")
 	private String carParkingId;
 	
+	@Column(name="Pool_Employee")
+	private String poolEmployee;
+	
+	@Column(name="Pool_Employee_Vehicle")
+	private String poolEmployeeVehicle;
+	
 	public EmployeeRegistration() {
 		super();
 	}
@@ -101,6 +107,22 @@ public class EmployeeRegistration {
 
 	public void setIsCarPool(String isCarPool) {
 		this.isCarPool = isCarPool;
+	}
+
+	public String getPoolEmployee() {
+		return poolEmployee;
+	}
+
+	public void setPoolEmployee(String poolEmployee) {
+		this.poolEmployee = poolEmployee;
+	}
+
+	public String getPoolEmployeeVehicle() {
+		return poolEmployeeVehicle;
+	}
+
+	public void setPoolEmployeeVehicle(String poolEmployeeVehicle) {
+		this.poolEmployeeVehicle = poolEmployeeVehicle;
 	}
 
 	public String getCarParkingId() {

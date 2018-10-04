@@ -98,24 +98,21 @@ public class LDAPService {
 			String displayName = null, email = null, employeeID = null;
 
 			NamingEnumeration emailEnum = emailAttr.getAll();
-			System.out.println("Email Id  :");
 			while (emailEnum.hasMore()) {
 				email = (String) emailEnum.next();
-				System.out.println(email);
+				
 			}
 
 			NamingEnumeration displayNameEnum = diaplayNameAttr.getAll();
-			System.out.println("Display Name  :");
 			while (displayNameEnum.hasMore()) {
 				displayName = (String) displayNameEnum.next();
-				System.out.println(displayName);
+				
 			}
 
 			NamingEnumeration employeeIDEnum = employeeIDAttr.getAll();
-			System.out.println("Employee  Id  :");
 			while (employeeIDEnum.hasMore()) {
 				employeeID = (String) employeeIDEnum.next();
-				System.out.println(employeeID);
+				
 			}
 
 			EmployeeRegistration employee = new EmployeeRegistration();
