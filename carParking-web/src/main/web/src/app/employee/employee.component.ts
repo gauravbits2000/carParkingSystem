@@ -30,6 +30,12 @@ export class EmployeeComponent implements OnInit {
     
     this.userNames = this.startupService.getAllMarkitEmployee();
     this.myControl.setValue(this.employee.poolEmployee);
+    if(this.employee.isCarPool === 'true'){
+      this.poolParking = true;
+    }else {
+      this.poolParking = false;
+    }
+    
     
     this.employeeForm = new FormGroup({
       employeeName: new FormControl(this.employee.employeeName),
