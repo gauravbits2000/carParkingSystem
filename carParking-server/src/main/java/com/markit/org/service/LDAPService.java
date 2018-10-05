@@ -133,11 +133,14 @@ public class LDAPService {
 			else // If not found search based on PoolEmployeeId
 			{
 				EmployeeRegistration emp = employeeRepository.findByPoolEmployeeId(employeeID);
-				employee.setVehicleRegistrationNumber(emp.getPoolEmployeeVehicle());
-				employee.setIsCarPool(emp.getIsCarPool());
-				employee.setPoolEmployee(emp.getEmployeeName());
-				employee.setPoolEmployeeVehicle(emp.getVehicleRegistrationNumber());
-				employee.setPoolEmployeeId(emp.getEmployeeId());
+				if(emp != null){
+					employee.setVehicleRegistrationNumber(emp.getPoolEmployeeVehicle());
+					employee.setIsCarPool(emp.getIsCarPool());
+					employee.setPoolEmployee(emp.getEmployeeName());
+					employee.setPoolEmployeeVehicle(emp.getVehicleRegistrationNumber());
+					employee.setPoolEmployeeId(emp.getEmployeeId());	
+				}
+				
 				
 			}
 			return employee;

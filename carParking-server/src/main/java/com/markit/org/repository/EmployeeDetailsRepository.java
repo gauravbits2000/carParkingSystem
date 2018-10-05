@@ -9,7 +9,9 @@ import com.markit.org.entity.EmployeesDetails;
 
 @Repository
 public interface EmployeeDetailsRepository extends JpaRepository<EmployeesDetails, String>{
-	
 
+	public EmployeesDetails findByEmployeeName(String poolEmployee);
+	
+   
 
 }

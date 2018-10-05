@@ -4,6 +4,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
@@ -33,6 +34,28 @@ public class MarkitCarParkingService {
 		if(employee == null) {
 			return null;
 		}
+		
+		if("true".equalsIgnoreCase(employee.getIsCarPool()) && employee.getPoolEmployee() != null){
+			
+			EmployeesDetails empDetails = empDetailsepository.findByEmployeeName(employee.getPoolEmployee());
+			employee.setPoolEmployeeId(empDetails.getEmployeeId());
+			
+		}
+		if("false".equalsIgnoreCase(employee.getIsCarPool()) && employee.getPoolEmployee() != null){
+			/*//Updating Pool Employee Details
+			EmployeesDetails empDetails = empDetailsepository.findByEmployeeName(employee.getPoolEmployee());
+			Optional<EmployeeRegistration> poolEmpRegistration = employeeRepository.findById(empDetails.getEmployeeId());
+			poolEmpRegistration.get().setIsCarPool("false");
+			poolEmpRegistration.get().setPoolEmployeeId(null);
+			poolEmpRegistration.get().setPoolEmployee(null);
+			poolEmpRegistration.get().setPoolEmployeeVehicle(null);*/
+			
+			//Updating Primary Employee Details
+			employee.setPoolEmployeeId(null);
+			employee.setPoolEmployee(null);
+			employee.setPoolEmployeeVehicle(null);
+		}
+		
 		employeeRepository.save(employee);
 		return employeeRepository.findAll();
 	}
