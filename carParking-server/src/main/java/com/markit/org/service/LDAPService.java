@@ -120,9 +120,25 @@ public class LDAPService {
 			employee.setEmail(email);
 			employee.setEmployeeId(employeeID);
 			employee.setIsAuthorize("True");
+			// First search for additional information based on Employee Id
 			Optional<EmployeeRegistration> registeredEmployee = employeeRepository.findById(employeeID);
-			if (registeredEmployee.isPresent()) {
+			if (registeredEmployee.isPresent()) 
+			{
 				employee.setVehicleRegistrationNumber(registeredEmployee.get().getVehicleRegistrationNumber());
+				employee.setIsCarPool(registeredEmployee.get().getIsCarPool());
+				employee.setPoolEmployee(registeredEmployee.get().getPoolEmployee());
+				employee.setPoolEmployeeVehicle(registeredEmployee.get().getPoolEmployeeVehicle());
+				employee.setPoolEmployeeId(registeredEmployee.get().getPoolEmployeeId());
+			}
+			else // If not found search based on PoolEmployeeId
+			{
+				EmployeeRegistration emp = employeeRepository.findByPoolEmployeeId(employeeID);
+				employee.setVehicleRegistrationNumber(emp.getPoolEmployeeVehicle());
+				employee.setIsCarPool(emp.getIsCarPool());
+				employee.setPoolEmployee(emp.getEmployeeName());
+				employee.setPoolEmployeeVehicle(emp.getVehicleRegistrationNumber());
+				employee.setPoolEmployeeId(emp.getEmployeeId());
+				
 			}
 			return employee;
 
