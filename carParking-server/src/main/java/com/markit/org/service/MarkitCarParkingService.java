@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
@@ -12,10 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.EmployeesDetails;
-import com.markit.org.entity.LoginBean;
 import com.markit.org.repository.EmployeeDetailsRepository;
 import com.markit.org.repository.EmployeeRepository;
 
@@ -63,25 +60,31 @@ public class MarkitCarParkingService {
 	public List<EmployeeRegistration> doCarParkingDraw(){
 		
 		log.info("Getting all registered Employees");
+		Integer carPoolSlots = 5;
+		Integer femaleLateShiftSlots = 5;
+		Integer generalSlots = 10;
 		
-		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
+		List<EmployeeRegistration> finalWinnersList = new ArrayList<EmployeeRegistration>();
 		
-		if(employeeList == null) {
-			return null;
+		//Car Pool Draw
+		if(carPoolSlots != null && carPoolSlots > 0) {
+			List<EmployeeRegistration> carPoolWinnersList = doCarPoolDraw(carPoolSlots);
+			finalWinnersList.addAll(carPoolWinnersList);
 		}
 		
-		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		IntStream.range(1, 4).forEach(i -> {
-			log.info("START : Shuffling " + i + " Times");
-			Collections.shuffle(employeeList, new SecureRandom());
-			log.info("Choosing a lucky winner !!");
-			winnersList.add(employeeList.get(0));
-			employeeList.remove(0);
-			log.info("END : Shuffling");
-		});
+		//Female Draw
+		if(femaleLateShiftSlots != null && femaleLateShiftSlots > 0) {
+			List<EmployeeRegistration> femaleLateShiftWinnersList = doFemaleLateShiftDraw(femaleLateShiftSlots);
+			finalWinnersList.addAll(femaleLateShiftWinnersList);
+		}
+		
+		//General Draw
+		List<EmployeeRegistration> winnersList = doGeneralDraw(generalSlots);
+		finalWinnersList.addAll(winnersList);
+		
 		
 		log.info("returning all lucky winners");
-		return winnersList;
+		return finalWinnersList;
 	}
 
 	public List<EmployeeRegistration> viewEmployeeList() {
@@ -96,7 +99,66 @@ public class MarkitCarParkingService {
 		return  empNameList;
 		
 	}
-
 	
-
+	private List<EmployeeRegistration> doCarPoolDraw(Integer carPoolSlots){
+		List<EmployeeRegistration> carPoolWinnersList = new ArrayList<EmployeeRegistration>();
+		List<EmployeeRegistration> carPoolEmployeeList = employeeRepository.findByIsCarPool();
+		
+		if(carPoolEmployeeList == null) {
+			log.info("No one applied for Car Pool Parking"); 
+			return carPoolWinnersList;
+		}
+		
+		IntStream.range(1, carPoolSlots).forEach(i -> {
+			log.info("START : Shuffling " + i + " Times");
+			Collections.shuffle(carPoolEmployeeList, new SecureRandom());
+			log.info("Choosing a lucky winner !!");
+			carPoolWinnersList.add(carPoolEmployeeList.get(0));
+			carPoolEmployeeList.remove(0);
+			log.info("END : Shuffling");
+		});
+		
+		return carPoolWinnersList;
+	}
+	
+	private List<EmployeeRegistration> doGeneralDraw(Integer generalSlots){
+		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
+		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
+		
+		if(employeeList == null) {
+			return winnersList;
+		}
+		
+		IntStream.range(1, generalSlots).forEach(i -> {
+			log.info("START : Shuffling " + i + " Times");
+			Collections.shuffle(employeeList, new SecureRandom());
+			log.info("Choosing a lucky winner !!");
+			winnersList.add(employeeList.get(0));
+			employeeList.remove(0);
+			log.info("END : Shuffling");
+		});
+		
+		return winnersList;
+	}
+	
+	private List<EmployeeRegistration> doFemaleLateShiftDraw(Integer femaleLateShiftSlots){
+		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
+		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
+		
+		if(employeeList == null) {
+			return winnersList;
+		}
+		
+		IntStream.range(1, femaleLateShiftSlots).forEach(i -> {
+			log.info("START : Shuffling " + i + " Times");
+			Collections.shuffle(employeeList, new SecureRandom());
+			log.info("Choosing a lucky winner !!");
+			winnersList.add(employeeList.get(0));
+			employeeList.remove(0);
+			log.info("END : Shuffling");
+		});
+		
+		return winnersList;
+	}
+	
 }

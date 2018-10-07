@@ -1,5 +1,7 @@
 package com.markit.org.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,5 +15,8 @@ public interface EmployeeRepository extends JpaRepository<EmployeeRegistration, 
 
 	 @Query("FROM EmployeeRegistration  t where t.poolEmployeeId = :id") 
 	 EmployeeRegistration findByPoolEmployeeId(@Param("id") String id);
+	 
+	 @Query("FROM EmployeeRegistration  t where t.isCarPool = 'Y'") 
+	 List<EmployeeRegistration> findByIsCarPool();
 	
 }
