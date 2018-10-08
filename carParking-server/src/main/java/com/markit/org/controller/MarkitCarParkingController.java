@@ -15,7 +15,9 @@ import com.markit.org.service.LDAPService;
 import com.markit.org.service.MarkitCarParkingService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+// All origins are allowed
+@CrossOrigin
+//@CrossOrigin(origins = "http://localhost:8080")
 public class MarkitCarParkingController {
 	
 	@Autowired
