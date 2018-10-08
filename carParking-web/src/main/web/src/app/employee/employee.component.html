@@ -1,75 +1,97 @@
-
-<div class="container-fluid">
-	<div class="row" style="height: 50px"></div>
-
-
-	<div class="row">
-		<div class="col-xs-12 col-sm-10 col-md-8">
-			<form novalidate action="" (ngSubmit)="onSubmitDetails()"
-				[formGroup]="employeeForm">
-				<div id="user-data">
-					<div class="form-group">
-						<label for="employeeName">Employee Name</label> <input type="text"
-							class="form-control" formControlName="employeeName" required disabled>
-					</div>
-					<div class="form-group">
-						<label for="employeeId">Employee Id</label> <input type="text"
-							class="form-control" formControlName="employeeId" required disabled>
-					</div>
-					<div class="form-group">
-						<label for="email">Employee Email</label> <input type="email"
-							class="form-control" formControlName="email" required email disabled>
-					</div>
-					<div class="form-group">
-						<label for="vehicleRegistration">Vehicle Registration</label> <input
-							type="text" class="form-control"
-							formControlName="vehicleRegistrationNumber" required>
-					</div>
-					<div class="form-group">
-						<label for="isCarPool">Pool Parking</label> <input
-							type="checkbox" (change)="toggleEditable($event)"
-							formControlName="isCarPool">
-					</div>
-					<div class="form-group" *ngIf="poolParking">
-						<label for="poolEmployee">Pool Employee Name</label>
-						 <input type="text" placeholder="Select Employee"  aria-label="Number" matInput
-							  [formControl]="myControl" [matAutocomplete]="auto" 
-							  formControlName="poolEmployee">
-						<mat-autocomplete #auto="matAutocomplete"> 
-						<mat-option *ngFor="let user of filteredOptions | async" [value]="user">
-						    {{user}}
-						</mat-option>
-						</mat-autocomplete>
-						
-					</div>
-					
-					<div class="form-group" *ngIf="poolParking">
-						<label for="poolEmployeeId">Pool Employee Id</label> 
-						<input type="text"
-							   class="form-control" 
-							   formControlName="poolEmployeeId" 
-							   disabled >
-					</div>
-					
-					<div class="form-group" *ngIf="poolParking">
-						<label for="poolEmployeeVehicle">Pool Employee Vehicle
-							Registration</label> <input type="text" class="form-control"
-							formControlName="poolEmployeeVehicle" required>
-					</div>
-
-
-					<!-- <mat-form-field class="example-full-width"> <input
-						type="text" placeholder="Pick one" aria-label="Number" matInput
-						[formControl]="myControl" [matAutocomplete]="auto"> <mat-autocomplete
-						#auto="matAutocomplete"> <mat-option
-						*ngFor="let user of filteredOptions | async" [value]="user">
-					{{user}} </mat-option> </mat-autocomplete> </mat-form-field> -->
-
+<div class="container col-md-12">
+	<div class=" row table-data-header">
+		<h2 class="offset-md-2 employee-title">{{employee.employeeName}}</h2>
+	</div>
+	<div class=" row bg-white">
+		<div class="col-md-2 profile-img-container">
+			<img [src]="employee.imageUrl" onerror="this.src='./assets/profile_place_holder.png';" />
+		</div>
+		<div class=" row col-md-10 offset-md-2">
+			<div class="col-md-6 pd-2">
+				<div class="dot-border">
+					<span>{{employee.email}}</span>
+				</div>
+				<div class="dot-border">
+					<span>{{employee.title}}</span>
+				</div>
+				<div>
+					<span>{{employee.location}}</span>
+				</div>
+			</div>
+			<div class="col-md-6 pd-2">
+				<div class="dot-border">
+					<span>{{employee.telephoneNumber}}</span>
+				</div>
+				<div class="dot-border">
+					<span>{{employee.mobile}}</span>
+				</div>
+				<div>
+					<span>&nbsp;</span>
 				</div>
 
-				<button class="btn btn-primary" type="submit">Submit</button>
-			</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="row bg-white">
+		<div class="row col-md-12 offset-md-1">
+			<div class="col-md-6 pd-2">
+				<div class="col-md-12">
+					<input type="radio" name="parking-request" value="medical-emergency" class="form-radio" (change)="handlePriorityRequest($event)">
+					<span class="ml-2">Medical Emergency </span>
+				</div>
+				<div class="col-md-12">
+					<input type="radio" name="parking-request" value="female-night-shift" class="form-radio" (change)="handlePriorityRequest($event)">
+					<span class="ml-2">Female Night Shift </span>
+				</div>
+				<div class="col-md-12">
+					<input type="radio" name="parking-request" value="pool-parking" class="form-radio" (change)="handlePriorityRequest($event)">
+					<span class="ml-2">Pool Parking </span>
+				</div>
+				<div class="col-md-12">
+					<input type="radio" name="parking-request" value="general-parking" class="form-radio" checked (change)="handlePriorityRequest($event)">
+					<span class="ml-2">General Parking </span>
+				</div>
+				<div class="col-md-12 mt-2 ml-2 col-md-6">
+					<input class="col-md-6" type="textbox" [(ngModel)]="employee.vehicleRegistrationNumber" placeholder="Vehicle Registration Number">
+				</div>
+			</div>
+
+			<div class="col-md-6 pd-2">
+				<div *ngIf="poolParking" class="col-md-6">
+					<form class="example-form">
+						<mat-form-field class="example-full-width">
+							<input type="text" [(ngModel)]="employee.poolEmployee" placeholder="Please Select Your Pool Partner" matInput [formControl]="myControl"
+							 [matAutocomplete]="auto">
+							<mat-autocomplete #auto="matAutocomplete">
+								<mat-option *ngFor="let user of filteredOptions | async" [value]="user">
+									{{user}}
+								</mat-option>
+							</mat-autocomplete>
+						</mat-form-field>
+					</form>
+				</div>
+				<div *ngIf="poolParking" class="col-md-6">
+					<input class="col-md-12" type="textbox" [(ngModel)]="employee.poolEmployeeVehicle" placeholder="Vehicle Registration Number">
+				</div>
+
+				<div *ngIf="employee.isCarPool" class="col-md-6">
+					<div class="ml-1">Your Pool Partner </div>
+					<div class="tag" data-id="web">{{employee.poolEmployee}}
+						<button type="button" class="close" aria-label="Close">
+							<span class="ml-2" aria-hidden="true" (click)="optPoolOut()">×</span>
+						</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="col-md-12 mt-2 center">
+			<input type="checkbox" name="terms" class="form-checkbox" />
+			<span class="ml-2">I do hereby declare that the information provided above is true and correct to the best of my knowledge and belief</span>
+		</div>
+		<div class="col-md-12 mt-2 center">
+			<button type="button" class="btn btn-success btn-lg" (click)="submitDetails()">Enroll</button>
 		</div>
 	</div>
 </div>
-

@@ -48,8 +48,8 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
 		// For testing Purpose Only
-		String username = "*****";
-		String password = "******";
+		String username = "nikhil.chitranshi";
+		String password = "homeland@123";
 		
 		// Configure our directory context environment.
 		String ldapusername = username + "@markit.partners";

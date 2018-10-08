@@ -42,7 +42,7 @@ public class LDAPService {
 
 	private static final String MEMBER_OF = "memberOf";
 	private static final String[] attrIdsToSearch = new String[] { MEMBER_OF, "uid", "mail", "displayName",
-			"employeeID" };
+			"employeeID", "title", "mobile", "telephoneNumber", "l", "uid"};
 	public static final String SEARCH_BY_ACCOUNT_NAME = "(sAMAccountName=%s)";
 	public static final String SEARCH_GROUP_BY_GROUP_CN = "(&(objectCategory=group)(cn={0}))";
 	private static String userBase = "DC=markit,DC=partners";
@@ -95,7 +95,15 @@ public class LDAPService {
 			Attribute emailAttr = attrs.get(attrIdsToSearch[2]);
 			Attribute diaplayNameAttr = attrs.get(attrIdsToSearch[3]);
 			Attribute employeeIDAttr = attrs.get(attrIdsToSearch[4]);
-			String displayName = null, email = null, employeeID = null;
+			Attribute titleAttr = attrs.get(attrIdsToSearch[5]);
+			Attribute mobileAttr = attrs.get(attrIdsToSearch[6]);
+			Attribute telephoneNumberAttr = attrs.get(attrIdsToSearch[7]);
+			Attribute locationAttr = attrs.get(attrIdsToSearch[8]);
+			Attribute uidAttr = attrs.get(attrIdsToSearch[9]);
+			
+			
+			String displayName = null, email = null, employeeID = null, 
+					title =null, mobile = null, telephoneNumber = null, location = null, uid = null;
 
 			NamingEnumeration emailEnum = emailAttr.getAll();
 			while (emailEnum.hasMore()) {
@@ -114,12 +122,43 @@ public class LDAPService {
 				employeeID = (String) employeeIDEnum.next();
 				
 			}
+			
+			NamingEnumeration titleEnum = titleAttr.getAll();
+			while (titleEnum.hasMore()){
+				title = (String) titleEnum.next();
+			}
+			
+			NamingEnumeration mobileEnum = mobileAttr.getAll();
+			while (mobileEnum.hasMore()){
+				mobile = (String) mobileEnum.next();
+			}
+			
+			NamingEnumeration telephoneNumberEnum = telephoneNumberAttr.getAll();
+			while (telephoneNumberEnum.hasMore()){
+				telephoneNumber = (String) telephoneNumberEnum.next();
+			}
+			
+			NamingEnumeration locationEnum = locationAttr.getAll();
+			while (locationEnum.hasMore()){
+				location = (String) locationEnum.next();
+			}
+			
+			NamingEnumeration uidEnum = uidAttr.getAll();
+			while (uidEnum.hasMore()){
+				uid = (String) uidEnum.next();
+			}
+			
 
 			EmployeeRegistration employee = new EmployeeRegistration();
 			employee.setEmployeeName(displayName);
 			employee.setEmail(email);
 			employee.setEmployeeId(employeeID);
+			employee.setTitle(title);
 			employee.setIsAuthorize("True");
+			employee.setMobile(mobile);
+			employee.setTelephoneNumber(telephoneNumber);
+			employee.setLocation(location);
+			employee.setImageUrl(generateImageUrl(uid));
 			// First search for additional information based on Employee Id
 			Optional<EmployeeRegistration> registeredEmployee = employeeRepository.findById(employeeID);
 			if (registeredEmployee.isPresent()) 
@@ -232,5 +271,18 @@ public class LDAPService {
 			return null;
 		}
 
+	}
+	
+	
+	private String generateImageUrl(String uid){
+		
+		if(null != uid && !"".equalsIgnoreCase(uid)){
+			
+			String name[] = uid.split("\\.");
+			return "http://mysites.markit.partners/User%20Photos/Profile%20Pictures/markit_"+name[0]+"_"+name[1]+"_MThumb.jpg";
+		}
+		
+		return "./assets/profile_place_holder.png";
+		
 	}
 }

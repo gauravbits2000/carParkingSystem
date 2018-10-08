@@ -8,4 +8,9 @@ export class Employee {
     poolEmployee: string;
     poolEmployeeVehicle: string;
     poolEmployeeId 	   : string;
+    title : string;
+    location : string;
+    mobile : string;
+    telephoneNumber : string;
+    imageUrl : string;
 }

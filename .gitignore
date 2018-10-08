@@ -1,4 +1,21 @@
 
 # /
+.project
+.settings
 /carParking-server/target
 /carParking-web/target
+carParking-server/.classpath
+carParking-server/.project
+carParking-server/.settings/
+
+.project
+.settings
+
+carParking-web/.classpath
+carParking-web/src/main/web/node_modules/
+
+carParking-server/src/main/resources/parkingdb.mv.db
+carParking-server/src/main/resources/parkingdb.trace.db
+
+
+
