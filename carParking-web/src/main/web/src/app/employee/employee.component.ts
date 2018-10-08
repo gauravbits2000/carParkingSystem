@@ -81,7 +81,6 @@ export class EmployeeComponent implements OnInit {
 
   
   optPoolOut(){
-    alert('Hiii');
     this.employee.isCarPool = null;
     this.employee.poolEmployee = null;
     this.employee.poolEmployeeVehicle = null;
