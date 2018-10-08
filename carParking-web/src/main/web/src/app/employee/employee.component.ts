@@ -69,7 +69,7 @@ export class EmployeeComponent implements OnInit {
   onSubmitDetails(){
    
     this.employee = <Employee>this.employeeForm.value;
-     this.employeeService.updateEmployeeDetails("http://localhost:8080//markit-car-parking/employee-registration",this.employee).subscribe((data: any[]) => {
+     this.employeeService.updateEmployeeDetails("/markit-car-parking/employee-registration",this.employee).subscribe((data: any[]) => {
        this.employees = data;
      });
      this.employeeService.setEmployee(this.employee);

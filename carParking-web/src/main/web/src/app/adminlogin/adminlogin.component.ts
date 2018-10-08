@@ -24,7 +24,7 @@ export class AdminloginComponent implements OnInit {
    
 
     const params = {username: this.username, password: this.password};
-    // this.employeeService.verifyLoginDetails("http://localhost:8080//markit-car-parking/login",params).subscribe(response => {
+    // this.employeeService.verifyLoginDetails("/markit-car-parking/login",params).subscribe(response => {
     //  if(response.toString() === 'Login Successfull'){
     //   this.router.navigateByUrl('/login/submitdetails');
     //  }else{
@@ -34,7 +34,7 @@ export class AdminloginComponent implements OnInit {
     //   console.log(err);
     // });
 
-    this.employeeService.verifyLoginDetails("http://localhost:8080//markit-car-parking/login",params).subscribe((data: any) => {
+    this.employeeService.verifyLoginDetails("/markit-car-parking/login",params).subscribe((data: any) => {
       this.employee = <Employee>data;
       if(this.employee.isAuthorize === 'True'){
         this.employeeService.setEmployee(data);

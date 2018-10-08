@@ -92,7 +92,7 @@ changePage(event: any) {
 
  	ngOnInit() 
  	{
- 	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080//fetch-employees").subscribe((data: Employee[]) => 
+ 	   this.employeeService.getEmployeeDetailsAll("/fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	   console.log(data);
 	      this.employeeList = data;
@@ -143,7 +143,7 @@ changePage(event: any) {
 
   startDraw1(){
     console.log("data");
-    this.employeeService.getParkingDraw("http://localhost:8080//markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
+    this.employeeService.getParkingDraw("/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.employeeList = <Employee[]>data;
     }, err => {
       console.log(err);
