@@ -51,13 +51,13 @@ export class EmployeeComponent implements OnInit {
 
   submitDetails() {
 
-    if(this.employee.poolEmployee != null && this.employee.poolEmployeeVehicle){
+    if(this.employee.poolEmployee != null && this.employee.poolEmployeeVehicle!=null){
       this.employee.isCarPool = 'true';
     }else{
       this.employee.poolEmployee = null;
-      this.employee.employeeId = null;
       this.employee.poolEmployeeVehicle = null;
       this.employee.isCarPool = null;
+      this.employee.poolEmployeeId = null;
     }
 
 
