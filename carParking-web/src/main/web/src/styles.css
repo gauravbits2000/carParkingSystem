@@ -284,8 +284,8 @@ header.topnav .logo {
 
 .data-container-holder{
     padding: 2% 5%;
-    top: -220px;
-    position: relative;
+    top: 80px;
+    position: absolute;
     width: 100%;
 }
 
@@ -439,4 +439,9 @@ input[type="text"]:focus {
   
   .example-full-width {
     width: 100%;
+  }
+
+  .nominations-container{
+      background-color: white;
+      min-height: 400px;
   }
