@@ -54,6 +54,9 @@ public class EmployeeRegistration {
 	@Column(name = "Pool_Employee_Vehicle")
 	private String poolEmployeeVehicle;
 
+	@Column(name = "REQUEST_CATEGORY")
+	private String requestCategory;
+
 	@Transient
 	private String imageUrl;
 
@@ -196,6 +199,14 @@ public class EmployeeRegistration {
 
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	public String getRequestCategory() {
+		return requestCategory;
+	}
+
+	public void setRequestCategory(String requestCategory) {
+		this.requestCategory = requestCategory;
 	}
 
 }

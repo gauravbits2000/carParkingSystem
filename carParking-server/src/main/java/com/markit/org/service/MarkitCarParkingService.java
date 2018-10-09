@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.EmployeesDetails;
+import com.markit.org.entity.RequestCategoryInput;
 import com.markit.org.repository.EmployeeDetailsRepository;
 import com.markit.org.repository.EmployeeRepository;
 
@@ -52,6 +53,8 @@ public class MarkitCarParkingService {
 			employee.setPoolEmployee(null);
 			employee.setPoolEmployeeVehicle(null);
 		}
+		
+		//employee.setRequestCategory(getRequestCategory(employee.getRequestCategory()));
 		
 		employeeRepository.save(employee);
 		return employeeRepository.findAll();
@@ -160,5 +163,19 @@ public class MarkitCarParkingService {
 		
 		return winnersList;
 	}
+//	
+//	private String getRequestCategory(String requestCategory) {
+//		
+//		if(requestCategory.equalsIgnoreCase(RequestCategoryInput.medical_emergency.name())){
+//			return "Medical Emergency";
+//		
+//		}else if(requestCategory.equalsIgnoreCase(RequestCategoryInput.female_night_shift.name())){
+//			return "Female Night Shift";
+//		
+//		}
+//		
+//		return null;
+//	}
+
 	
 }

@@ -77,7 +77,7 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 			String searchFilter = "(&(objectCategory=user))";
 
 			// Specify the Base for the search
-			String searchBase = "OU=India,OU=APAC,OU=Standard Accounts2,OU=Standard Accounts,DC=markit,DC=partners";
+			String searchBase = "OU=Noida,OU=APAC,OU=Standard Accounts2,OU=Standard Accounts,DC=markit,DC=partners";
 
 			// initialize counter to total the results
 			int totalResults = 0;
