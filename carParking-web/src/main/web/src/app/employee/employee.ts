@@ -13,4 +13,5 @@ export class Employee {
     mobile : string;
     telephoneNumber : string;
     imageUrl : string;
+    requestCategory : string;
 }

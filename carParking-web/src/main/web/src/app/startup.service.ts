@@ -13,7 +13,7 @@ export class StartupService {
 
         this.userNames = null;
         return this.httpClient
-            .get('/markit-car-parking/fetch-markit-employees')
+            .get('http://localhost:8080/markit-car-parking/fetch-markit-employees')
             .toPromise()
             .then((data: any) => this.userNames = data)
             .catch((err: any) => Promise.resolve());

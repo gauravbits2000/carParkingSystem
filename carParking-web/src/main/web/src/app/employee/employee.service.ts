@@ -6,36 +6,35 @@ import { Employee } from 'src/app/employee/employee';
 @Injectable()
 export class EmployeeService {
 
-  employee : Employee;
-  
+  employee: Employee;
 
-    constructor(private httpClient: HttpClient) { }
 
-    getEmployeeDetails(baseURL: string): Observable<any>{
-     return this.httpClient.get(baseURL);
-      }
-      
-     getEmployeeDetailsAll(baseURL: string): Observable<Employee[]>
-     {
-     	return this.httpClient.get<Employee[]>(baseURL);
-     }
+  constructor(private httpClient: HttpClient) { }
 
-    getParkingDraw(baseURL: string): Observable<any>{
-    return this.httpClient.get(baseURL);       
-    }
-     updateEmployeeDetails(baseURL: string,params): Observable<any>{
-     return this.httpClient.post(baseURL,params);       
-    }
-    verifyLoginDetails(baseURL: string,params) {
-      return this.httpClient.post(baseURL,params);
-    }
-    setEmployee(data){
-       this.employee = data;
-    }
-    getEmployee(){
-      return this.employee;
-   }
-   
-    
+  getEmployeeDetails(baseURL: string): Observable<any> {
+    return this.httpClient.get(baseURL);
+  }
+
+  getEmployeeDetailsAll(baseURL: string): Observable<Employee[]> {
+    return this.httpClient.get<Employee[]>(baseURL);
+  }
+
+  getParkingDraw(baseURL: string): Observable<any> {
+    return this.httpClient.get(baseURL);
+  }
+  updateEmployeeDetails(baseURL: string, params): Observable<any> {
+    return this.httpClient.post(baseURL, params);
+  }
+  verifyLoginDetails(baseURL: string, params) {
+    return this.httpClient.post(baseURL, params);
+  }
+  setEmployee(data) {
+    this.employee = data;
+  }
+  getEmployee() {
+    return this.employee;
+  }
+
+
 
 }

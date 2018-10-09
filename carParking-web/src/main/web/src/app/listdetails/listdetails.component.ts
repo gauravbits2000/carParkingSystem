@@ -15,7 +15,7 @@ export class ListdetailsComponent implements OnInit {
   ngOnInit() {
     setTimeout(()=>{
 
-      this.employeeService.getEmployeeDetails("/fetch-employees").subscribe((data: any[]) => {
+      this.employeeService.getEmployeeDetails("http://localhost:8080/fetch-employees").subscribe((data: any[]) => {
       this.employeeList = <Employee[]>data;
     }, err => {
       console.log(err);
@@ -26,7 +26,7 @@ export class ListdetailsComponent implements OnInit {
 
   viewDetails(){
     console.log("data");
-    this.employeeService.getEmployeeDetails("/fetch-employees").subscribe((data: any[]) => {
+    this.employeeService.getEmployeeDetails("http://localhost:8080/fetch-employees").subscribe((data: any[]) => {
       this.employeeList = <Employee[]>data;
     }, err => {
       console.log(err);

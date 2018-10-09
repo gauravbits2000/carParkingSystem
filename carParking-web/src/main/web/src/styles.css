@@ -115,7 +115,7 @@ header.topnav .logo {
 
 #mega-menu .top-level-nav:hover a {
     color: #00AB4A;
-    border-bottom: 2px solid #00AB4A;
+    border-bottom: 3px solid #00AB4A;
     text-decoration: none;
 }
 
@@ -136,7 +136,7 @@ header.topnav .logo {
     color: #B3B3B3;
     padding: 20px 0;
     font-size: 12px;
-    position: relative;
+    position: fixed;
     width: 100%;
     bottom: 0;
 }
@@ -444,4 +444,9 @@ input[type="text"]:focus {
   .nominations-container{
       background-color: white;
       min-height: 400px;
+      font-size: 14px;
+  }
+
+  .icons{
+      height : 20px;
   }

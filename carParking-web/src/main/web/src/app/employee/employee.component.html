@@ -9,20 +9,25 @@
 		<div class=" row col-md-10 offset-md-2">
 			<div class="col-md-6 pd-2">
 				<div class="dot-border">
-					<span>{{employee.email}}</span>
+					<img class="icons mr-1 mb-1" src="./assets/mail.svg" />
+					<span >{{employee.email}}</span>
 				</div>
 				<div class="dot-border">
+					<img class="icons mr-1 mb-1" src="./assets/designation.svg" />
 					<span>{{employee.title}}</span>
 				</div>
 				<div>
+						<img class="icons mr-1 mb-1" src="./assets/location.svg" />
 					<span>{{employee.location}}</span>
 				</div>
 			</div>
 			<div class="col-md-6 pd-2">
 				<div class="dot-border">
+					<img class="icons mr-1 mb-1" src="./assets/telephone.svg" />
 					<span>{{employee.telephoneNumber}}</span>
 				</div>
 				<div class="dot-border">
+					<img class="icons mr-1 mb-1" src="./assets/mobile.svg" />
 					<span>{{employee.mobile}}</span>
 				</div>
 				<div>
@@ -37,19 +42,19 @@
 		<div class="row col-md-12 offset-md-1">
 			<div class="col-md-6 pd-2">
 				<div class="col-md-12">
-					<input type="radio" name="parking-request" value="medical-emergency" class="form-radio" (change)="handlePriorityRequest($event)">
+					<input type="radio" name="parking-request" value="Medical Emergency" [(ngModel)]="employee.requestCategory" class="form-radio" (change)="handlePriorityRequest($event)">
 					<span class="ml-2">Medical Emergency </span>
 				</div>
 				<div class="col-md-12">
-					<input type="radio" name="parking-request" value="female-night-shift" class="form-radio" (change)="handlePriorityRequest($event)">
+					<input type="radio" name="parking-request" value="Female Night Shift" [(ngModel)]="employee.requestCategory" class="form-radio" (change)="handlePriorityRequest($event)">
 					<span class="ml-2">Female Night Shift </span>
 				</div>
 				<div class="col-md-12">
-					<input type="radio" name="parking-request" value="pool-parking" class="form-radio" (change)="handlePriorityRequest($event)">
+					<input type="radio" name="parking-request" value="Pool Parking" [(ngModel)]="employee.requestCategory" class="form-radio" (change)="handlePriorityRequest($event)">
 					<span class="ml-2">Pool Parking </span>
 				</div>
 				<div class="col-md-12">
-					<input type="radio" name="parking-request" value="general-parking" class="form-radio" checked (change)="handlePriorityRequest($event)">
+					<input type="radio" name="parking-request" value="General Parking" [(ngModel)]="employee.requestCategory" class="form-radio" checked (change)="handlePriorityRequest($event)">
 					<span class="ml-2">General Parking </span>
 				</div>
 				<div class="col-md-12 mt-2 ml-2 col-md-6">

@@ -51,6 +51,7 @@ export class EmployeeComponent implements OnInit {
 
   submitDetails() {
 
+    /* Handling for car pool option */
     if(this.employee.poolEmployee != null && this.employee.poolEmployeeVehicle!=null){
       this.employee.isCarPool = 'true';
     }else{
@@ -59,6 +60,8 @@ export class EmployeeComponent implements OnInit {
       this.employee.isCarPool = null;
       this.employee.poolEmployeeId = null;
     }
+
+
 
 
 
@@ -72,7 +75,7 @@ export class EmployeeComponent implements OnInit {
 
   handlePriorityRequest(event) {
 
-    if (event.target.value === 'pool-parking' && this.employee.isCarPool === null) {
+    if (event.target.value === 'Pool Parking' && this.employee.isCarPool === null) {
       this.poolParking = true;
     } else {      
       this.poolParking = false;     
