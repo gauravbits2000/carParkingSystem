@@ -107,19 +107,31 @@ public class MarkitCarParkingService {
 		List<EmployeeRegistration> carPoolWinnersList = new ArrayList<EmployeeRegistration>();
 		List<EmployeeRegistration> carPoolEmployeeList = employeeRepository.findByIsCarPool();
 		
-		if(carPoolEmployeeList == null) {
+		if(carPoolEmployeeList == null || carPoolEmployeeList.size() == 0) 
+		{
 			log.info("No one applied for Car Pool Parking"); 
 			return carPoolWinnersList;
 		}
 		
-		IntStream.range(1, carPoolSlots).forEach(i -> {
-			log.info("START : Shuffling " + i + " Times");
-			Collections.shuffle(carPoolEmployeeList, new SecureRandom());
-			log.info("Choosing a lucky winner !!");
-			carPoolWinnersList.add(carPoolEmployeeList.get(0));
-			carPoolEmployeeList.remove(0);
-			log.info("END : Shuffling");
-		});
+		// If car Pool Slots are more than applied, no need for random selection
+		if(carPoolSlots > carPoolEmployeeList.size())
+		{
+			carPoolWinnersList.addAll(carPoolEmployeeList);
+
+		}
+		else
+		{
+			IntStream.range(1, carPoolSlots).forEach(i -> {
+				log.info("START : Shuffling " + i + " Times");
+				Collections.shuffle(carPoolEmployeeList, new SecureRandom());
+				log.info("Choosing a lucky winner !!");
+				carPoolWinnersList.add(carPoolEmployeeList.get(0));
+				carPoolEmployeeList.remove(0);
+				log.info("END : Shuffling");
+			});			
+		}
+		
+
 		
 		return carPoolWinnersList;
 	}
@@ -128,38 +140,61 @@ public class MarkitCarParkingService {
 		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
 		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
 		
-		if(employeeList == null) {
+		if(employeeList == null || employeeList.size() ==0) 
+		{
 			return winnersList;
 		}
 		
-		IntStream.range(1, generalSlots).forEach(i -> {
-			log.info("START : Shuffling " + i + " Times");
-			Collections.shuffle(employeeList, new SecureRandom());
-			log.info("Choosing a lucky winner !!");
-			winnersList.add(employeeList.get(0));
-			employeeList.remove(0);
-			log.info("END : Shuffling");
-		});
+		// If general Slots are more than applied, no need for random selection
+		if(generalSlots > employeeList.size())
+		{
+			winnersList.addAll(employeeList);
+
+		}
+		else
+		{
+			IntStream.range(1, generalSlots).forEach(i -> {
+				log.info("START : Shuffling " + i + " Times");
+				Collections.shuffle(employeeList, new SecureRandom());
+				log.info("Choosing a lucky winner !!");
+				winnersList.add(employeeList.get(0));
+				employeeList.remove(0);
+				log.info("END : Shuffling");
+			});			
+		}
+		
 		
 		return winnersList;
 	}
 	
-	private List<EmployeeRegistration> doFemaleLateShiftDraw(Integer femaleLateShiftSlots){
+	private List<EmployeeRegistration> doFemaleLateShiftDraw(Integer femaleLateShiftSlots)
+	{
 		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
 		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
 		
-		if(employeeList == null) {
+		if(employeeList == null || employeeList.size() == 0 ) 
+		{
 			return winnersList;
 		}
 		
-		IntStream.range(1, femaleLateShiftSlots).forEach(i -> {
-			log.info("START : Shuffling " + i + " Times");
-			Collections.shuffle(employeeList, new SecureRandom());
-			log.info("Choosing a lucky winner !!");
-			winnersList.add(employeeList.get(0));
-			employeeList.remove(0);
-			log.info("END : Shuffling");
-		});
+		// If Female Slots are more than applied, no need for random selection
+		if(femaleLateShiftSlots > employeeList.size())
+		{
+			winnersList.addAll(employeeList);
+		}
+		else
+		{
+			IntStream.range(1, femaleLateShiftSlots).forEach(i -> {
+				log.info("START : Shuffling " + i + " Times");
+				Collections.shuffle(employeeList, new SecureRandom());
+				log.info("Choosing a lucky winner !!");
+				winnersList.add(employeeList.get(0));
+				employeeList.remove(0);
+				log.info("END : Shuffling");
+			});			
+		}
+		
+
 		
 		return winnersList;
 	}

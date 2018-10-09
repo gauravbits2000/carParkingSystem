@@ -14,4 +14,16 @@ export class Employee {
     telephoneNumber : string;
     imageUrl : string;
     requestCategory : string;
+    
+    constructor(employeeName: string,
+    employeeId: string,
+    email: string,
+    vehicleRegistrationNumber: string){
+    	this.employeeName = employeeName;
+    	this.employeeId = employeeId;
+    	this.email = email;
+    	this.vehicleRegistrationNumber = vehicleRegistrationNumber;
+    	
+    
+    }
 }

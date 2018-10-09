@@ -1,38 +1,88 @@
-.card{
+
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";          
+@import "../../../node_modules/font-awesome/css/font-awesome.css";
+/* @import "../../../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss";
+@import "../../../node_modules/angular-bootstrap-md/scss/mdb-free.scss";  */               
+
+.card1{
     width:100%;    
-    min-height: 90%;   
+    height: 90%;   
     overflow:visible;   
-    transition: width 2s, height 2s, transform 2s;      
+    transition: width 0.5s, height 0.5s, transform 0.5s;      
 }
 
 .inner-container{
-    min-height:100%;
-    width:100%;  
-   overflow: auto;
+    min-height:100vh;
+    min-width:100%;  
+   overflow: hidden;
     padding-top:0px;   
-    padding:0;
-    position: relative;
+    padding:0;   
+    position: absolute;  
+    left:0;       
+    z-index:10;
+}
+
+
+.inner-container1{
+    min-height:100vh;
+    min-width:100%;  
+   overflow: hidden;
+    padding-top:0px;   
+    padding:0;   
+    opacity: 0;
+    z-index:1;
+    position: absolute;  
+    right:0;
+   
+   
+}
+
+.inner-container2{
+    min-height:100vh;
+    min-width:100%;  
+   overflow: hidden;
+    padding-top:0px;   
+    padding:0;   
+    opacity: 1;
+    z-index:2;
+    visibility:hidden;
+    position: absolute;  
+    left:0; 
 }
 
 .inner-container-animate1{
-    width:60%;
+    width:70%;
 }
 
 .inner-container-animate2{
     min-width:50%;
     min-height:50%;    
-    transform: rotate(360deg) scale(0.5,0.5) translate(-250px,-250px);
+    transform: rotate(360deg) scale(0.5,0.5) translate(-40%,-40%);
 }
 
+.inner-container-animate3{
+    min-width:50%;
+    min-height:50%;    
+    transform: rotate(360deg) scale(0.5,0.5) translate(120%,-40%);
+}
+
+.inner-container-animate4{
+    min-width:50%;
+    min-height:50%;    
+    transform: rotate(360deg) scale(0.5,0.5) translate(30%,190%);
+}
 .container{
     padding:10px 20px;
-    margin-top:20px;
-    margin-bottom:20px;
-    overflow-y: hidden;      
+    margin-top:0px;
+    margin-bottom:0px;
+    overflow: hidden;      
     position:relative;
-    min-height:500px;
-    width:100%;
+    min-height:600px;
+    border:1px solid black;
+    
 }
+
+
 
 @keyframes text-bold-animation {
     0% {color:black;left:0;right:0;font-weight: bold;}
@@ -42,22 +92,22 @@
     20%{left:40%;top:0px;transform:scale(2,2);font-weight: bold;}
     25%{left:60%;top:0px;transform:scale(2.5,2.5);font-weight: bold;}
     30%{left:80%;top:0px;transform:scale(2.5,2.5);font-weight: bold;}
-   35% {left:100%;top:0px;transform:scale(3,3);font-weight: bold;}
-   40% {left:120%;top:0px;transform:scale(3,3);font-weight: bold;}
-   45% {left:140%;top:0px;transform:scale(3.5,3.5);font-weight: bold;}
-   50% {left:160%;top:0px;transform:scale(3.5,3.5);font-weight: bold;}
-   55% {left:180%;top:0px;transform:scale(4,4);font-weight: bold;}
-   60% {left:200%;top:0px;transform:scale(4,4);font-weight: bold;}
-   65% {left:220%;top:0px;transform:scale(4.5,4.5);font-weight: bold;}
-   70% {left:220%;top:50px;transform:scale(5,5);font-weight: bold;}
-   75% {left:220%;top:100px;transform:scale(5,5);font-weight: bold;}
-   80% {left:220%;top:150px;transform:scale(5,5);font-weight: bold;}
-   85% {left:220%;top:200px;transform:scale(5,5);font-weight: bold;}
-   90% {left:220%;top:250px;transform:scale(5,5);font-weight: bold;}
-   95% {left:220%;top:300px;transform:scale(5,5);font-weight: bold;}
-   100% {left:220%;top:350px;transform:scale(5,5);opacity:0;font-weight: bold;}
+   35% {left:90%;top:0px;transform:scale(3,3);font-weight: bold;}
+   40% {left:100%;top:0px;transform:scale(3,3);font-weight: bold;}
+   45% {left:110%;top:0px;transform:scale(3.5,3.5);font-weight: bold;}
+   50% {left:120%;top:0px;transform:scale(3.5,3.5);font-weight: bold;}
+   55% {left:130%;top:0px;transform:scale(4,4);font-weight: bold;}
+   60% {left:140%;top:0px;transform:scale(4,4);font-weight: bold;}
+   65% {left:150%;top:0px;transform:scale(4,4);font-weight: bold;}
+   70% {left:150%;top:50px;transform:scale(4,4);font-weight: bold;}
+   75% {left:150%;top:150px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
+   80% {left:150%;top:150px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
+   85% {left:150%;top:200px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
+   90% {left:150%;top:250px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
+   95% {left:150%;top:300px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
+   99% {left:150%;top:350px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
+   100% {left:150%;top:500px;transform:scale(4,4) rotate(90deg);visibility: hidden;}
 }
-
 
 .text-bold1{
     position:relative;  
@@ -66,20 +116,41 @@
     animation-duration: 3s;   
     animation-timing-function: ease-in;
     animation-fill-mode: both;
+    animation-direction: alternate;
     /*transform: scale(2,2);*/
 }
 
 
 img{
     position:absolute;
-    left:55%;
-    top:50%;
-    vertical-align: middle;    
+    top:30%;
+    left:45%;  
     width:180px;
     height:180px;    
     opacity: 0;
     filter: alpha(opacity=20); /* For IE8 and earlier */
     z-index:-1;
+    display:block;     
 }
 
      
+#asd{
+    width:20px;
+    height:20px;
+    border:1px solid black;   
+    color:red;
+}
+
+.text-reverse{
+    visibility: visible;
+    opacity: 0.9;
+    color:red;
+}
+
+.newDiv{
+    height:20px;
+    width:20px;
+    color:blue;
+    border:1px solid purple;
+}
+

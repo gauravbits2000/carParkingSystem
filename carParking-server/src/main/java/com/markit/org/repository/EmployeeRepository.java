@@ -16,7 +16,7 @@ public interface EmployeeRepository extends JpaRepository<EmployeeRegistration, 
 	 @Query("FROM EmployeeRegistration  t where t.poolEmployeeId = :id") 
 	 EmployeeRegistration findByPoolEmployeeId(@Param("id") String id);
 	 
-	 @Query("FROM EmployeeRegistration  t where t.isCarPool = 'Y'") 
+	 @Query("FROM EmployeeRegistration  t where t.isCarPool = 'true'") 
 	 List<EmployeeRegistration> findByIsCarPool();
 	
 }
