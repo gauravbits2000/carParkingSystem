@@ -218,7 +218,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
                   window.setTimeout(function () {   
                     //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());       
                   $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').css({"position":"relative",'visibility':'visible'})
-                  .animate({bottom:'+=770px'},1000).animate({left:'+=350px'},1000);
+                  .animate({bottom:'+=780px'},1000).animate({left:'+=550px'},1000);
                 }, i * 1000);
               }(i));
             } 
