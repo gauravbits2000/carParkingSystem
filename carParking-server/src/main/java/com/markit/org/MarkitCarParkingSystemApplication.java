@@ -21,12 +21,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.markit.org.entity.EmployeesDetails;
 import com.markit.org.repository.EmployeeDetailsRepository;
+import com.markit.org.service.ParkingDrawService;
 
 @SpringBootApplication
 public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 	
 	@Autowired
 	private EmployeeDetailsRepository empDetailsRepository;
+	
+	@Autowired
+	private  ParkingDrawService parkingDrawService;
 
 	public static void main(String[] args) 
 	{
@@ -113,7 +117,7 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 			empDetailsRepository.saveAll(employeesList);
 			
 			
-			
+			parkingDrawService.init();
            
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

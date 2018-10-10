@@ -22,13 +22,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.markit.org.entity.EmployeeRegistration;
-import com.markit.org.repository.EmployeeRepository;
+import com.markit.org.repository.EmployeeRegistrationRepository;
 
 @Service
 public class LDAPService {
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private EmployeeRegistrationRepository employeeRepository;
 
 	private static final String contextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
 	private static final String connectionURL = "ldap://ams5ldap.markit.partners:389";
@@ -171,8 +171,9 @@ public class LDAPService {
 			}
 			else // If not found search based on PoolEmployeeId
 			{
-				EmployeeRegistration emp = employeeRepository.findByPoolEmployeeId(employeeID);
-				if(emp != null){
+				Optional<EmployeeRegistration> employeeOptional = employeeRepository.findByPoolEmployeeId(employeeID);
+				if(employeeOptional.isPresent()){
+					EmployeeRegistration emp = employeeOptional.get();
 					employee.setVehicleRegistrationNumber(emp.getPoolEmployeeVehicle());
 					employee.setIsCarPool(emp.getIsCarPool());
 					employee.setPoolEmployee(emp.getEmployeeName());

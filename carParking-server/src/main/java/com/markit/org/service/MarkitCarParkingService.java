@@ -1,10 +1,8 @@
 package com.markit.org.service;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.EmployeesDetails;
-import com.markit.org.entity.RequestCategoryInput;
 import com.markit.org.repository.EmployeeDetailsRepository;
-import com.markit.org.repository.EmployeeRepository;
+import com.markit.org.repository.EmployeeRegistrationRepository;
 
 @Service
 public class MarkitCarParkingService {
@@ -23,41 +20,49 @@ public class MarkitCarParkingService {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private EmployeeRegistrationRepository employeeRegistrationRepository;
 	
 	@Autowired
 	private EmployeeDetailsRepository empDetailsepository;
+	
+	@Autowired
+	private ParkingDrawService parkingDrawService;
 	
 	public List<EmployeeRegistration> registerEmployee(EmployeeRegistration employee){
 		if(employee == null) {
 			return null;
 		}
 		
-		if("true".equalsIgnoreCase(employee.getIsCarPool()) && employee.getPoolEmployee() != null){
-			
+		if(RequestCategory.POOL_PARKING.getCategory().equals(employee.getRequestCategory())) {
 			EmployeesDetails empDetails = empDetailsepository.findByEmployeeName(employee.getPoolEmployee());
 			employee.setPoolEmployeeId(empDetails.getEmployeeId());
-			
-		}
-		if("false".equalsIgnoreCase(employee.getIsCarPool()) && employee.getPoolEmployee() != null){
-			/*//Updating Pool Employee Details
-			EmployeesDetails empDetails = empDetailsepository.findByEmployeeName(employee.getPoolEmployee());
-			Optional<EmployeeRegistration> poolEmpRegistration = employeeRepository.findById(empDetails.getEmployeeId());
-			poolEmpRegistration.get().setIsCarPool("false");
-			poolEmpRegistration.get().setPoolEmployeeId(null);
-			poolEmpRegistration.get().setPoolEmployee(null);
-			poolEmpRegistration.get().setPoolEmployeeVehicle(null);*/
-			
-			//Updating Primary Employee Details
-			employee.setPoolEmployeeId(null);
-			employee.setPoolEmployee(null);
-			employee.setPoolEmployeeVehicle(null);
 		}
 		
-		//employee.setRequestCategory(getRequestCategory(employee.getRequestCategory()));
+		if(RequestCategory.GENERAL_PARKING.getCategory().equals(employee.getRequestCategory()) 
+				|| RequestCategory.MEDICAL_EMERGENCY.getCategory().equals(employee.getRequestCategory()) 
+				|| RequestCategory.FEMALE_NIGHT_SHIFT.getCategory().equals(employee.getRequestCategory())) {
+			// Find the employee Details in primary and if exists with car pool then remove that carpool information
+			Optional<EmployeeRegistration> primaryEmployeeOptional = employeeRegistrationRepository.findById(employee.getEmployeeId());
+			if(primaryEmployeeOptional.isPresent()) {
+				employeeRegistrationRepository.delete(primaryEmployeeOptional.get());
+			}
+			
+			// Find the employee Details in Pooled Employee	and remove pool employee info and create a new row for the employee in General Parking		
+			Optional<EmployeeRegistration> pooledEmployeeOptional = employeeRegistrationRepository.findByPoolEmployeeId(employee.getEmployeeId());
+			if(pooledEmployeeOptional.isPresent()) {
+				EmployeeRegistration pooledEmployee = pooledEmployeeOptional.get();
+				pooledEmployee.setPoolEmployee(null);
+				pooledEmployee.setPoolEmployeeId(null);
+				pooledEmployee.setPoolEmployeeVehicle(null);
+				pooledEmployee.setIsCarPool(null);
+				pooledEmployee.setVehicleRegistrationNumber(employee.getVehicleRegistrationNumber());
+				pooledEmployee.setRequestCategory(RequestCategory.GENERAL_PARKING.getCategory());
+				employeeRegistrationRepository.save(pooledEmployee);
+			}
+		}
 		
-		employeeRepository.save(employee);
-		return employeeRepository.findAll();
+		employeeRegistrationRepository.save(employee);
+		return employeeRegistrationRepository.findAll();
 	}
 
 	public List<EmployeeRegistration> doCarParkingDraw(){
@@ -65,24 +70,30 @@ public class MarkitCarParkingService {
 		log.info("Getting all registered Employees");
 		Integer carPoolSlots = 5;
 		Integer femaleLateShiftSlots = 5;
+		Integer medicalEmergencySlots = 5;
 		Integer generalSlots = 10;
 		
 		List<EmployeeRegistration> finalWinnersList = new ArrayList<EmployeeRegistration>();
 		
 		//Car Pool Draw
 		if(carPoolSlots != null && carPoolSlots > 0) {
-			List<EmployeeRegistration> carPoolWinnersList = doCarPoolDraw(carPoolSlots);
+			List<EmployeeRegistration> carPoolWinnersList = parkingDrawService.doCarPoolDraw(carPoolSlots);
 			finalWinnersList.addAll(carPoolWinnersList);
 		}
 		
 		//Female Draw
 		if(femaleLateShiftSlots != null && femaleLateShiftSlots > 0) {
-			List<EmployeeRegistration> femaleLateShiftWinnersList = doFemaleLateShiftDraw(femaleLateShiftSlots);
+			List<EmployeeRegistration> femaleLateShiftWinnersList = parkingDrawService.doFemaleLateShiftDraw(femaleLateShiftSlots);
 			finalWinnersList.addAll(femaleLateShiftWinnersList);
 		}
 		
+		if(medicalEmergencySlots != null && medicalEmergencySlots > 0) {
+			List<EmployeeRegistration> medicalEmergencyWinnersList = parkingDrawService.doMedicalEmergencyDraw(medicalEmergencySlots);
+			finalWinnersList.addAll(medicalEmergencyWinnersList);
+		}
+		
 		//General Draw
-		List<EmployeeRegistration> winnersList = doGeneralDraw(generalSlots);
+		List<EmployeeRegistration> winnersList = parkingDrawService.doGeneralDraw(generalSlots);
 		finalWinnersList.addAll(winnersList);
 		
 		
@@ -91,7 +102,7 @@ public class MarkitCarParkingService {
 	}
 
 	public List<EmployeeRegistration> viewEmployeeList() {
-		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
+		List<EmployeeRegistration> employeeList = employeeRegistrationRepository.findAll();
 		return employeeList;
 	}
 
@@ -103,114 +114,27 @@ public class MarkitCarParkingService {
 		
 	}
 	
-	private List<EmployeeRegistration> doCarPoolDraw(Integer carPoolSlots){
-		List<EmployeeRegistration> carPoolWinnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> carPoolEmployeeList = employeeRepository.findByIsCarPool();
-		
-		if(carPoolEmployeeList == null || carPoolEmployeeList.size() == 0) 
-		{
-			log.info("No one applied for Car Pool Parking"); 
-			return carPoolWinnersList;
-		}
-		
-		// If car Pool Slots are more than applied, no need for random selection
-		if(carPoolSlots > carPoolEmployeeList.size())
-		{
-			carPoolWinnersList.addAll(carPoolEmployeeList);
-
-		}
-		else
-		{
-			IntStream.range(1, carPoolSlots).forEach(i -> {
-				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(carPoolEmployeeList, new SecureRandom());
-				log.info("Choosing a lucky winner !!");
-				carPoolWinnersList.add(carPoolEmployeeList.get(0));
-				carPoolEmployeeList.remove(0);
-				log.info("END : Shuffling");
-			});			
-		}
-		
-
-		
-		return carPoolWinnersList;
+	public List<String> fetchCarParkingResults(String quarter){
+		//TODO:
+		return null;
 	}
 	
-	private List<EmployeeRegistration> doGeneralDraw(Integer generalSlots){
-		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
-		
-		if(employeeList == null || employeeList.size() ==0) 
-		{
-			return winnersList;
-		}
-		
-		// If general Slots are more than applied, no need for random selection
-		if(generalSlots > employeeList.size())
-		{
-			winnersList.addAll(employeeList);
 
-		}
-		else
-		{
-			IntStream.range(1, generalSlots).forEach(i -> {
-				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(employeeList, new SecureRandom());
-				log.info("Choosing a lucky winner !!");
-				winnersList.add(employeeList.get(0));
-				employeeList.remove(0);
-				log.info("END : Shuffling");
-			});			
+	enum RequestCategory{
+		POOL_PARKING("Pool Parking"),
+		GENERAL_PARKING("General Parking"),
+		MEDICAL_EMERGENCY("Medical Emergency"),
+		FEMALE_NIGHT_SHIFT("Female Night Shift");
+		
+		private String category;
+		
+		private RequestCategory(String category) {
+			this.category = category;
 		}
 		
-		
-		return winnersList;
+		public String getCategory() {
+			return category;
+		}
 	}
-	
-	private List<EmployeeRegistration> doFemaleLateShiftDraw(Integer femaleLateShiftSlots)
-	{
-		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> employeeList = employeeRepository.findAll();
-		
-		if(employeeList == null || employeeList.size() == 0 ) 
-		{
-			return winnersList;
-		}
-		
-		// If Female Slots are more than applied, no need for random selection
-		if(femaleLateShiftSlots > employeeList.size())
-		{
-			winnersList.addAll(employeeList);
-		}
-		else
-		{
-			IntStream.range(1, femaleLateShiftSlots).forEach(i -> {
-				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(employeeList, new SecureRandom());
-				log.info("Choosing a lucky winner !!");
-				winnersList.add(employeeList.get(0));
-				employeeList.remove(0);
-				log.info("END : Shuffling");
-			});			
-		}
-		
-
-		
-		return winnersList;
-	}
-//	
-//	private String getRequestCategory(String requestCategory) {
-//		
-//		if(requestCategory.equalsIgnoreCase(RequestCategoryInput.medical_emergency.name())){
-//			return "Medical Emergency";
-//		
-//		}else if(requestCategory.equalsIgnoreCase(RequestCategoryInput.female_night_shift.name())){
-//			return "Female Night Shift";
-//		
-//		}
-//		
-//		return null;
-//	}
-
 	
 }

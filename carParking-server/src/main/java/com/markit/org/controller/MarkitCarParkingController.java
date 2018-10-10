@@ -52,5 +52,10 @@ public class MarkitCarParkingController {
 		// return ldapService.fetchMarkitEmployees(loginBean.getUsername(),loginBean.getPassword());
 		return service.fetchMarkitEmployees();
 	}
+	
+	@PostMapping("/markit-car-parking/car-parking-results")
+	public List<String> fetchCarParkingResults(@RequestBody String quarter){
+		return service.fetchCarParkingResults(quarter);
+	}
 
 }
