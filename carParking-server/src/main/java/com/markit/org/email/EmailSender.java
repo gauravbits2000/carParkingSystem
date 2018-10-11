@@ -69,7 +69,7 @@ public class EmailSender {
               InternetAddress.parse(mailTo));
 
            // Set Subject: header field
-           message.setSubject("Parking Draw Winner");
+           message.setSubject("Car Parking Draw Winner");
 
            // This mail has 2 part, the BODY and the embedded image
            MimeMultipart multipart = new MimeMultipart("related");
@@ -83,13 +83,19 @@ public class EmailSender {
 
            // second part (the image)
            messageBodyPart = new MimeBodyPart();
-           DataSource fds = new FileDataSource(
-              "D:/BootWorkSpace/carParkingSystem/carParking-server/src/main/resources/congratulations.jpg");
+           DataSource fds = new FileDataSource("./src/main/resources/congratulations.jpg");
                                
            messageBodyPart.setDataHandler(new DataHandler(fds));
            messageBodyPart.setHeader("Content-ID", "<image>");
 
            // add image to the multipart
+           multipart.addBodyPart(messageBodyPart);
+           
+           messageBodyPart = new MimeBodyPart();
+           String signatureText = "<html>Regards,<br>"
+           						+ "In FLM Team</html>	";
+           
+           messageBodyPart.setContent(signatureText, "text/html");
            multipart.addBodyPart(messageBodyPart);
 
            // put everything together
