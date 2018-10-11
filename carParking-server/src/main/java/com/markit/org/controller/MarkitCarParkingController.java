@@ -59,5 +59,11 @@ public class MarkitCarParkingController {
 	public List<QuarterParkingResult> fetchCarParkingResults(@PathVariable String quarter){
 		return service.fetchCarParkingResults(quarter);
 	}
+	
+	@PostMapping("/markit-car-parking/send-email")
+	public void sendEmail(){
+		
+	}
+	
 
 }
