@@ -15,7 +15,7 @@
 	<!-- <name>carParking-server</name> -->
 	
 	<artifactId>carParking-server</artifactId>
-	<packaging>war</packaging>	
+	<packaging>jar</packaging>
 	<description>Demo project for Car Parking Registration and Lucky Draw</description>
 
 <!-- 	<parent>
@@ -32,6 +32,11 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.markit.mcp.auth</groupId>
+			<artifactId>markit-security-autoconfiguration</artifactId>
+			<version>1.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
