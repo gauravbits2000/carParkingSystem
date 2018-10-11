@@ -16,6 +16,8 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AdminloginComponent } from './adminlogin/adminlogin.component';
 import { StartupService } from './startup.service';
+import { ParkinghistoryComponent } from './parkinghistory/parkinghistory.component';
+import { ParkingHistoryService } from 'src/app/parkinghistory/parkinghistory.service';
 
 
 export function startupServiceFactory(startupService: StartupService): Function {
@@ -33,7 +35,8 @@ export function startupServiceFactory(startupService: StartupService): Function 
     LottreyComponent,
     HomeComponent,
     LoginComponent,
-    AdminloginComponent
+    AdminloginComponent,
+    ParkinghistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +51,7 @@ export function startupServiceFactory(startupService: StartupService): Function 
   ],
   schemas : [NO_ERRORS_SCHEMA],
   providers: [EmployeeService,
+    ParkingHistoryService,
     StartupService,
     {
          provide: APP_INITIALIZER,

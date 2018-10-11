@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.LoginBean;
+import com.markit.org.entity.QuarterParkingResult;
 import com.markit.org.service.LDAPService;
 import com.markit.org.service.MarkitCarParkingService;
 
@@ -32,7 +34,7 @@ public class MarkitCarParkingController {
 	}
 	
 	@GetMapping("/markit-car-parking/lucky-draw/")
-	public List<EmployeeRegistration> doCarParkingDraw(){
+	public List<QuarterParkingResult> doCarParkingDraw(){
 		return service.doCarParkingDraw();
 	}
 	
@@ -52,5 +54,16 @@ public class MarkitCarParkingController {
 		// return ldapService.fetchMarkitEmployees(loginBean.getUsername(),loginBean.getPassword());
 		return service.fetchMarkitEmployees();
 	}
+	
+	@GetMapping("/markit-car-parking/car-parking-results/{quarter}")
+	public List<QuarterParkingResult> fetchCarParkingResults(@PathVariable String quarter){
+		return service.fetchCarParkingResults(quarter);
+	}
+	
+	@PostMapping("/markit-car-parking/send-email")
+	public void sendEmail(){
+		
+	}
+	
 
 }

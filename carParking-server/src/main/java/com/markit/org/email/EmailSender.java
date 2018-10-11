@@ -5,12 +5,18 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  * Class for emailing results of calling the service
@@ -34,10 +40,9 @@ public class EmailSender {
     private String parsingDate;
 
     public EmailSender(String mailTo) {
-        // default the email status is successful
-        // if any part of the parsing process fail, it will return an failure email
+        
         status = EmailStatus.SUCCESS;
-        mailFrom = "hari.gupta@ihsmarkit.com";
+        mailFrom = "IN-FLM@ihsmarkit.com";
         smtpHost = "uksmtp.markit.partners";
 
         try {
@@ -51,19 +56,57 @@ public class EmailSender {
 
         session = Session.getDefaultInstance(properties);
 
-        try{
-            // Create a default MimeMessage object.
-            message = new MimeMessage(session);
+        try {
 
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(mailFrom));
+           // Create a default MimeMessage object.
+           Message message = new MimeMessage(session);
 
-            // Set To: header field of the header.
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo));
+           // Set From: header field of the header.
+           message.setFrom(new InternetAddress(mailFrom));
 
-        }catch (MessagingException mex) {
-            mex.printStackTrace();
-        }
+           // Set To: header field of the header.
+           message.setRecipients(Message.RecipientType.TO,
+              InternetAddress.parse(mailTo));
+
+           // Set Subject: header field
+           message.setSubject("Car Parking Draw Winner");
+
+           // This mail has 2 part, the BODY and the embedded image
+           MimeMultipart multipart = new MimeMultipart("related");
+
+           // first part (the html)
+           BodyPart messageBodyPart = new MimeBodyPart();
+           String htmlText = "<H1>Hello " +mailTo+ "</H1><img src=\"cid:image\">";
+           messageBodyPart.setContent(htmlText, "text/html");
+           // add it
+           multipart.addBodyPart(messageBodyPart);
+
+           // second part (the image)
+           messageBodyPart = new MimeBodyPart();
+           DataSource fds = new FileDataSource("./src/main/resources/congratulations.jpg");
+                               
+           messageBodyPart.setDataHandler(new DataHandler(fds));
+           messageBodyPart.setHeader("Content-ID", "<image>");
+
+           // add image to the multipart
+           multipart.addBodyPart(messageBodyPart);
+           
+           messageBodyPart = new MimeBodyPart();
+           String signatureText = "<html>Regards,<br>"
+           						+ "In FLM Team</html>	";
+           
+           messageBodyPart.setContent(signatureText, "text/html");
+           multipart.addBodyPart(messageBodyPart);
+
+           // put everything together
+           message.setContent(multipart);
+           // Send message
+           Transport.send(message);
+
+           System.out.println("Sent message successfully....");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+         }
     }
 
     public void setSubject(String subject) {
@@ -108,13 +151,6 @@ public class EmailSender {
             Transport.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
-            // Something went wrong; return false to let the
-            // calling method handle it (this shouldn't happen
-            // often) This is messaging exception - generic could-not-reach server
-            // error, at which point telnet into mailhost on port 25 (from webserver),
-            // dig out the old "helo" etc SMTP commands and check it can send mails.
-            // However, we don't expect these errors in the normal run of events
-            // Be carefull not to resend the message if this returns false!
             return false;
         }
         return true; // everything worked
