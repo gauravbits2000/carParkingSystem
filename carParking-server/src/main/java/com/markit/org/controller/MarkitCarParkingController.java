@@ -55,7 +55,7 @@ public class MarkitCarParkingController {
 		return service.fetchMarkitEmployees();
 	}
 	
-	@PostMapping("/markit-car-parking/car-parking-results/{quarter}")
+	@GetMapping("/markit-car-parking/car-parking-results/{quarter}")
 	public List<QuarterParkingResult> fetchCarParkingResults(@PathVariable String quarter){
 		return service.fetchCarParkingResults(quarter);
 	}
