@@ -34,7 +34,7 @@ public class MarkitCarParkingController {
 	}
 	
 	@GetMapping("/markit-car-parking/lucky-draw/")
-	public List<EmployeeRegistration> doCarParkingDraw(){
+	public List<QuarterParkingResult> doCarParkingDraw(){
 		return service.doCarParkingDraw();
 	}
 	
