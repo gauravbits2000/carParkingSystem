@@ -2,6 +2,7 @@ package com.markit.org.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -104,28 +105,45 @@ public class MarkitCarParkingService {
 		Integer generalSlots = 10;
 		
 		List<EmployeeRegistration> finalWinnersList = new ArrayList<EmployeeRegistration>();
-		parkingDrawService.init();
+		
+		Map<String, List<EmployeeRegistration>> allEmployeeRegistrationMap = parkingDrawService.getEmployeeRegistrationBasedOnCategory();
+		List<EmployeeRegistration> generalParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.GENERAL_PARKING.getCategory());
 		
 		//Car Pool Draw
 		if(carPoolSlots != null && carPoolSlots > 0) {
-			List<EmployeeRegistration> carPoolWinnersList = parkingDrawService.doCarPoolDraw(carPoolSlots);
-			finalWinnersList.addAll(carPoolWinnersList);
+			List<EmployeeRegistration> poolParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.POOL_PARKING.getCategory());
+			List<EmployeeRegistration> poolParkingWinnersList = parkingDrawService.doCarPoolDraw(carPoolSlots, poolParkingRegistrationList);
+			finalWinnersList.addAll(poolParkingWinnersList);
+		}else {
+			List<EmployeeRegistration> poolParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.POOL_PARKING.getCategory());
+			generalParkingRegistrationList.addAll(poolParkingRegistrationList);
+			parkingDrawService.addSlotsToGeneralPool(RequestCategory.POOL_PARKING.getCategory());
 		}
 		
 		//Female Draw
 		if(femaleLateShiftSlots != null && femaleLateShiftSlots > 0) {
-			List<EmployeeRegistration> femaleLateShiftWinnersList = parkingDrawService.doFemaleLateShiftDraw(femaleLateShiftSlots);
+			List<EmployeeRegistration> femaleLateShiftRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
+			List<EmployeeRegistration> femaleLateShiftWinnersList = parkingDrawService.doFemaleLateShiftDraw(femaleLateShiftSlots, femaleLateShiftRegistrationList);
 			finalWinnersList.addAll(femaleLateShiftWinnersList);
+		}else {
+			List<EmployeeRegistration> femaleLateShiftRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
+			generalParkingRegistrationList.addAll(femaleLateShiftRegistrationList);
+			parkingDrawService.addSlotsToGeneralPool(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
 		}
 		
 		//Medical Emergency
 		if(medicalEmergencySlots != null && medicalEmergencySlots > 0) {
-			List<EmployeeRegistration> medicalEmergencyWinnersList = parkingDrawService.doMedicalEmergencyDraw(medicalEmergencySlots);
+			List<EmployeeRegistration> medicalEmergencyRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.MEDICAL_EMERGENCY.getCategory());
+			List<EmployeeRegistration> medicalEmergencyWinnersList = parkingDrawService.doMedicalEmergencyDraw(medicalEmergencySlots, medicalEmergencyRegistrationList);
 			finalWinnersList.addAll(medicalEmergencyWinnersList);
+		}else {
+			List<EmployeeRegistration> medicalEmergencyRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.MEDICAL_EMERGENCY.getCategory());
+			generalParkingRegistrationList.addAll(medicalEmergencyRegistrationList);
+			parkingDrawService.addSlotsToGeneralPool(RequestCategory.MEDICAL_EMERGENCY.getCategory());
 		}
 		
 		//General Draw
-		List<EmployeeRegistration> winnersList = parkingDrawService.doGeneralDraw(generalSlots);
+		List<EmployeeRegistration> winnersList = parkingDrawService.doGeneralDraw(generalSlots, generalParkingRegistrationList);
 		finalWinnersList.addAll(winnersList);
 		
 		List<QuarterParkingResult> quarterParkingResultList = quarterResultService.saveQuarterResults(finalWinnersList, "Q4");

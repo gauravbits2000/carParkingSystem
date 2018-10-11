@@ -31,20 +31,22 @@ public class ParkingDrawService {
 	
 	private Map<String, List<CarParkingDetails>> carParkingDetailsMap ;
 	
+	private List<CarParkingDetails> generalParkingDetails = null;
+	
 	public void init() {
 		List<CarParkingDetails> carParkingDetails = carParkingDetailsRepository.findAll();
 		if(carParkingDetails != null && !carParkingDetails.isEmpty()) {
 			carParkingDetailsMap = carParkingDetails.stream().collect(Collectors.groupingBy(CarParkingDetails::getParkingType));
+			generalParkingDetails = carParkingDetailsMap.get("Open");
 		}
 	}
 	
-	public List<EmployeeRegistration> doCarPoolDraw(Integer carPoolSlots) {
+	public List<EmployeeRegistration> doCarPoolDraw(Integer carPoolSlots, List<EmployeeRegistration> poolParkingRegistrationList) {
 		log.info("************* Doing Car Pool Draw *************");
 		
 		List<EmployeeRegistration> carPoolWinnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> carPoolEmployeeList = employeeRegistrationRepository.findByCarPool();
 
-		if (carPoolEmployeeList == null || carPoolEmployeeList.size() == 0) {
+		if (poolParkingRegistrationList == null || poolParkingRegistrationList.size() == 0) {
 			log.info("No one applied for Car Pool Parking");
 			return carPoolWinnersList;
 		}
@@ -52,9 +54,9 @@ public class ParkingDrawService {
 		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Pool Parking");
 		
 		// If car Pool Slots are more than applied, no need for random selection
-		if (carPoolSlots > carPoolEmployeeList.size()) {
+		if (carPoolSlots > poolParkingRegistrationList.size()) {
 			int j=0;
-			for(EmployeeRegistration carPoolEmployee : carPoolEmployeeList) {
+			for(EmployeeRegistration carPoolEmployee : poolParkingRegistrationList) {
 				carPoolEmployee.setCarParkingId(carParkingDetails.get(j).getCarParkingId());
 				carPoolWinnersList.add(carPoolEmployee);
 				j++;
@@ -62,14 +64,14 @@ public class ParkingDrawService {
 		} else {
 			IntStream.range(0, carPoolSlots).forEach(i -> {
 				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(carPoolEmployeeList, new SecureRandom());
+				Collections.shuffle(poolParkingRegistrationList, new SecureRandom());
 				
 				log.info("Choosing a lucky winner !!");
-				EmployeeRegistration winner = carPoolEmployeeList.get(0);
+				EmployeeRegistration winner = poolParkingRegistrationList.get(0);
 				winner.setCarParkingId(carParkingDetails.get(i).getCarParkingId());
 				carPoolWinnersList.add(winner);
 				
-				carPoolEmployeeList.remove(0);
+				poolParkingRegistrationList.remove(0);
 				log.info("END : Shuffling");
 			});
 		}
@@ -77,58 +79,58 @@ public class ParkingDrawService {
 		return carPoolWinnersList;
 	}
 	
-	public List<EmployeeRegistration> doGeneralDraw(Integer generalSlots) {
+	public List<EmployeeRegistration> doGeneralDraw(Integer generalSlots, List<EmployeeRegistration> generalParkingRegistrationList) {
+		
+		log.info("************* Doing General Parking Draw *************");
+		
 		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> employeeList = employeeRegistrationRepository.findByGeneralParking();
 
-		if (employeeList == null || employeeList.size() == 0) {
+		if (generalParkingRegistrationList == null || generalParkingRegistrationList.size() == 0) {
 			return winnersList;
 		}
-
-		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Open");
 		
 		// If general Slots are more than applied, no need for random selection
-		if (generalSlots > employeeList.size()) {
+		if (generalSlots > generalParkingRegistrationList.size()) {
 			int j=0;
-			for(EmployeeRegistration employee : employeeList) {
-				employee.setCarParkingId(carParkingDetails.get(j).getCarParkingId());
+			for(EmployeeRegistration employee : generalParkingRegistrationList) {
+				employee.setCarParkingId(generalParkingDetails.get(j).getCarParkingId());
 				winnersList.add(employee);
 				j++;
 			}
 		} else {
 			IntStream.range(0, generalSlots).forEach(i -> {
 				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(employeeList, new SecureRandom());
+				Collections.shuffle(generalParkingRegistrationList, new SecureRandom());
 				
 				log.info("Choosing a lucky winner !!");
-				EmployeeRegistration winner = employeeList.get(0);
-				winner.setCarParkingId(carParkingDetails.get(i).getCarParkingId());
+				EmployeeRegistration winner = generalParkingRegistrationList.get(0);
+				winner.setCarParkingId(generalParkingDetails.get(i).getCarParkingId());
 				winnersList.add(winner);
 				
-				employeeList.remove(0);
+				generalParkingRegistrationList.remove(0);
 				log.info("END : Shuffling");
 			});
 		}
+		log.info("************* General Parking Draw Complete *************");
 
 		return winnersList;
 	}
 	
-	public List<EmployeeRegistration> doMedicalEmergencyDraw(Integer medicalEmergencySlots) {
+	public List<EmployeeRegistration> doMedicalEmergencyDraw(Integer medicalEmergencySlots, List<EmployeeRegistration> medicalEmergencyRegistrationList) {
 		log.info("************* Doing Medical Emergency Draw *************");
 		
 		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> employeeList = employeeRegistrationRepository.findByMedicalEmergency();
 
-		if (employeeList == null || employeeList.size() == 0) {
+		if (medicalEmergencyRegistrationList == null || medicalEmergencyRegistrationList.size() == 0) {
 			return winnersList;
 		}
 
 		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Medical Emergency");
 		
 		// If medical Emergency Slots are more than applied, no need for random selection
-		if (medicalEmergencySlots > employeeList.size()) {
+		if (medicalEmergencySlots > medicalEmergencyRegistrationList.size()) {
 			int j=0;
-			for(EmployeeRegistration employee : employeeList) {
+			for(EmployeeRegistration employee : medicalEmergencyRegistrationList) {
 				employee.setCarParkingId(carParkingDetails.get(j).getCarParkingId());
 				winnersList.add(employee);
 				j++;
@@ -136,14 +138,14 @@ public class ParkingDrawService {
 		} else {
 			IntStream.range(0, medicalEmergencySlots).forEach(i -> {
 				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(employeeList, new SecureRandom());
+				Collections.shuffle(medicalEmergencyRegistrationList, new SecureRandom());
 				
 				log.info("Choosing a lucky winner !!");
-				EmployeeRegistration winner = employeeList.get(0);
+				EmployeeRegistration winner = medicalEmergencyRegistrationList.get(0);
 				winner.setCarParkingId(carParkingDetails.get(i).getCarParkingId());
-				winnersList.add(employeeList.get(0));
+				winnersList.add(medicalEmergencyRegistrationList.get(0));
 				
-				employeeList.remove(0);
+				medicalEmergencyRegistrationList.remove(0);
 				log.info("END : Shuffling");
 			});
 		}
@@ -152,23 +154,22 @@ public class ParkingDrawService {
 	}
 	
 	
-	public List<EmployeeRegistration> doFemaleLateShiftDraw(Integer femaleLateShiftSlots) {
+	public List<EmployeeRegistration> doFemaleLateShiftDraw(Integer femaleLateShiftSlots, List<EmployeeRegistration> femaleLateShiftRegistrationList) {
 		
 		log.info("************* Doing Female Night Shift Draw *************");
 		
 		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> employeeList = employeeRegistrationRepository.findByFemaleNightShift();
 
-		if (employeeList == null || employeeList.size() == 0) {
+		if (femaleLateShiftRegistrationList == null || femaleLateShiftRegistrationList.size() == 0) {
 			return winnersList;
 		}
 		
-		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Medical Emergency");
+		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Female Night Shift");
 
 		// If Female Slots are more than applied, no need for random selection
-		if (femaleLateShiftSlots > employeeList.size()) {
+		if (femaleLateShiftSlots > femaleLateShiftRegistrationList.size()) {
 			int j=0;
-			for(EmployeeRegistration employee : employeeList) {
+			for(EmployeeRegistration employee : femaleLateShiftRegistrationList) {
 				employee.setCarParkingId(carParkingDetails.get(j).getCarParkingId());
 				winnersList.add(employee);
 				j++;
@@ -176,14 +177,14 @@ public class ParkingDrawService {
 		} else {
 			IntStream.range(1, femaleLateShiftSlots).forEach(i -> {
 				log.info("START : Shuffling " + i + " Times");
-				Collections.shuffle(employeeList, new SecureRandom());
+				Collections.shuffle(femaleLateShiftRegistrationList, new SecureRandom());
 				
 				log.info("Choosing a lucky winner !!");
-				EmployeeRegistration winner = employeeList.get(0);
+				EmployeeRegistration winner = femaleLateShiftRegistrationList.get(0);
 				winner.setCarParkingId(carParkingDetails.get(i).getCarParkingId());
-				winnersList.add(employeeList.get(0));
+				winnersList.add(femaleLateShiftRegistrationList.get(0));
 				
-				employeeList.remove(0);
+				femaleLateShiftRegistrationList.remove(0);
 				log.info("END : Shuffling");
 			});
 		}
@@ -191,5 +192,20 @@ public class ParkingDrawService {
 		log.info("************* Female Night Shift Draw Complete *************");
 		return winnersList;
 	}
-
+	
+	public Map<String, List<EmployeeRegistration>> getEmployeeRegistrationBasedOnCategory(){
+		init();
+		List<EmployeeRegistration> allEmployeeRegistration =  employeeRegistrationRepository.findAll();
+		if(allEmployeeRegistration == null || allEmployeeRegistration.isEmpty()) {
+			return null;
+		}
+		return allEmployeeRegistration.stream().collect(Collectors.groupingBy(EmployeeRegistration::getRequestCategory));
+	}
+	
+	public void addSlotsToGeneralPool(String category) {
+		if(generalParkingDetails == null) {
+			generalParkingDetails = carParkingDetailsMap.get("Open");
+		}
+		generalParkingDetails.addAll(carParkingDetailsMap.get(category));
+	}
 }
