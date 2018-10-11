@@ -135,7 +135,7 @@
             <!--Table body-->
             <tbody class="text-small">
               <!--a blank table with 5 rows will be displayed-->
-              <tr *ngFor="let data of blankTableData; let i = index">
+              <tr *ngFor="let data of resultTempTable let i = index">
   
                 <td px-3  scope="row">{{data.employeeId}}</td>
                 <td >{{data.employeeName}}</td>
@@ -213,9 +213,7 @@
   
         </div>
   
-        <hr class="my-0">
-
-                
+        <hr class="my-0">               
   
         <!--Bottom Table UI-->
         <div class="d-flex justify-content-center lower-div" style="padding:0; ">
@@ -225,7 +223,7 @@
               <ul class="pagination pagination-circle pg-blue mb-0">
     
                 <!--First-->
-                <li class="page-item clearfix d-none d-md-block" (click)="firstPage()" [ngClass]="{disabled: activePage == 1 || startDraw1}">
+                <li class="page-item clearfix d-none d-md-block" (click)="firstPage()" [ngClass]="{disabled: activePage == 1}">
                   <a class="page-link">First</a>
                 </li>
     
@@ -246,7 +244,7 @@
     
     
                 <!--Arrow right-->
-                <li class="page-item" (click)="nextPage($event)" [ngClass]="{disabled: activePage == numberOfPaginators1 || startDraw1  }">
+                <li class="page-item" (click)="nextPage($event)" [ngClass]="{disabled: activePage == numberOfPaginators1 }">
                   <a class="page-link" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
@@ -291,21 +289,28 @@
 
           <!--Table head-->
           <thead>
-            <tr>
-               <th class="th-lg">Name</th>              
-            </tr>
-          </thead>
-          <!--Table head-->
-
-          <!--Table body-->
-          <tbody class="text-small">
-            <tr *ngFor="let data of resultTempTable; let i = index">
-              <td px-3  scope="row">{{data.employeeId}}</td>
-              <td>{{data.employeeName}}</td>
-              
-
-            </tr>
-          </tbody>
+              <tr>
+                <th scope="row" class="th-lg">Employee Id</th>
+                <th class="th-lg">Name</th>
+                <th class="th-lg">Email</th>
+                <th class="th-lg">Vehicle Registration Number</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+  
+            <!--Table body-->
+            <tbody class="text-small">
+              <!-- final complete list of lucky draw data-->
+              <tr *ngFor="let data of resultTempTable let i = index">
+                  <td px-3 *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex" scope="row">{{data.employeeId}}</td>
+                  <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.employeeName}}</td>
+                  <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.email}}</td>
+                  <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.vehicleRegistrationNumber}}</td>
+    
+               
+  
+              </tr>
+            </tbody>
           <!--Table body-->
         </table>
 

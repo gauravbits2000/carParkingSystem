@@ -51,13 +51,6 @@ export class LottreyComponent implements OnInit {
 
   ]
   
-    blankTableData = [
-    new Employee("", "", "", "a"),
-    new Employee("", "", "", "b"),
-    new Employee("", "", "", "b"),
-    new Employee("", "", "", "b"),
-    new Employee("", "", "", "b")    
-  ];
   
   
   constructor(private employeeService: EmployeeService, private el: ElementRef) { }
@@ -165,8 +158,7 @@ changePage(event: any) {
     var table2 = $(".card2");
     var table3 = $(".card3");
 
-    $('.table2 td:nth-child(4)').css({color:"white"});
-    $('#final').css("visibility","hidden");
+   $('#final').css("visibility","hidden");
   
   
     let firstVisibleIndex = this.firstVisibleIndex;
@@ -194,10 +186,13 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
       table2.addClass('inner-container-animate1');
       table2.addClass('inner-container-animate3');
 
+	//$('.inner-container2').addClass('inner-container-animate1');
+	//$('.inner-container2').addClass('inner-container-animate4');
       table3.addClass('inner-container-animate1');
       table3.addClass('inner-container-animate4');
         
-        $('.img1').animate({ opacity: '1' }, 1000, function () {          
+        
+        $('.img1').animate({ opacity: '0' }, 1000, function () {          
           for (var i = firstVisibleIndex,j=1; i <= lastVisibleIndex; i++,j++) {
             (function (i) {
               console.log(i);
@@ -211,14 +206,21 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
             table1.css({opacity:'0'});
            $('.inner-container1').css({opacity:'1'});           
             table2.css({opacity:'1'});
+            
+            
 
             for (var i = 1; i <= result_temp.length; i++) {
               (function (i) {
                 console.log(i);
                   window.setTimeout(function () {   
-                    //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());       
+                    //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());     
+                    var pos1 = $('.table2 tr:nth-child(' + i + ') td:nth-child(2)').offset();
+                     var pos2 = $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').offset();
+                     var final_pos = (pos2.top-pos1.top) + pos1.top;
+                    console.log("final" + final_pos);
+                    console.log("pos" + pos1.top);
                   $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').css({"position":"relative",'visibility':'visible'})
-                  .animate({bottom:'+=780px'},1000).animate({left:'+=550px'},1000);
+                  .animate({bottom: '+=' + final_pos + 'px'},1000).animate({left:'+=550px'},1000);
                 }, i * 1000);
               }(i));
             } 
@@ -231,6 +233,10 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
 
               $("#temp").css("visibility","hidden");
               $('#final').css("visibility","visible");
+              
+               $('.table2 td:nth-child(1)').css({color:"black"});
+                $('.table2 td:nth-child(2)').css({color:"black"});
+                 $('.table2 td:nth-child(3)').css({color:"black"});
               $('.table2 td:nth-child(4)').css({color:"black"});
               
             },result_temp.length*2000);
@@ -255,8 +261,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
     
   }
   
-  getTempLuckyDrawResult(){
-  
+  getTempLuckyDrawResult(){  
   for(var i=0;i<5;i++){
   	this.resultTempTable[i] = this.resultTable[i];	
   
