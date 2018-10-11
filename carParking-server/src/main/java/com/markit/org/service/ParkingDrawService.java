@@ -79,7 +79,7 @@ public class ParkingDrawService {
 	
 	public List<EmployeeRegistration> doGeneralDraw(Integer generalSlots) {
 		List<EmployeeRegistration> winnersList = new ArrayList<EmployeeRegistration>();
-		List<EmployeeRegistration> employeeList = employeeRegistrationRepository.findAll();
+		List<EmployeeRegistration> employeeList = employeeRegistrationRepository.findByGeneralParking();
 
 		if (employeeList == null || employeeList.size() == 0) {
 			return winnersList;

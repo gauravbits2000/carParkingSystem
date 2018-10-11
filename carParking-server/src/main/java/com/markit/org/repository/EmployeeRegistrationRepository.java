@@ -24,5 +24,8 @@ public interface EmployeeRegistrationRepository extends JpaRepository<EmployeeRe
 	 
 	 @Query("FROM EmployeeRegistration  t where t.requestCategory = 'Medical Emergency'")
 	 List<EmployeeRegistration> findByMedicalEmergency();
+	 
+	 @Query("FROM EmployeeRegistration  t where t.requestCategory = 'General Parking'")
+	 List<EmployeeRegistration> findByGeneralParking();
 	
 }

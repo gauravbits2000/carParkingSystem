@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.EmployeesDetails;
+import com.markit.org.entity.QuarterParkingResult;
 import com.markit.org.repository.EmployeeDetailsRepository;
 import com.markit.org.repository.EmployeeRegistrationRepository;
 
@@ -28,6 +29,9 @@ public class MarkitCarParkingService {
 	@Autowired
 	private ParkingDrawService parkingDrawService;
 	
+	@Autowired
+	private QuarterResultService quarterResultService;
+	
 	public List<EmployeeRegistration> registerEmployee(EmployeeRegistration employee){
 		if(employee == null) {
 			return null;
@@ -36,6 +40,32 @@ public class MarkitCarParkingService {
 		if(RequestCategory.POOL_PARKING.getCategory().equals(employee.getRequestCategory())) {
 			EmployeesDetails empDetails = empDetailsepository.findByEmployeeName(employee.getPoolEmployee());
 			employee.setPoolEmployeeId(empDetails.getEmployeeId());
+			
+			//Check if Pooled employee has a single entry
+			Optional<EmployeeRegistration> primaryEmployeeOptional = employeeRegistrationRepository.findById(empDetails.getEmployeeId());
+			if(primaryEmployeeOptional.isPresent()) {
+				employeeRegistrationRepository.delete(primaryEmployeeOptional.get());
+			}
+			
+			//check if Primary Employee has changed its Pool Partner
+			Optional<EmployeeRegistration> primaryEmployeeChangingPartnerOptional = employeeRegistrationRepository.findById(employee.getEmployeeId());
+			if(primaryEmployeeChangingPartnerOptional.isPresent()) {
+				EmployeeRegistration er = primaryEmployeeChangingPartnerOptional.get();
+				if(er.getPoolEmployeeId() != null && !employee.getPoolEmployeeId().equals(er.getPoolEmployeeId())) {
+					Optional<EmployeesDetails> prevPooledEmployeeDetails = empDetailsepository.findById(er.getPoolEmployeeId());
+					String emailId = null;
+					if(prevPooledEmployeeDetails.isPresent()) {
+						emailId = prevPooledEmployeeDetails.get().getEmployeeEmail();
+					}
+					EmployeeRegistration employeeReg = new EmployeeRegistration();
+					employeeReg.setEmployeeId(er.getPoolEmployeeId());
+					employeeReg.setEmployeeName(er.getPoolEmployee());
+					employeeReg.setEmail(emailId);
+					employeeReg.setRequestCategory(RequestCategory.GENERAL_PARKING.getCategory());
+					employeeReg.setVehicleRegistrationNumber(er.getPoolEmployeeVehicle());
+					employeeRegistrationRepository.save(employeeReg);
+				}
+			}
 		}
 		
 		if(RequestCategory.GENERAL_PARKING.getCategory().equals(employee.getRequestCategory()) 
@@ -74,6 +104,7 @@ public class MarkitCarParkingService {
 		Integer generalSlots = 10;
 		
 		List<EmployeeRegistration> finalWinnersList = new ArrayList<EmployeeRegistration>();
+		parkingDrawService.init();
 		
 		//Car Pool Draw
 		if(carPoolSlots != null && carPoolSlots > 0) {
@@ -87,6 +118,7 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(femaleLateShiftWinnersList);
 		}
 		
+		//Medical Emergency
 		if(medicalEmergencySlots != null && medicalEmergencySlots > 0) {
 			List<EmployeeRegistration> medicalEmergencyWinnersList = parkingDrawService.doMedicalEmergencyDraw(medicalEmergencySlots);
 			finalWinnersList.addAll(medicalEmergencyWinnersList);
@@ -96,6 +128,7 @@ public class MarkitCarParkingService {
 		List<EmployeeRegistration> winnersList = parkingDrawService.doGeneralDraw(generalSlots);
 		finalWinnersList.addAll(winnersList);
 		
+		List<QuarterParkingResult> quarterParkingResultList = quarterResultService.saveQuarterResults(finalWinnersList, "Q4");
 		
 		log.info("returning all lucky winners");
 		return finalWinnersList;
@@ -114,9 +147,8 @@ public class MarkitCarParkingService {
 		
 	}
 	
-	public List<String> fetchCarParkingResults(String quarter){
-		//TODO:
-		return null;
+	public List<QuarterParkingResult> fetchCarParkingResults(String quarter){
+		return quarterResultService.fetchQuarterResults(quarter);
 	}
 	
 

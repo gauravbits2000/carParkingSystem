@@ -115,10 +115,6 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 			}
 			
 			empDetailsRepository.saveAll(employeesList);
-			
-			
-			parkingDrawService.init();
-           
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
