@@ -192,7 +192,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
       table3.addClass('inner-container-animate4');
         
         
-        $('.img1').animate({ opacity: '0' }, 1000, function () {          
+        $('.img1').animate({ opacity: '1' }, 1000, function () {          
           for (var i = firstVisibleIndex,j=1; i <= lastVisibleIndex; i++,j++) {
             (function (i) {
               console.log(i);
@@ -207,20 +207,19 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
            $('.inner-container1').css({opacity:'1'});           
             table2.css({opacity:'1'});
             
-            
+            var pos1 = $('.table2 tr:nth-child(1) td:nth-child(2)').offset();
+                     var pos2 = $('.table3 tr:nth-child(1) td:nth-child(2)').offset();
+                     var final_pos_top = (pos2.top-pos1.top) + pos1.top;
+                      var final_pos_left = pos1.left;
+                      console.log(final_pos_left);
 
             for (var i = 1; i <= result_temp.length; i++) {
               (function (i) {
                 console.log(i);
                   window.setTimeout(function () {   
-                    //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());     
-                    var pos1 = $('.table2 tr:nth-child(' + i + ') td:nth-child(2)').offset();
-                     var pos2 = $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').offset();
-                     var final_pos = (pos2.top-pos1.top) + pos1.top;
-                    console.log("final" + final_pos);
-                    console.log("pos" + pos1.top);
+                    //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());
                   $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').css({"position":"relative",'visibility':'visible'})
-                  .animate({bottom: '+=' + final_pos + 'px'},1000).animate({left:'+=550px'},1000);
+                  .animate({bottom: '+=' +  final_pos_top + 'px'},1000).animate({left: final_pos_left + 'px'},1000);
                 }, i * 1000);
               }(i));
             } 
@@ -232,7 +231,20 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
 
 
               $("#temp").css("visibility","hidden");
+              
+              
               $('#final').css("visibility","visible");
+              
+              for (var i = 1; i <= result_temp.length; i++) {
+              (function (i) {
+                console.log(i);
+                  window.setTimeout(function () {   
+                   $('.table2 tr:nth-child(' + i + ') td:nth-child(1)').css({color:"black"});
+                  $('.table2 tr:nth-child(' + i + ') td:nth-child(1)').fadeIn();
+                }, i * 1000);
+              }(i));
+            } 
+              
               
                $('.table2 td:nth-child(1)').css({color:"black"});
                 $('.table2 td:nth-child(2)').css({color:"black"});
@@ -254,6 +266,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
     this.employeeService.getParkingDraw("/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.resultTable = <Employee[]>data;
       this.getTempLuckyDrawResult();
+      console.log("Result" + this.resultTable);
       this.Start();
     }, err => {
       console.log(err);
