@@ -198,7 +198,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
               console.log(i);
                 window.setTimeout(function () {
                 $('.table1 tr:nth-child(' + i + ') td:nth-child(2)').addClass("text-bold1");                 
-              }, j * 500);
+              }, j * 1000);
             }(i));
           } 
 
@@ -209,8 +209,13 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
             
             var pos1 = $('.table2 tr:nth-child(1) td:nth-child(2)').offset();
                      var pos2 = $('.table3 tr:nth-child(1) td:nth-child(2)').offset();
-                     var final_pos_top = (pos2.top-pos1.top) + pos1.top;
-                      var final_pos_left = pos1.left;
+                     var final_pos_top = (pos2.top-pos1.top) + pos1.top+7;
+                     console.log(pos1.left);
+                     console.log(pos2.left);
+                     
+                     
+                      var final_pos_left =  (pos1.left-pos2.left)+ pos1.left;
+                      
                       console.log(final_pos_left);
 
             for (var i = 1; i <= result_temp.length; i++) {
@@ -219,7 +224,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
                   window.setTimeout(function () {   
                     //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());
                   $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').css({"position":"relative",'visibility':'visible'})
-                  .animate({bottom: '+=' +  final_pos_top + 'px'},1000).animate({left: final_pos_left + 'px'},1000);
+                  .animate({bottom: '+=' +  final_pos_top + 'px'},1000).animate({left: '715px'},1000);
                 }, i * 1000);
               }(i));
             } 
@@ -241,7 +246,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
                   window.setTimeout(function () {   
                    $('.table2 tr:nth-child(' + i + ') td:nth-child(1)').css({color:"black"});
                   $('.table2 tr:nth-child(' + i + ') td:nth-child(1)').fadeIn();
-                }, i * 1000);
+                }, i * 2000);
               }(i));
             } 
               
