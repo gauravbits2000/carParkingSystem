@@ -176,6 +176,7 @@ public class LDAPService {
 				employee.setPoolEmployee(registeredEmployee.get().getPoolEmployee());
 				employee.setPoolEmployeeVehicle(registeredEmployee.get().getPoolEmployeeVehicle());
 				employee.setPoolEmployeeId(registeredEmployee.get().getPoolEmployeeId());
+				employee.setRequestCategory(registeredEmployee.get().getRequestCategory());
 			}
 			else // If not found search based on PoolEmployeeId
 			{
@@ -187,6 +188,7 @@ public class LDAPService {
 					employee.setPoolEmployee(emp.getEmployeeName());
 					employee.setPoolEmployeeVehicle(emp.getVehicleRegistrationNumber());
 					employee.setPoolEmployeeId(emp.getEmployeeId());	
+					employee.setRequestCategory(emp.getRequestCategory());
 				}
 				
 				Optional<EmployeesDetails> empDetails = empDetailsepository.findById(employee.getEmployeeId());

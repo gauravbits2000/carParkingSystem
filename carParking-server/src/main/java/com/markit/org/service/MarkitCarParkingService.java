@@ -191,10 +191,10 @@ public class MarkitCarParkingService {
 	}
 
 	enum RequestCategory{
-		POOL_PARKING("Pool Parking"),
-		GENERAL_PARKING("General Parking"),
-		MEDICAL_EMERGENCY("Medical Emergency"),
-		FEMALE_NIGHT_SHIFT("Female Night Shift");
+		POOL_PARKING("pool_parking"),
+		GENERAL_PARKING("general_parking"),
+		MEDICAL_EMERGENCY("medical_emergency"),
+		FEMALE_NIGHT_SHIFT("female_night_shift");
 		
 		private String category;
 		

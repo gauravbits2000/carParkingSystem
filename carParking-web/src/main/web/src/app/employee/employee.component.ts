@@ -30,13 +30,15 @@ export class EmployeeComponent implements OnInit {
     this.employee = this.employeeService.getEmployee();
 
     this.userNames = this.startupService.getAllMarkitEmployee();
-    
-    this.filteredOptions = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this._filter(value))
-      );
 
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+
+    if (this.employee.requestCategory === null) {
+      this.employee.requestCategory = 'general_parking';
+    }
   }
 
   private _filter(value: string): string[] {
@@ -51,19 +53,17 @@ export class EmployeeComponent implements OnInit {
 
   submitDetails() {
 
-    /* Handling for car pool option */
-    if(this.employee.poolEmployee != null && this.employee.poolEmployeeVehicle!=null){
-      this.employee.isCarPool = 'true';
-    }else{
-      this.employee.poolEmployee = null;
-      this.employee.poolEmployeeVehicle = null;
-      this.employee.isCarPool = null;
-      this.employee.poolEmployeeId = null;
+    if(this.employee.poolEmployee !==null && this.employee.poolEmployeeVehicle !==null){
+      this.employee.isCarPool = "true";
     }
 
-
-
-
+    if(this.employee.requestCategory !== 'pool_parking'){
+      {
+        this.employee.isCarPool = null;
+        this.employee.poolEmployee =null;
+        this.employee.poolEmployeeVehicle =null
+      }
+    }
 
     this.employeeService.updateEmployeeDetails("http://localhost:8080//markit-car-parking/employee-registration", this.employee).subscribe((data: any[]) => {
       this.employees = data;
@@ -73,20 +73,8 @@ export class EmployeeComponent implements OnInit {
     this.router.navigate(['login/listdetails']);
   }
 
-  handlePriorityRequest(event) {
-
-    if (event.target.value === 'Pool Parking' && this.employee.isCarPool === null) {
-      this.poolParking = true;
-    } else {      
-      this.poolParking = false;     
-    }
-  }
-
-  
-  optPoolOut(){
+  optOutPool(){
     this.employee.isCarPool = null;
-    this.employee.poolEmployee = null;
-    this.employee.poolEmployeeVehicle = null;
-  }    
+  }
 
 }
