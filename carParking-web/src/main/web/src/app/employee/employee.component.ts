@@ -22,6 +22,9 @@ export class EmployeeComponent implements OnInit {
   options: string[] = ['Hari', 'Parag', 'Nikhil', 'Piyush', 'Gaurav'];
   userNames: string[];
   filteredOptions: Observable<string[]>;
+  validationFailed : boolean = false;
+  errorText : string;
+  terms : boolean = false;
 
   constructor(private router: Router, private employeeService: EmployeeService, private startupService: StartupService) { }
 
@@ -52,6 +55,23 @@ export class EmployeeComponent implements OnInit {
 
 
   submitDetails() {
+
+    if(this.employee.vehicleRegistrationNumber == '' || this.employee.vehicleRegistrationNumber === null){
+      this.validationFailed = true;
+      this.errorText = '* Please provide Vehicle Registration Number';
+      return;
+    
+    }else if(this.terms === false){
+      this.validationFailed = true;
+      this.errorText = '* Please accept terms and conditions';
+      return;
+    }
+
+
+
+
+
+
 
     if(this.employee.poolEmployee !==null && this.employee.poolEmployeeVehicle !==null){
       this.employee.isCarPool = "true";

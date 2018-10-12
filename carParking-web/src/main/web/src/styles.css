@@ -136,9 +136,9 @@ header.topnav .logo {
     color: #B3B3B3;
     padding: 20px 0;
     font-size: 12px;
-    position: absolute;
+    /* position: absolute; */
     width: 100%;
-    bottom: 0;
+    /* bottom: 0; */
 }
 
 .page-footer .footer-logo {
@@ -354,6 +354,7 @@ header.topnav .logo {
      margin-right: 7px;
      margin-left: 10px !important;
      outline: none;
+     border : 1px solid lightgreen;
 }
 .form-radio:checked::before
 {
@@ -391,6 +392,7 @@ header.topnav .logo {
      margin-right: 7px;
      margin-left: 10px !important;
      outline: none;
+     border : 1px solid lightgreen;
 }
 .form-checkbox:checked::before
 {
@@ -449,4 +451,16 @@ input[type="text"]:focus {
 
   .icons{
       height : 20px;
+  }
+
+  select {
+    margin: 2% 2%;
+    width: 150px;
+    font-size: 16px;
+    border: 1px solid #28a745;
+    height: 34px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('./assets/carLogo.ico') 90% / 20% no-repeat transparent;
   }

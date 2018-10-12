@@ -73,7 +73,7 @@
 				<!--medical_emergency_container-->
 
 				<div class="row col-md-12 pd-2" id="female_night_shift_container" *ngIf="employee.requestCategory === 'female_night_shift'">
-					<div class="ml-1 mb-1">Please upload your managers approval mail </div>
+					<div class="mb-1">Please upload your managers approval mail </div>
 					<div>
 						<input type="file" name="mail" id="mail"/>
 					</div>
@@ -119,8 +119,13 @@
 			</div>
 
 		</div>
+
+		<div ng-if="validationFailed === true" class="col-md-12 mt-2 center text-danger">
+			<span class="ml-2">{{errorText}}</span>
+		</div>
+
 		<div class="col-md-12 mt-2 center">
-			<input type="checkbox" name="terms" class="form-checkbox" />
+			<input type="checkbox" name="terms" [(ngModel)]="terms" class="form-checkbox" />
 			<span class="ml-2">I do hereby declare that the information provided above is true and correct to the best of my knowledge and belief</span>
 		</div>
 		<div class="col-md-12 mt-2 center">

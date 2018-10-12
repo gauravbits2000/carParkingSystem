@@ -1,39 +1,38 @@
 <div class="container col-md-12 p-0 nominations-container">
-    <div class="col-md-12 mt-2 center">
-    <select  required [(ngModel)]='optionSelected'>
-      <option  *ngFor='let option of options' [value]="option">
-          {{option}}
-        </option>
+  <div class="col-md-12 text-right">
+    <select class="pl-2"  required [(ngModel)]='optionSelected' (change)="submitDetails()">
+      <option *ngFor='let option of options' [value]="option">
+        {{option}}
+      </option>
     </select>
+
   </div>
-    <div class="col-md-12 mt-2 center">
-        <button type="button" class="btn btn-success btn-lg" (click)="submitDetails()">Submit</button>
-    </div>
+
 
   <table class="table table-bordred table-striped">
     <thead>
       <tr>
-          <th scope="col">#</th>
-          <th scope="col">Employee Name</th>
-          <th scope="col">Car Parking Id</th>
-          <th scope="col">Vehicle Number</th>
-          <th scope="col">Request Category</th>
-          <th scope="col">Pool Employee Name</th>
-          <th scope="col">Pool Vehicle Number</th>
+        <th scope="col">#</th>
+        <th scope="col">Employee Name</th>
+        <th scope="col">Car Parking Id</th>
+        <th scope="col">Vehicle Number</th>
+        <th scope="col">Request Category</th>
+        <th scope="col">Pool Employee Name</th>
+        <th scope="col">Pool Vehicle Number</th>
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let parkingHistory of parkingHistoryList; let i = index;">
-          <th scope="row">{{i+ 1}}</th>
-          <td>{{parkingHistory.employeeName}}</td>
-          <td>{{parkingHistory.carParkingId}}</td>
-          <td>{{parkingHistory.vehicleRegistrationNumber}}</td>
-          <td>{{parkingHistory.requestCategory}}</td>
-          <td *ngIf="parkingHistory.poolEmployeeName !== null">{{parkingHistory.poolEmployeeName}}</td>
-          <td *ngIf="parkingHistory.poolEmployeeName === null">--</td>
-          <td *ngIf="parkingHistory.poolEmployeeVehicle !== null">{{parkingHistory.poolEmployeeVehicle}}</td>
-          <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <tr *ngFor="let parkingHistory of parkingHistoryList; let i = index;">
+        <th scope="row">{{i+ 1}}</th>
+        <td>{{parkingHistory.employeeName}}</td>
+        <td>{{parkingHistory.carParkingId}}</td>
+        <td>{{parkingHistory.vehicleRegistrationNumber}}</td>
+        <td>{{parkingHistory.requestCategory}}</td>
+        <td *ngIf="parkingHistory.poolEmployeeName !== null">{{parkingHistory.poolEmployeeName}}</td>
+        <td *ngIf="parkingHistory.poolEmployeeName === null">--</td>
+        <td *ngIf="parkingHistory.poolEmployeeVehicle !== null">{{parkingHistory.poolEmployeeVehicle}}</td>
+        <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
