@@ -30,7 +30,8 @@ public class QuarterResultService {
 			QuarterParkingResult qpr = new QuarterParkingResult(new QuarterResultIdentity(winner.getEmployeeId(), quarter), 
 					winner.getEmployeeName(), winner.getVehicleRegistrationNumber(), 
 					winner.getCarParkingId(),  winner.getPoolEmployee(), 
-					winner.getPoolEmployeeId(), winner.getPoolEmployeeVehicle(), winner.getRequestCategory());
+					winner.getPoolEmployeeId(), winner.getPoolEmployeeVehicle(), winner.getRequestCategory(), 
+					winner.getEmail(), winner.getPoolEmployeeEmailId());
 			
 			quarterParkingResultList.add(qpr);
 		});

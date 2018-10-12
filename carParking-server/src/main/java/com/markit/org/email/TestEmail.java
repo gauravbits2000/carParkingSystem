@@ -18,13 +18,15 @@ public class TestEmail {
 	 * 
 	 */
 	public static void sendEmail() {
-		String mailTo = "hari.gupta@ihsmarkit.com,gaurav.agarwal@ihsmarkit.com,parag.garg@ihsmarkit.com,nikhil.chitranshi@markit.com";
+		//String mailTo = "hari.gupta@ihsmarkit.com,gaurav.agarwal@ihsmarkit.com,parag.garg@ihsmarkit.com,nikhil.chitranshi@markit.com";
+		
+		String mailTo = "parag.garg@ihsmarkit.com";
 		
 		String[] mailToArray = mailTo.split(",");
 		
-		for(String mailId : mailToArray) {
+		/*for(String mailId : mailToArray) {
 			EmailSender emailSender = new EmailSender(mailId);
-		}
+		}*/
 		
 		/*emailSender.setEmailStatus(EmailStatus.SUCCESS);
 		emailSender.setSubject("Parking Allocation Draw");

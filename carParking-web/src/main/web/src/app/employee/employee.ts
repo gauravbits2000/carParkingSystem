@@ -14,6 +14,7 @@ export class Employee {
     telephoneNumber : string;
     imageUrl : string;
     requestCategory : string;
+    isAdmin : string;
     
     constructor(employeeName: string,
     employeeId: string,

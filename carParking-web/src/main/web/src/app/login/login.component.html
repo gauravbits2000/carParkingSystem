@@ -14,8 +14,8 @@
           <div class="top-level-nav">
             <a class="nav-link" routerLink="/login/listdetails">NOMINATIONS</a>
           </div>
-          <div class="top-level-nav">
-            <a class="nav-link" routerLink="/login/parkingdraw" target="_self">DRAW</a>
+          <div *ngIf=isAdmin class="top-level-nav">
+            <a  class="nav-link" routerLink="/login/parkingdraw" target="_self">DRAW</a>
           </div>
           <div class="top-level-nav">
             <a class="nav-link" routerLink="/login/parkinghistory" target="_self">PARKING HISTORY</a>

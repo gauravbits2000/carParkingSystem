@@ -32,6 +32,12 @@ public class QuarterParkingResult {
 	
 	@Column(name = "REQUEST_CATEGORY")
 	private String requestCategory;
+	
+	@Column(name = "EMPLOYEE_EMAIL")
+	private String email;
+	
+	@Column(name = "POOL_EMPLOYEE_EMAIL")
+	private String poolEmployeeEmailId;
 
 	public QuarterParkingResult() {
 		super();
@@ -39,7 +45,7 @@ public class QuarterParkingResult {
 
 	public QuarterParkingResult(QuarterResultIdentity identity, String employeeName, String vehicleRegistrationNumber,
 			String carParkingId, String poolEmployeeName, String poolEmployeeId, String poolEmployeeVehicle,
-			String requestCategory) {
+			String requestCategory, String email, String poolEmployeeEmailId) {
 		super();
 		this.identity = identity;
 		this.employeeName = employeeName;
@@ -49,6 +55,8 @@ public class QuarterParkingResult {
 		this.poolEmployeeId = poolEmployeeId;
 		this.poolEmployeeVehicle = poolEmployeeVehicle;
 		this.requestCategory = requestCategory;
+		this.email = email;
+		this.poolEmployeeEmailId = poolEmployeeEmailId;
 	}
 
 	public QuarterResultIdentity getIdentity() {
@@ -113,6 +121,22 @@ public class QuarterParkingResult {
 
 	public void setRequestCategory(String requestCategory) {
 		this.requestCategory = requestCategory;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPoolEmployeeEmailId() {
+		return poolEmployeeEmailId;
+	}
+
+	public void setPoolEmployeeEmailId(String poolEmployeeEmailId) {
+		this.poolEmployeeEmailId = poolEmployeeEmailId;
 	}
 
 	@Override
