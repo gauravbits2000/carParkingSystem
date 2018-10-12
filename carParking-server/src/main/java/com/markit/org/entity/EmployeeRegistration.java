@@ -62,6 +62,9 @@ public class EmployeeRegistration {
 
 	@Transient
 	private String imageUrl;
+	
+	@Transient
+	private String isAdmin;
 
 	public EmployeeRegistration() {
 		super();
@@ -218,6 +221,14 @@ public class EmployeeRegistration {
 
 	public void setPoolEmployeeEmailId(String poolEmployeeEmailId) {
 		this.poolEmployeeEmailId = poolEmployeeEmailId;
+	}
+
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 	

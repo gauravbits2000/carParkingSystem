@@ -7,6 +7,7 @@ import java.util.List;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
+import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
@@ -46,14 +47,13 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 		final String MEMBER_OF = "memberOf";
 		final String[] attrIdsToSearch = new String[] { MEMBER_OF, "uid", "mail", "displayName",
 				"employeeID" };
-		final String SEARCH_BY_ACCOUNT_NAME = "(sAMAccountName=%s)";
-		final String SEARCH_GROUP_BY_GROUP_CN = "(&(objectCategory=group)(cn={0}))";
-		String userBase = "DC=markit,DC=partners";
+		String adminGroup ="CN=gsg-PARKING_ADMIN_GROUP,OU=Global Security Groups,OU=Standard Accounts,DC=markit,DC=partners";
+		//String userBase = "DC=markit,DC=partners";
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
 		// For testing Purpose Only
-		String username = "nikhil.chitranshi";
-		String password = "homeland@123";
+		String username = "***";
+		String password = "****";
 		
 		// Configure our directory context environment.
 		String ldapusername = username + "@markit.partners";
@@ -63,17 +63,16 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 		env.put(Context.SECURITY_CREDENTIALS, password);
 		if (authentication != null)
 			env.put(Context.SECURITY_AUTHENTICATION, authentication);
-		if (protocol != null)
-			env.put(Context.SECURITY_PROTOCOL, protocol);
 
 		
-		// InitialDirContext context = new InitialDirContext(env);
+		
 		try {
 			DirContext ldapContext = new InitialLdapContext(env, null);
 			
 			List<EmployeesDetails> employeesList = new ArrayList<EmployeesDetails>();
 
 			SearchControls searchCtls = new SearchControls();
+			searchCtls.setCountLimit(4000);
 
 			searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
@@ -81,7 +80,7 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 			String searchFilter = "(&(objectCategory=user))";
 
 			// Specify the Base for the search
-			String searchBase = "OU=Noida,OU=APAC,OU=Standard Accounts2,OU=Standard Accounts,DC=markit,DC=partners";
+			String searchBase = "OU=India,OU=APAC,OU=Standard Accounts2,OU=Standard Accounts,DC=markit,DC=partners";
 
 			// initialize counter to total the results
 			int totalResults = 0;
@@ -94,10 +93,11 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 				SearchResult sr = (SearchResult) fetchData.next();
 				totalResults++;
 
-/*				String names[] = sr.getName().split(",");
-				String name[] = names[0].split("=");*/
-				
+
 				Attributes attributes = sr.getAttributes();
+				
+
+				
 	           
 				if(attributes.get(attrIdsToSearch[2]) == null || attributes.get(attrIdsToSearch[4]) == null)
 				{
@@ -105,15 +105,29 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 					System.out.println("Email/EmployeeId not found for "+ sr.getName());
 				}
 				else
-				{
+				{   
+					String isAdmin ="N";
+					String group =null;
+					Attribute attr = attributes.get(attrIdsToSearch[0]);
+					if(null != attr){
+						NamingEnumeration memberOfEnum = attr.getAll();
+						while (memberOfEnum.hasMore()) {
+							
+							group = (String) memberOfEnum.next();
+							if(adminGroup.equalsIgnoreCase(group)){
+								 isAdmin = "Y";
+							}
+							
+						}
+					}
 		            String employeeEmail = attributes.get(attrIdsToSearch[2]).get().toString();
 		            String employeeName = attributes.get(attrIdsToSearch[3]).get().toString();
 		            String employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
-		            EmployeesDetails empDetails = new EmployeesDetails(employeeName,employeeId,employeeEmail);
+		            EmployeesDetails empDetails = new EmployeesDetails(employeeName,employeeId,employeeEmail,isAdmin);
 		            employeesList.add(empDetails);
-				}				
+			   }				
 			}
-			
+			System.out.println("Total results "+ totalResults);
 			empDetailsRepository.saveAll(employeesList);
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

@@ -25,6 +25,7 @@ export class AdminloginComponent implements OnInit {
 
     this.employeeService.verifyLoginDetails("http://localhost:8080/markit-car-parking/login", params).subscribe((data: any) => {
       this.employee = <Employee>data;
+      console.log(this.employee.isAdmin);
       if (this.employee.isAuthorize === 'True') {
         this.employeeService.setEmployee(data);
         this.router.navigateByUrl('/login/submitdetails');

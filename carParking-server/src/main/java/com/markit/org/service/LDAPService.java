@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.markit.org.entity.EmployeeRegistration;
+import com.markit.org.entity.EmployeesDetails;
+import com.markit.org.repository.EmployeeDetailsRepository;
 import com.markit.org.repository.EmployeeRegistrationRepository;
 
 @Service
@@ -29,6 +31,9 @@ public class LDAPService {
 
 	@Autowired
 	private EmployeeRegistrationRepository employeeRepository;
+	
+	@Autowired
+	private EmployeeDetailsRepository empDetailsepository;
 
 	private static final String contextFactory = "com.sun.jndi.ldap.LdapCtxFactory";
 	private static final String connectionURL = "ldap://ams5ldap.markit.partners:389";
@@ -102,8 +107,11 @@ public class LDAPService {
 			Attribute uidAttr = attrs.get(attrIdsToSearch[9]);
 			
 			
+			
 			String displayName = null, email = null, employeeID = null, 
 					title =null, mobile = null, telephoneNumber = null, location = null, uid = null;
+			
+			
 
 			NamingEnumeration emailEnum = emailAttr.getAll();
 			while (emailEnum.hasMore()) {
@@ -181,8 +189,15 @@ public class LDAPService {
 					employee.setPoolEmployeeId(emp.getEmployeeId());	
 				}
 				
-				
+				Optional<EmployeesDetails> empDetails = empDetailsepository.findById(employee.getEmployeeId());
+				if(empDetails.isPresent() &&  "Y".equalsIgnoreCase(empDetails.get().getIsAdmin())){
+					employee.setIsAdmin("Y");
+				}else{
+					employee.setIsAdmin("N");
+				}
 			}
+			
+			
 			return employee;
 
 		} catch (NamingException e) {
