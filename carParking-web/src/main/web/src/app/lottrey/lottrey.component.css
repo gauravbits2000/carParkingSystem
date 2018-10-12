@@ -29,7 +29,7 @@
    overflow: hidden;
     padding-top:0px;   
     padding:0;   
-    opacity: 0;
+    display: none;
     z-index:1;
     position: absolute;  
     right:0; 
@@ -120,21 +120,43 @@
 }
 
 
-img{
+.img1{
     position:absolute;
     top:30%;
     left:45%;  
-    width:180px;
-    height:180px;    
+    width:250px;
+    height:250px;    
     opacity: 0;
     filter: alpha(opacity=20); /* For IE8 and earlier */
-    z-index:-1;
-    display:block;     
+    display:block;    
+    z-index:4; 
 }
 
-.table2{
+.img2{
+    position:absolute;
+    top:25%;
+    left:35%;  
+    width:450px;
+    height:400px;    
+    opacity: 0;
+    filter: alpha(opacity=20); /* For IE8 and earlier */
+    display:block; 
+    z-index:3;    
+}
+
+.table2 td{
 	color:white;
 }
+
+#temp{
+    z-index:1;    
+}
+
+#final{
+    z-index:-1;
+    
+}
+
 
 
 

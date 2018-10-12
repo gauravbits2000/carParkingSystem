@@ -14,6 +14,8 @@ export class LottreyComponent implements OnInit {
   employeeList : Employee[];
   resultTable: Employee[];
   //resultTempTable: Employee[];
+  imgPath:string;
+  imgPath1:string;
   
   @ViewChildren('pages') pages: QueryList<any>;
   itemsPerPage = 5;
@@ -120,7 +122,9 @@ changePage(event: any) {
 
  	ngOnInit() 
  	{
- 	   this.employeeService.getEmployeeDetailsAll("/fetch-employees").subscribe((data: Employee[]) => 
+
+    
+ 	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080/fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	   console.log(data);
 	      this.employeeList = data;
@@ -152,13 +156,15 @@ changePage(event: any) {
     let empList = this.employeeList;
     let result_temp = this.resultTempTable;
     let result = this.resultTable;
+    this.imgPath = "../assets/WrapBox.png";
+    this.imgPath1 = "../assets/gift_marvel.gif";
 
 
     var table1 = $(".card1");
     var table2 = $(".card2");
     var table3 = $(".card3");
 
-   $('#final').css("visibility","hidden");
+   $('#final').css("display","none");
   
   
     let firstVisibleIndex = this.firstVisibleIndex;
@@ -179,15 +185,11 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
     }
 
 
-
-
       table1.addClass('inner-container-animate1').delay(1000).queue(function () {
       table1.addClass('inner-container-animate2').delay(1000).queue(function () {
       table2.addClass('inner-container-animate1');
       table2.addClass('inner-container-animate3');
 
-	//$('.inner-container2').addClass('inner-container-animate1');
-	//$('.inner-container2').addClass('inner-container-animate4');
       table3.addClass('inner-container-animate1');
       table3.addClass('inner-container-animate4');
         
@@ -203,9 +205,16 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
           } 
 
           setTimeout(()=>{        
-            table1.css({opacity:'0'});
-           $('.inner-container1').css({opacity:'1'});           
+            table1.css({opacity:'0'},1000);
+            //table1.fadeOut(1000);
+            $('.inner-container1').fadeIn(2000);
+
+           //$('.inner-container1').css({opacity:'1'});           
             table2.css({opacity:'1'});
+
+            $('.img1').css({opacity:0});
+            $('.img2').css({opacity:1});
+            
             
             var pos1 = $('.table2 tr:nth-child(1) td:nth-child(2)').offset();
                      var pos2 = $('.table3 tr:nth-child(1) td:nth-child(2)').offset();
@@ -230,34 +239,28 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
             } 
 
             window.setTimeout(function(){
-              $('.img1').animate({ opacity: '0' },"slow"); 
+              $('img').animate({ opacity: '0' },"slow"); 
               this.isFinal = false;
               $('.table3 td:nth-child(2)').css({'visibility':'hidden'});
 
+              //$("#temp").css({"visibility":"hidden"});
+                 //$("#final").css({"visibility":"visible"});
 
-              $("#temp").css("visibility","hidden");
-              
-              
-              $('#final').css("visibility","visible");
-              
-              for (var i = 1; i <= result_temp.length; i++) {
-              (function (i) {
-                console.log(i);
-                  window.setTimeout(function () {   
-                   $('.table2 tr:nth-child(' + i + ') td:nth-child(1)').css({color:"black"});
-                  $('.table2 tr:nth-child(' + i + ') td:nth-child(1)').fadeIn();
-                }, i * 2000);
-              }(i));
-            } 
-              
-              
-               $('.table2 td:nth-child(1)').css({color:"black"});
+                 $("#temp").fadeOut(2000);                 
+
+              $("#final").fadeIn(2000,function(){
+                $('.table2 td:nth-child(1)').css({color:"black"});
                 $('.table2 td:nth-child(2)').css({color:"black"});
                  $('.table2 td:nth-child(3)').css({color:"black"});
               $('.table2 td:nth-child(4)').css({color:"black"});
+              });
+              
+              
+
+
               
             },result_temp.length*2000);
-          },j*1000);          
+          },j*1500);          
         });
       }).dequeue();
     });  
@@ -268,7 +271,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
 
   getLuckyDrawResult(){
     console.log("data");
-    this.employeeService.getParkingDraw("/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
+    this.employeeService.getParkingDraw("http://localhost:8080/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.resultTable = <Employee[]>data;
       this.getTempLuckyDrawResult();
       console.log("Result" + this.resultTable);
