@@ -62,7 +62,7 @@ public class MarkitCarParkingController {
 	
 	@PostMapping("/markit-car-parking/send-email")
 	public void sendEmail(){
-		
+		service.sendEmail();
 	}
 	
 

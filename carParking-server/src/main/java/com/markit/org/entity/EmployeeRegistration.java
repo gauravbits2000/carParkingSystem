@@ -18,7 +18,7 @@ public class EmployeeRegistration {
 	@Column(name = "EMPLOYEE_NAME")
 	private String employeeName;
 
-	@Column(name = "EMAIL")
+	@Column(name = "EMPLOYEE_EMAIL")
 	private String email;
 
 	@Column(name = "title")
@@ -45,17 +45,20 @@ public class EmployeeRegistration {
 	@Column(name = "CAR_PARKING_ID")
 	private String carParkingId;
 
-	@Column(name = "Pool_Employee")
+	@Column(name = "POOL_EMPLOYEE")
 	private String poolEmployee;
 
-	@Column(name = "Pool_Employee_ID")
+	@Column(name = "POOL_EMPLOYEE_ID")
 	private String poolEmployeeId;
 
-	@Column(name = "Pool_Employee_Vehicle")
+	@Column(name = "POOL_EMPLOYEE_VEHICLE")
 	private String poolEmployeeVehicle;
 
 	@Column(name = "REQUEST_CATEGORY")
 	private String requestCategory;
+	
+	@Column(name = "POOL_EMPLOYEE_EMAIL")
+	private String poolEmployeeEmailId;
 
 	@Transient
 	private String imageUrl;
@@ -208,5 +211,15 @@ public class EmployeeRegistration {
 	public void setRequestCategory(String requestCategory) {
 		this.requestCategory = requestCategory;
 	}
+
+	public String getPoolEmployeeEmailId() {
+		return poolEmployeeEmailId;
+	}
+
+	public void setPoolEmployeeEmailId(String poolEmployeeEmailId) {
+		this.poolEmployeeEmailId = poolEmployeeEmailId;
+	}
+	
+	
 
 }

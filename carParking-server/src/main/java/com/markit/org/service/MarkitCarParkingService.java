@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.markit.org.email.EmailSender;
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.EmployeesDetails;
 import com.markit.org.entity.QuarterParkingResult;
@@ -33,6 +34,8 @@ public class MarkitCarParkingService {
 	@Autowired
 	private QuarterResultService quarterResultService;
 	
+	private List<QuarterParkingResult> quarterParkingResultList;
+	
 	public List<EmployeeRegistration> registerEmployee(EmployeeRegistration employee){
 		if(employee == null) {
 			return null;
@@ -41,6 +44,7 @@ public class MarkitCarParkingService {
 		if(RequestCategory.POOL_PARKING.getCategory().equals(employee.getRequestCategory())) {
 			EmployeesDetails empDetails = empDetailsepository.findByEmployeeName(employee.getPoolEmployee());
 			employee.setPoolEmployeeId(empDetails.getEmployeeId());
+			employee.setPoolEmployeeEmailId(empDetails.getEmployeeEmail());
 			
 			//Check if Pooled employee has a single entry
 			Optional<EmployeeRegistration> primaryEmployeeOptional = employeeRegistrationRepository.findById(empDetails.getEmployeeId());
@@ -86,6 +90,7 @@ public class MarkitCarParkingService {
 				pooledEmployee.setPoolEmployeeId(null);
 				pooledEmployee.setPoolEmployeeVehicle(null);
 				pooledEmployee.setIsCarPool(null);
+				pooledEmployee.setPoolEmployeeEmailId(null);
 				pooledEmployee.setVehicleRegistrationNumber(employee.getVehicleRegistrationNumber());
 				pooledEmployee.setRequestCategory(RequestCategory.GENERAL_PARKING.getCategory());
 				employeeRegistrationRepository.save(pooledEmployee);
@@ -146,7 +151,7 @@ public class MarkitCarParkingService {
 		List<EmployeeRegistration> winnersList = parkingDrawService.doGeneralDraw(generalSlots, generalParkingRegistrationList);
 		finalWinnersList.addAll(winnersList);
 		
-		List<QuarterParkingResult> quarterParkingResultList = quarterResultService.saveQuarterResults(finalWinnersList, "Q4");
+		quarterParkingResultList = quarterResultService.saveQuarterResults(finalWinnersList, "Q4");
 		
 		log.info("returning all lucky winners");
 		return quarterParkingResultList;
@@ -169,6 +174,21 @@ public class MarkitCarParkingService {
 		return quarterResultService.fetchQuarterResults(quarter);
 	}
 	
+	public void sendEmail() {
+		if(quarterParkingResultList == null || quarterParkingResultList.isEmpty()) {
+			log.info("Draw yet to happen, returning");
+			return;
+		}
+		
+		quarterParkingResultList.forEach(i -> {
+			String emailTo = i.getEmail();
+			if(RequestCategory.POOL_PARKING.getCategory().equals(i.getRequestCategory())) {
+				emailTo = i.getEmail()+","+ i.getPoolEmployeeEmailId();
+			}
+			
+			new EmailSender(emailTo, i.getEmployeeName(), i.getPoolEmployeeName(), i.getIdentity().getQuarter());
+		});
+	}
 
 	enum RequestCategory{
 		POOL_PARKING("Pool Parking"),
@@ -186,5 +206,4 @@ public class MarkitCarParkingService {
 			return category;
 		}
 	}
-	
 }

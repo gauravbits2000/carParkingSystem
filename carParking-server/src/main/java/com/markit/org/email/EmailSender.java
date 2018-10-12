@@ -24,7 +24,6 @@ import javax.mail.internet.MimeMultipart;
  */
 public class EmailSender {
    
-    private String mailTo = null;
     private String mailFrom = null;
     private String smtpHost = null;
     private String senderHost = null;
@@ -34,12 +33,8 @@ public class EmailSender {
     private Session session = null;
     private final String br = System.getProperty("line.separator");
     private EmailStatus status;
-    private boolean sendHtmlEmail = false;
 
-    private String parsingType;
-    private String parsingDate;
-
-    public EmailSender(String mailTo) {
+    public EmailSender(String mailTo, String primaryEmpName, String pooledEmpName, String quarter) {
         
         status = EmailStatus.SUCCESS;
         mailFrom = "IN-FLM@ihsmarkit.com";
@@ -69,7 +64,7 @@ public class EmailSender {
               InternetAddress.parse(mailTo));
 
            // Set Subject: header field
-           message.setSubject("Car Parking Draw Winner");
+           message.setSubject(quarter + " Car Parking Draw Winner");
 
            // This mail has 2 part, the BODY and the embedded image
            MimeMultipart multipart = new MimeMultipart("related");
@@ -90,16 +85,10 @@ public class EmailSender {
 
            // add image to the multipart
            multipart.addBodyPart(messageBodyPart);
-           
-           messageBodyPart = new MimeBodyPart();
-           String signatureText = "<html>Regards,<br>"
-           						+ "In FLM Team</html>	";
-           
-           messageBodyPart.setContent(signatureText, "text/html");
-           multipart.addBodyPart(messageBodyPart);
 
            // put everything together
            message.setContent(multipart);
+           
            // Send message
            Transport.send(message);
 
@@ -108,103 +97,6 @@ public class EmailSender {
             throw new RuntimeException(e);
          }
     }
-
-    public void setSubject(String subject) {
-        // Set Subject: header field
-        try {
-            message.setSubject(subject);
-        } catch (MessagingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public void setSendHtmlEmail(boolean sendAsHtml) {
-        this.sendHtmlEmail=sendAsHtml;
-    }
-
-    public EmailSender appendContent(String content) {
-        this.sb.append(content);
-        return this;
-    }
-
-    public boolean sendEmail() {
-
-        // message too big
-        if (sb.length() > 5000000) {
-            this.setSubject("[DataParser Status] - Email too big.");
-            StringBuilder errorMessage = new StringBuilder();
-            errorMessage.append("ERROR_EMAIL_TOO_BIG_LOGGED" + "\n\n\n----------\n\n"
-                    + "WARNING: ONLY THE FIRST 5 M LOG IN THIS EMAIL.\n\n\n");
-            errorMessage.append(sb.substring(0, 5000000));
-            // replace the existing message object by modified 5M message
-            sb = errorMessage;
-        }
-
-        try {
-            if(sendHtmlEmail) {
-                // Send the messages as HTML/web pages
-                message.setContent(sb.toString(), "text/html");
-            } else {
-                message.setText(sb.toString());
-            }
-            Transport.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true; // everything worked
-    }
-
-
-
-    public EmailSender appendSeparator() {
-        this.sb.append("\n");
-        this.sb.append("------------------------------------------------\n");
-        this.sb.append("\n");
-        return this;
-    }
-
-    public EmailSender newLine() {
-        this.sb.append("\n");
-        return this;
-    }
-
-    public String getParsingDate() {
-        return parsingDate;
-    }
-
-    public void setParsingDate(String parsingDate) {
-        this.parsingDate = parsingDate;
-    }
-
-    public String getParsingType() {
-        return parsingType;
-    }
-
-    public void setParsingType(String parsingType) {
-        this.parsingType = parsingType;
-    }
-
-    public EmailStatus getEmailStatus() {
-        return status;
-    }
-
-    public void setEmailStatus(EmailStatus status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return sb.toString();
-    }
-
-    public String getMailTo() {
-		return mailTo;
-	}
-
-    public void setMailTo(String mailTo) {
-		this.mailTo = mailTo;
-	}
 
 	public enum EmailStatus {
         SUCCESS("OK", true), FAIL("ERROR", false), WARNING("WARNING", false);
