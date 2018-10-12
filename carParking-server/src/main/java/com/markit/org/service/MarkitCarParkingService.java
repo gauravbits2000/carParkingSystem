@@ -96,7 +96,7 @@ public class MarkitCarParkingService {
 		return employeeRegistrationRepository.findAll();
 	}
 
-	public List<QuarterParkingResult> doCarParkingDraw(){
+	public List<EmployeeRegistration> doCarParkingDraw(){
 		
 		log.info("Getting all registered Employees");
 		Integer carPoolSlots = 5;
@@ -149,7 +149,7 @@ public class MarkitCarParkingService {
 		List<QuarterParkingResult> quarterParkingResultList = quarterResultService.saveQuarterResults(finalWinnersList, "Q4");
 		
 		log.info("returning all lucky winners");
-		return quarterParkingResultList;
+		return finalWinnersList;
 	}
 
 	public List<EmployeeRegistration> viewEmployeeList() {
