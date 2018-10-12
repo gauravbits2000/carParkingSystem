@@ -17,7 +17,10 @@
         <td>{{employee.employeeName}}</td>
         <td>{{employee.employeeId}}</td>
         <td>{{employee.vehicleRegistrationNumber}}</td>
-        <td>{{employee.requestCategory}}</td>
+        <td *ngIf="employee.requestCategory === 'medical_emergency'">Medical Emergency</td>
+        <td *ngIf="employee.requestCategory === 'female_night_shift'">Female Night Shift</td>
+        <td *ngIf="employee.requestCategory === 'pool_parking'">Pool Parking</td>
+        <td *ngIf="employee.requestCategory === 'general_parking'">General Parking</td>
         <td *ngIf="employee.poolEmployee !== null">{{employee.poolEmployee}}</td>
         <td *ngIf="employee.poolEmployee === null">--</td>
         <td *ngIf="employee.poolEmployeeVehicle !== null">{{employee.poolEmployeeVehicle}}</td>
