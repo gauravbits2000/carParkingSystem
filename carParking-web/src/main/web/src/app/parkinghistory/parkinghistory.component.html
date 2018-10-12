@@ -1,7 +1,6 @@
 <div class="container col-md-12 p-0 nominations-container">
     <div class="col-md-12 mt-2 center">
     <select  required [(ngModel)]='optionSelected'>
-      <option value="">Show All</option>
       <option  *ngFor='let option of options' [value]="option">
           {{option}}
         </option>
@@ -14,11 +13,13 @@
   <table class="table table-bordred table-striped">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Employee Name</th>
-        <th scope="col">Car Parking ID</th>
-        <th scope="col">Request category</th>
-        <th scope="col">Vehicle Registration Number</th>
+          <th scope="col">#</th>
+          <th scope="col">Employee Name</th>
+          <th scope="col">Car Parking Id</th>
+          <th scope="col">Vehicle Number</th>
+          <th scope="col">Request Category</th>
+          <th scope="col">Pool Employee Name</th>
+          <th scope="col">Pool Vehicle Number</th>
       </tr>
     </thead>
     <tbody>
@@ -26,8 +27,12 @@
           <th scope="row">{{i+ 1}}</th>
           <td>{{parkingHistory.employeeName}}</td>
           <td>{{parkingHistory.carParkingId}}</td>
-          <td>{{parkingHistory.requestCategory}}</td>
           <td>{{parkingHistory.vehicleRegistrationNumber}}</td>
+          <td>{{parkingHistory.requestCategory}}</td>
+          <td *ngIf="parkingHistory.poolEmployeeName !== null">{{parkingHistory.poolEmployeeName}}</td>
+          <td *ngIf="parkingHistory.poolEmployeeName === null">--</td>
+          <td *ngIf="parkingHistory.poolEmployeeVehicle !== null">{{parkingHistory.poolEmployeeVehicle}}</td>
+          <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
         </tr>
       </tbody>
     </table>
