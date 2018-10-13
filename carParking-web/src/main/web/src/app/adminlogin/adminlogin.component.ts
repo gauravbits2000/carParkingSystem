@@ -14,6 +14,7 @@ export class AdminloginComponent implements OnInit {
   password: string;
   isValidLogin: boolean = true;
   employee: Employee;
+  model: any = {};
   constructor(private router: Router, private employeeService: EmployeeService) { }
 
   ngOnInit() {
@@ -21,11 +22,10 @@ export class AdminloginComponent implements OnInit {
 
   tryLogin() {
 
-    const params = { username: this.username, password: this.password };
-
+   
+    const params = { username: this.model.username, password: this.model.password };
     this.employeeService.verifyLoginDetails("http://localhost:8080/markit-car-parking/login", params).subscribe((data: any) => {
       this.employee = <Employee>data;
-      console.log(this.employee.isAdmin);
       if (this.employee.isAuthorize === 'True') {
         this.employeeService.setEmployee(data);
         this.router.navigateByUrl('/login/submitdetails');
