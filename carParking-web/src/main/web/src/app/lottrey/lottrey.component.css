@@ -1,15 +1,46 @@
 
 @import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";          
 @import "../../../node_modules/font-awesome/css/font-awesome.css";
-/* @import "../../../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss";
-@import "../../../node_modules/angular-bootstrap-md/scss/mdb-free.scss";  */               
 
 .card1{
     width:100%;    
-    height: 90%;   
-    overflow:visible;   
-    transition: width 0.5s, height 0.5s, transform 0.5s;      
+    height: 100%;   
+    overflow:visible;  
+    transition: width 1s, height 1s, transform 1s;  
 }
+
+
+.inner-container-big-animate1{
+    border:5px solid green;
+    background-color: red;
+   -ms-transform: rotate(20deg); /* IE 9 */
+    -webkit-transform: rotate(20deg); /* Safari */
+    transform: rotate(20deg);
+}
+
+@keyframes SHW {
+    from {
+        transform:scale(0.5);               
+    }
+    to {
+        transform: scale(1);
+        width:100%;          
+        margin-top:35px;
+        
+    }
+}
+
+.element-animation  {
+    animation: SHW 3s;
+    animation-fill-mode: both
+}
+
+.inner-container-big-animate2{
+    min-width:100%;
+    min-height:100%;    
+    transform: scale(1,1);
+}
+
 
 .inner-container{
     min-height:100vh;
@@ -29,10 +60,10 @@
    overflow: hidden;
     padding-top:0px;   
     padding:0;   
-    display: none;
+    display: none;  
     z-index:1;
     position: absolute;  
-    right:0; 
+    right:0;   
    
 }
 
@@ -55,7 +86,8 @@
     margin-bottom:10px;
     overflow: hidden;      
     position:relative;
-    min-height:600px;
+    min-height:620px;
+    background-color: white;
     
 }
 
@@ -110,6 +142,18 @@
    100% {left:120%;top:500px;transform:scale(4,4) rotate(90deg);visibility: hidden;}
 }
 
+@keyframes text-bold-animation1{
+    from{
+        left:0;
+    }
+    to{
+        left:120%;
+        top:500px;
+        font-weight: bold;
+        transform: scale(4,4) rotate(90deg);
+        opacity:0;        
+    }
+}
 .text-bold1{
     position:relative;  
     animation-name: text-bold-animation;
@@ -123,7 +167,7 @@
 .img1{
     position:absolute;
     top:30%;
-    left:45%;  
+    left:50%;  
     width:250px;
     height:250px;    
     opacity: 0;
@@ -134,7 +178,7 @@
 
 .img2{
     position:absolute;
-    top:25%;
+    top:20%;
     left:35%;  
     width:450px;
     height:400px;    
@@ -149,13 +193,14 @@
 }
 
 #temp{
-    z-index:1;    
+    z-index:-1;    
 }
 
 #final{
-    z-index:-1;
+    z-index:1;
     
 }
+
 
 
 
