@@ -464,3 +464,7 @@ input[type="text"]:focus {
     appearance: none;
     background: url('./assets/carLogo.ico') 90% / 20% no-repeat transparent;
   }
+
+  .error-highlight{
+      border : 1px solid red;
+  }

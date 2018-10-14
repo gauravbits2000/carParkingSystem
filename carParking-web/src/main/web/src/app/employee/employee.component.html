@@ -58,7 +58,7 @@
 					<span class="ml-2">General Parking </span>
 				</div>
 				<div class="col-md-12 mt-2 ml-2 col-md-6">
-					<input class="col-md-6" type="textbox" [(ngModel)]="employee.vehicleRegistrationNumber" placeholder="Vehicle Registration Number">
+					<input [className]="validationFailed ? 'error-highlight col-md-6' :'col-md-6' " class="col-md-6" type="textbox" [(ngModel)]="employee.vehicleRegistrationNumber" placeholder="Vehicle Registration Number">
 				</div>
 			</div>
 

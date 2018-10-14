@@ -63,12 +63,12 @@ export class EmployeeComponent implements OnInit {
     
     }else if(this.employee.requestCategory === 'pool_parking' && (this.employee.poolEmployeeVehicle === null || this.employee.poolEmployee == '')){
       this.validationFailed = true;
-      this.errorText = '* Please provide pool vehicle details';
+      this.errorText = '* Please provide Pool Vehicle Registration Number';
       return;
     
     }else if(this.terms === false){
       this.validationFailed = true;
-      this.errorText = '* Please accept terms and conditions';
+      this.errorText = '* Please accept Terms and Conditions';
       return;
     
     }
