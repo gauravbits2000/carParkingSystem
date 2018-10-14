@@ -1,29 +1,69 @@
 <div class="container col-md-12" >
 
-  <form class="form-inline">
-    <div class="md-form form-group">
+  <form class="form-inline" #ParkingDrawForm = "ngForm" >
+
+    <div class="md-form form-group" >
+      <i class="fa prefix"></i>
       <input mdbInputDirective type="text" 
-             [(ngModel)]="model.medicalEmergencySlots" #emergency="ngModel"
-      size="14" value="5" class="form-control" id="form8" name="medicalEmergencySlots">
+             [(ngModel)]="model.medicalEmergencySlots" #medicalEmergencySlots = "ngModel" 
+      size="14" class="form-control" id="form8" name="medicalEmergencySlots" pattern="[0-9]{0,4}"
+      data-error="wrong" data-success="success" (ngModelChange)="valuechange($event)" 
+      max = "30" maxlength="30" required >
       <label for="form8">Emergency Slots</label>
     </div>
 
     <div class="md-form form-group">
-      <input mdbInputDirective type="text" [(ngModel)]="model.femaleLateShiftSlots" #femaleLateShiftSlots="ngModel" size="15" value="5" class="form-control" id="form9" name="femaleLateShiftSlots">
+      <i class="fa prefix"></i>
+      <input mdbInputDirective type="number" [(ngModel)]="model.femaleLateShiftSlots" 
+      #femaleLateShiftSlots="ngModel" size="15" value="5" class="form-control" id="form9"
+       name="femaleLateShiftSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
+       (ngModelChange)="valuechange($event)" required>
       <label for="form9">Female Late-Shit Slots</label>
     </div>
+
     <div class="md-form form-group">
       <i class="fa prefix"></i>
-      <input mdbInputDirective type="text" size="15"  [(ngModel)]="model.carPoolSlots" value="5" class="form-control" id="form10" name="carPoolSlots">
+      <input mdbInputDirective type="number" size="15"  [(ngModel)]="model.carPoolSlots" value="5" 
+      class="form-control" id="form10" name="carPoolSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
+      (ngModelChange)="valuechange($event)" required>
       <label for="form10">Car Pool Slots</label>
     </div>
     <div class="md-form form-group">
-      <input mdbInputDirective type="text" size="15" [(ngModel)]="model.generalSlots" value="10" class="form-control" id="form11" name="generalSlots">
+       <i class="fa prefix"></i>
+      <input mdbInputDirective type="number" size="15" [(ngModel)]="model.generalSlots" value="10" 
+      class="form-control" id="form11" name="generalSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
+     (ngModelChange)="valuechange($event)" readonly>
       <label for="form11">General Slots</label>
     </div>
 
     <div class="md-form form-group">
-      <button mdbBtn color="primary" size="md" class="waves-light" mdbWavesEffect [disabled]="startDraw" id="startBtn" (click)="getLuckyDrawResult()">Start</button>
+      <i class="fa prefix"></i>
+      <input mdbInputDirective type="number" size="15" [(ngModel)]="model.reservedSlots" value="5" 
+             class="form-control" id="form12" name="reservedSlots" pattern="[0-9]{0,4}" 
+             data-error="cannot be less than 0" (ngModelChange)="valuechange($event)"
+             required>
+      <label for="form12">Reserved Slots</label>
+    </div>
+
+    <div class="md-form form-group">
+      <i class="fa prefix"></i>
+      <input   mdbInputDirective type="number" size="15" [(ngModel)]="model.totalSlots" value="30" 
+             class="form-control" id="form13" name="totalSlots" readonly>
+      <label for="form13">Total Slots</label>
+    </div>
+
+    <div class="md-form form-group">
+      <i class="fa prefix"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button mdbBtn color="primary" size="mg" class="waves-light"           
+              mdbWavesEffect [disabled]="startDraw || ParkingDrawForm.invalid" 
+              id="startBtn" (click)="getLuckyDrawResult()">Start Draw</button>
+    </div>
+
+    <div class="md-form form-group">
+      <i class="fa prefix"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button mdbBtn color="primary" size="mg" class="waves-light"           
+              mdbWavesEffect 
+              id="sendEmail" (click)="sendEmail()" >Send Mail</button>
     </div>
 
   </form>

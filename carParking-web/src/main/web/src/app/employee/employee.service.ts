@@ -30,6 +30,12 @@ export class EmployeeService {
     console.log(params);
     return this.httpClient.post(baseURL,params );
   }
+
+  sendEmail(baseURL: string): Observable<any> 
+  {
+    return this.httpClient.get(baseURL);
+  }
+
   updateEmployeeDetails(baseURL: string, params): Observable<any> {
     return this.httpClient.post(baseURL, params);
   }

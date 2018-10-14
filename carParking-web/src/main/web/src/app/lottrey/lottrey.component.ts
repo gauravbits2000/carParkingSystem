@@ -4,6 +4,7 @@ import { EmployeeService } from 'src/app/employee/employee.service';
 //import { Employee } from 'src/app/employee/employee';
 import { Employee } from 'src/app/employee/employee';
 import { carParkingSlots } from 'src/app/lottrey/carParkingSlots';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-lottrey',
@@ -18,6 +19,7 @@ export class LottreyComponent implements OnInit
  // resultTempTable: Employee[];
   imgPath:string;
   imgPath1:string;
+  validatingForm: FormGroup;
   
   @ViewChildren('pages') pages: QueryList<any>;
   itemsPerPage = 5;
@@ -66,7 +68,8 @@ export class LottreyComponent implements OnInit
 
   ]  
   
-  constructor(private employeeService: EmployeeService, private el: ElementRef) { }
+  constructor(private employeeService: EmployeeService, private el: ElementRef,private fb: FormBuilder) { 
+            }
 
 changePage(event: any) {  
     if (event.target.text >= 1 && event.target.text <= this.numberOfPaginators) {
@@ -132,17 +135,21 @@ changePage(event: any) {
 
 
  	ngOnInit() 
- 	{    
+ 	{       
      this.model.medicalEmergencySlots = 5;
      this.model.femaleLateShiftSlots = 5;
      this.model.carPoolSlots = 5;
      this.model.generalSlots = 10;
-     
+     this.model.reservedSlots = 5;
+      this.model.totalSlots = 30;
+
  	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080/fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	     console.log(data);
 	       this.employeeList = data;
 	       console.log(this.employeeList);
+
+             
         
     
 	    this.startDraw = false;
@@ -288,15 +295,21 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
           },j*1500);          
         });
       }).dequeue();
-    });  
-    
-    
-        
+    });         
+  }
+
+  valuechange(event){
+    console.log(event); 
+   this.validatingForm = this.fb.group({
+        'max': [null, Validators.max(30)],
+        });
+    this.model.generalSlots = Number.parseInt(this.model.totalSlots) - (Number.parseInt(this.model.medicalEmergencySlots) + Number.parseInt(this.model.femaleLateShiftSlots) + Number.parseInt(this.model.carPoolSlots) + Number.parseInt(this.model.reservedSlots) );
+     if(this.model.generalSlots == "NaN") this.model.generalSlots = 0;
   }
 
   getLuckyDrawResult()
   {
-    this.employeeService.getParkingDraw1("http://localhost:8080/markit-car-parking/lucky-draw1/", this.model).subscribe((data: any[]) => {
+    this.employeeService.startLuckyDraw("http://localhost:8080/markit-car-parking/start-lucky-draw/", this.model).subscribe((data: any[]) => {
     //  this.employeeService.getParkingDraw("http://localhost:8080/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.resultTable = <Employee[]>data;
       this.getTempLuckyDrawResult();
@@ -308,6 +321,19 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
     })
     
   }
+
+  sendEmail()
+  {
+    this.employeeService.sendEmail("http://localhost:8080/markit-car-parking/send-email").subscribe((data: any[]) => 
+    {
+    
+    }, err => {
+      console.log(err);
+    })
+    
+  }
+
+
   
   getTempLuckyDrawResult(){  
   for(var i=0;i<5;i++){

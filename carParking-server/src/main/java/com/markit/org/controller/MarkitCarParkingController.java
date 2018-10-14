@@ -63,7 +63,7 @@ public class MarkitCarParkingController {
 		return service.fetchCarParkingResults(quarter);
 	}
 	
-	@PostMapping("/markit-car-parking/send-email")
+	@GetMapping("/markit-car-parking/send-email")
 	public void sendEmail(){
 		service.sendEmail();
 	}
