@@ -189,14 +189,14 @@ public class LDAPService {
 					employee.setPoolEmployeeVehicle(emp.getVehicleRegistrationNumber());
 					employee.setPoolEmployeeId(emp.getEmployeeId());	
 					employee.setRequestCategory(emp.getRequestCategory());
-				}
-				
-				Optional<EmployeesDetails> empDetails = empDetailsepository.findById(employee.getEmployeeId());
-				if(empDetails.isPresent() &&  "Y".equalsIgnoreCase(empDetails.get().getIsAdmin())){
-					employee.setIsAdmin("Y");
-				}else{
-					employee.setIsAdmin("N");
-				}
+				}		
+			}
+			
+			Optional<EmployeesDetails> empDetails = empDetailsepository.findById(employee.getEmployeeId());
+			if(empDetails.isPresent() &&  "Y".equalsIgnoreCase(empDetails.get().getIsAdmin())){
+				employee.setIsAdmin("Y");
+			}else{
+				employee.setIsAdmin("N");
 			}
 			
 			
