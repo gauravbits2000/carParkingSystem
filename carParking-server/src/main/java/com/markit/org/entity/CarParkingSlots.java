@@ -7,6 +7,8 @@ public class CarParkingSlots
 	int femaleLateShiftSlots;
 	int carPoolSlots;		
 	int generalSlots;
+	int reservedSlots;
+	int totalSlots;
 	
 	public int getMedicalEmergencySlots() {
 		return medicalEmergencySlots;
@@ -32,39 +34,18 @@ public class CarParkingSlots
 	public void setGeneralSlots(int generalSlots) {
 		this.generalSlots = generalSlots;
 	}
-	
-	
-	
-/*	Integer medicalEmergencySlots;
-	Integer femaleLateShiftSlots;
-	Integer carPoolSlots;		
-	Integer generalSlots;
-	
-	public Integer getMedicalEmergencySlots() {
-		return medicalEmergencySlots;
+	public int getReservedSlots() {
+		return reservedSlots;
 	}
-	public void setMedicalEmergencySlots(Integer medicalEmergencySlots) {
-		this.medicalEmergencySlots = medicalEmergencySlots;
+	public void setReservedSlots(int reservedSlots) {
+		this.reservedSlots = reservedSlots;
 	}
-	public Integer getFemaleLateShiftSlots() {
-		return femaleLateShiftSlots;
+	public int getTotalSlots() {
+		return totalSlots;
 	}
-	public void setFemaleLateShiftSlots(Integer femaleLateShiftSlots) {
-		this.femaleLateShiftSlots = femaleLateShiftSlots;
+	public void setTotalSlots(int totalSlots) {
+		this.totalSlots = totalSlots;
 	}
-	public Integer getCarPoolSlots() {
-		return carPoolSlots;
-	}
-	public void setCarPoolSlots(Integer carPoolSlots) {
-		this.carPoolSlots = carPoolSlots;
-	}
-	public Integer getGeneralSlots() {
-		return generalSlots;
-	}
-	public void setGeneralSlots(Integer generalSlots) {
-		this.generalSlots = generalSlots;
-	}*/
-	
 	
 
 }

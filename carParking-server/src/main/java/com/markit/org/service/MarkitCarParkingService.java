@@ -106,14 +106,12 @@ public class MarkitCarParkingService {
 	{	
 		log.info("Getting all registered Employees");
 
-		Integer medicalEmergencySlots = carParkingSlots.getMedicalEmergencySlots();
-		Integer femaleLateShiftSlots = carParkingSlots.getFemaleLateShiftSlots();
-		Integer carPoolSlots = carParkingSlots.getCarPoolSlots();		
-		Integer generalSlots = carParkingSlots.getGeneralSlots();
-/*		Integer medicalEmergencySlots = 5;
-		Integer femaleLateShiftSlots = 5;
-		Integer carPoolSlots = 5;		
-		Integer generalSlots = 10;*/
+		Integer medicalEmergencySlots = carParkingSlots.getMedicalEmergencySlots();	// Default 5
+		Integer femaleLateShiftSlots = carParkingSlots.getFemaleLateShiftSlots();	// Default 5
+		Integer carPoolSlots = carParkingSlots.getCarPoolSlots();					// Default 5
+		Integer generalSlots = carParkingSlots.getGeneralSlots();					// Default 10
+		Integer reservedSlots = carParkingSlots.getReservedSlots();					// Default 5
+		Integer totalSlots = carParkingSlots.getTotalSlots();						// Total  30 slots
 		
 		List<EmployeeRegistration> finalWinnersList = new ArrayList<EmployeeRegistration>();
 		
@@ -127,7 +125,11 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(poolParkingWinnersList);
 		}else {
 			List<EmployeeRegistration> poolParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.POOL_PARKING.getCategory());
-			generalParkingRegistrationList.addAll(poolParkingRegistrationList);
+			if(poolParkingRegistrationList != null && poolParkingRegistrationList.size() > 0)
+			{
+				generalParkingRegistrationList.addAll(poolParkingRegistrationList);
+			}
+			
 			parkingDrawService.addSlotsToGeneralPool(RequestCategory.POOL_PARKING.getCategory());
 		}
 		
@@ -138,7 +140,10 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(femaleLateShiftWinnersList);
 		}else {
 			List<EmployeeRegistration> femaleLateShiftRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
-			generalParkingRegistrationList.addAll(femaleLateShiftRegistrationList);
+			if(femaleLateShiftRegistrationList != null && femaleLateShiftRegistrationList.size() > 0)
+			{
+				generalParkingRegistrationList.addAll(femaleLateShiftRegistrationList);
+			}			
 			parkingDrawService.addSlotsToGeneralPool(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
 		}
 		
@@ -149,7 +154,10 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(medicalEmergencyWinnersList);
 		}else {
 			List<EmployeeRegistration> medicalEmergencyRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.MEDICAL_EMERGENCY.getCategory());
-			generalParkingRegistrationList.addAll(medicalEmergencyRegistrationList);
+			if(medicalEmergencyRegistrationList != null && medicalEmergencyRegistrationList.size() > 0)
+			{
+				generalParkingRegistrationList.addAll(medicalEmergencyRegistrationList);
+			}			
 			parkingDrawService.addSlotsToGeneralPool(RequestCategory.MEDICAL_EMERGENCY.getCategory());
 		}
 		

@@ -25,7 +25,7 @@ export class EmployeeService {
     return this.httpClient.get(baseURL );
   }
 
-  getParkingDraw1(baseURL: string, params): Observable<any> 
+  startLuckyDraw(baseURL: string, params): Observable<any> 
   {
     console.log(params);
     return this.httpClient.post(baseURL,params );

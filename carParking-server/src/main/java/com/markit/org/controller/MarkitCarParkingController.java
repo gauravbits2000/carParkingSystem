@@ -33,27 +33,13 @@ public class MarkitCarParkingController {
 	public List<EmployeeRegistration> registerEmployee(@RequestBody EmployeeRegistration employee){
 		return service.registerEmployee(employee);
 	}
-
-	@GetMapping("/markit-car-parking/lucky-draw/")
-	public List<EmployeeRegistration> doCarParkingDraw()
-	{
-		//return service.doCarParkingDraw();
-		CarParkingSlots carParkingSlots = new CarParkingSlots();
-		carParkingSlots.setMedicalEmergencySlots(5);
-		carParkingSlots.setFemaleLateShiftSlots(5);
-		carParkingSlots.setCarPoolSlots(5);		
-		carParkingSlots.setGeneralSlots(10);
-		return service.doCarParkingDraw(carParkingSlots);
-	}
 	
-	@PostMapping("/markit-car-parking/lucky-draw1")
+	@PostMapping("/markit-car-parking/start-lucky-draw")
 	public List<EmployeeRegistration> doCarParkingDraw1(@RequestBody CarParkingSlots carParkingSlots)
 	{
-		//return service.doCarParkingDraw();
 		return service.doCarParkingDraw(carParkingSlots);
 	}
 	
-
 	
 	@GetMapping("/fetch-employees")
 	public List<EmployeeRegistration> viewEmployee(){
