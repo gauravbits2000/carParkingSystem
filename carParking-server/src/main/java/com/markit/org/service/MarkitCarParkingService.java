@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.markit.org.email.EmailSender;
+import com.markit.org.entity.CarParkingSlots;
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.EmployeesDetails;
 import com.markit.org.entity.QuarterParkingResult;
@@ -101,13 +102,18 @@ public class MarkitCarParkingService {
 		return employeeRegistrationRepository.findAll();
 	}
 
-	public List<EmployeeRegistration> doCarParkingDraw(){
-		
+	public List<EmployeeRegistration> doCarParkingDraw(CarParkingSlots carParkingSlots)
+	{	
 		log.info("Getting all registered Employees");
-		Integer carPoolSlots = 5;
+
+		Integer medicalEmergencySlots = carParkingSlots.getMedicalEmergencySlots();
+		Integer femaleLateShiftSlots = carParkingSlots.getFemaleLateShiftSlots();
+		Integer carPoolSlots = carParkingSlots.getCarPoolSlots();		
+		Integer generalSlots = carParkingSlots.getGeneralSlots();
+/*		Integer medicalEmergencySlots = 5;
 		Integer femaleLateShiftSlots = 5;
-		Integer medicalEmergencySlots = 5;
-		Integer generalSlots = 10;
+		Integer carPoolSlots = 5;		
+		Integer generalSlots = 10;*/
 		
 		List<EmployeeRegistration> finalWinnersList = new ArrayList<EmployeeRegistration>();
 		

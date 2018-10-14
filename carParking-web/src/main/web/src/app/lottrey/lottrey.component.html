@@ -2,14 +2,24 @@
 
   <form class="form-inline">
     <div class="md-form form-group">
+      <input mdbInputDirective type="text" 
+             [(ngModel)]="model.medicalEmergencySlots" #emergency="ngModel"
+      size="14" value="5" class="form-control" id="form8" name="medicalEmergencySlots">
+      <label for="form8">Emergency Slots</label>
+    </div>
 
-      <input mdbInputDirective type="text" size="30" value="70" class="form-control" id="form9" name="available">
-      <label for="form9">Total Parkings Slots Available</label>
+    <div class="md-form form-group">
+      <input mdbInputDirective type="text" [(ngModel)]="model.femaleLateShiftSlots" #femaleLateShiftSlots="ngModel" size="15" value="5" class="form-control" id="form9" name="femaleLateShiftSlots">
+      <label for="form9">Female Late-Shit Slots</label>
     </div>
     <div class="md-form form-group">
       <i class="fa prefix"></i>
-      <input mdbInputDirective type="text" value="25" class="form-control" id="form10" name="reserved">
-      <label for="form10">Reserved Parking Slots</label>
+      <input mdbInputDirective type="text" size="15"  [(ngModel)]="model.carPoolSlots" value="5" class="form-control" id="form10" name="carPoolSlots">
+      <label for="form10">Car Pool Slots</label>
+    </div>
+    <div class="md-form form-group">
+      <input mdbInputDirective type="text" size="15" [(ngModel)]="model.generalSlots" value="10" class="form-control" id="form11" name="generalSlots">
+      <label for="form11">General Slots</label>
     </div>
 
     <div class="md-form form-group">

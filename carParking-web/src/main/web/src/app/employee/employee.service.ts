@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Employee } from 'src/app/employee/employee';
+import { carParkingSlots } from 'src/app/lottrey/carParkingSlots';
+
 
 @Injectable()
 export class EmployeeService {
 
   employee: Employee;
-
+  carParkingSlots : carParkingSlots;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,7 +22,13 @@ export class EmployeeService {
   }
 
   getParkingDraw(baseURL: string): Observable<any> {
-    return this.httpClient.get(baseURL);
+    return this.httpClient.get(baseURL );
+  }
+
+  getParkingDraw1(baseURL: string, params): Observable<any> 
+  {
+    console.log(params);
+    return this.httpClient.post(baseURL,params );
   }
   updateEmployeeDetails(baseURL: string, params): Observable<any> {
     return this.httpClient.post(baseURL, params);
@@ -33,6 +41,11 @@ export class EmployeeService {
   }
   getEmployee() {
     return this.employee;
+  }
+
+ getCarParkingSlots() 
+ {
+    return this.carParkingSlots;
   }
 
 

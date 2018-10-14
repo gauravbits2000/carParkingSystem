@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.markit.org.entity.CarParkingSlots;
 import com.markit.org.entity.EmployeeRegistration;
 import com.markit.org.entity.LoginBean;
 import com.markit.org.entity.QuarterParkingResult;
@@ -32,11 +33,27 @@ public class MarkitCarParkingController {
 	public List<EmployeeRegistration> registerEmployee(@RequestBody EmployeeRegistration employee){
 		return service.registerEmployee(employee);
 	}
-	
+
 	@GetMapping("/markit-car-parking/lucky-draw/")
-	public List<EmployeeRegistration> doCarParkingDraw(){
-		return service.doCarParkingDraw();
+	public List<EmployeeRegistration> doCarParkingDraw()
+	{
+		//return service.doCarParkingDraw();
+		CarParkingSlots carParkingSlots = new CarParkingSlots();
+		carParkingSlots.setMedicalEmergencySlots(5);
+		carParkingSlots.setFemaleLateShiftSlots(5);
+		carParkingSlots.setCarPoolSlots(5);		
+		carParkingSlots.setGeneralSlots(10);
+		return service.doCarParkingDraw(carParkingSlots);
 	}
+	
+	@PostMapping("/markit-car-parking/lucky-draw1")
+	public List<EmployeeRegistration> doCarParkingDraw1(@RequestBody CarParkingSlots carParkingSlots)
+	{
+		//return service.doCarParkingDraw();
+		return service.doCarParkingDraw(carParkingSlots);
+	}
+	
+
 	
 	@GetMapping("/fetch-employees")
 	public List<EmployeeRegistration> viewEmployee(){

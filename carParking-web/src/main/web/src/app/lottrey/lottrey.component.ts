@@ -1,16 +1,18 @@
 import { Component, OnInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import * as $ from 'jquery';
 import { EmployeeService } from 'src/app/employee/employee.service';
+//import { Employee } from 'src/app/employee/employee';
 import { Employee } from 'src/app/employee/employee';
-
+import { carParkingSlots } from 'src/app/lottrey/carParkingSlots';
 
 @Component({
   selector: 'app-lottrey',
   templateUrl: './lottrey.component.html',
   styleUrls: ['./lottrey.component.css']
 })
-export class LottreyComponent implements OnInit {
-
+export class LottreyComponent implements OnInit 
+{
+  model: any = {}; 
   employeeList : Employee[];
   resultTable: Employee[];
  // resultTempTable: Employee[];
@@ -131,6 +133,11 @@ changePage(event: any) {
 
  	ngOnInit() 
  	{    
+     this.model.medicalEmergencySlots = 5;
+     this.model.femaleLateShiftSlots = 5;
+     this.model.carPoolSlots = 5;
+     this.model.generalSlots = 10;
+     
  	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080/fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	     console.log(data);
@@ -287,9 +294,10 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
         
   }
 
-  getLuckyDrawResult(){
-    console.log("data");
-    this.employeeService.getParkingDraw("http://localhost:8080/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
+  getLuckyDrawResult()
+  {
+    this.employeeService.getParkingDraw1("http://localhost:8080/markit-car-parking/lucky-draw1/", this.model).subscribe((data: any[]) => {
+    //  this.employeeService.getParkingDraw("http://localhost:8080/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.resultTable = <Employee[]>data;
       this.getTempLuckyDrawResult();
       console.log("Result" + this.resultTable);
