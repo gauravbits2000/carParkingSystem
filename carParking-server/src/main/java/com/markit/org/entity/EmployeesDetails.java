@@ -15,6 +15,7 @@ public class EmployeesDetails {
 	private String employeeEmail;
 	@Column(name = "IS_ADMIN")
 	private String isAdmin;
+	private String baseLocation;
 	
 	public String getEmployeeName() {
 		return employeeName;
@@ -41,12 +42,23 @@ public class EmployeesDetails {
 	public void setIsAdmin(String isAdmin) {
 		this.isAdmin = isAdmin;
 	}
-	public EmployeesDetails(String employeeName, String employeeId, String employeeEmail, String isAdmin) {
+	
+	
+	public String getBaseLocation() {
+		return baseLocation;
+	}
+	public void setBaseLocation(String baseLocation) {
+		this.baseLocation = baseLocation;
+	}
+	
+	public EmployeesDetails(String employeeName, String employeeId, String employeeEmail, String isAdmin,
+			String baseLocation) {
 		super();
 		this.employeeName = employeeName;
 		this.employeeId = employeeId;
 		this.employeeEmail = employeeEmail;
 		this.isAdmin = isAdmin;
+		this.baseLocation = baseLocation;
 	}
 	public EmployeesDetails() {
 		super();

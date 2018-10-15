@@ -12,7 +12,11 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
+import javax.naming.ldap.Control;
 import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.PagedResultsControl;
+import javax.naming.ldap.PagedResultsResponseControl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -46,13 +50,13 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 
 		final String MEMBER_OF = "memberOf";
 		final String[] attrIdsToSearch = new String[] { MEMBER_OF, "uid", "mail", "displayName",
-				"employeeID" };
+				"employeeID", "l" };
 		String adminGroup ="CN=gsg-PARKING_ADMIN_GROUP,OU=Global Security Groups,OU=Standard Accounts,DC=markit,DC=partners";
 		//String userBase = "DC=markit,DC=partners";
 		Hashtable<String, String> env = new Hashtable<String, String>();
 
 		// For testing Purpose Only
-		String username = "***";
+		String username = "****";
 		String password = "****";
 		
 		// Configure our directory context environment.
@@ -67,7 +71,7 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 		
 		
 		try {
-			DirContext ldapContext = new InitialLdapContext(env, null);
+			LdapContext ldapContext = new InitialLdapContext(env, null);
 			
 			List<EmployeesDetails> employeesList = new ArrayList<EmployeesDetails>();
 
@@ -82,53 +86,84 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 			// Specify the Base for the search
 			String searchBase = "OU=India,OU=APAC,OU=Standard Accounts2,OU=Standard Accounts,DC=markit,DC=partners";
 
-			// initialize counter to total the results
-			int totalResults = 0;
-
-			// Search for objects using the filter
-			NamingEnumeration<SearchResult> fetchData = ldapContext.search(searchBase, searchFilter, searchCtls);
-
-			// Loop through the search results
-			while (fetchData.hasMoreElements()) {
-				SearchResult sr = (SearchResult) fetchData.next();
-				totalResults++;
-
-
-				Attributes attributes = sr.getAttributes();
+			int total;
+			byte[] cookie = null;
+			ldapContext.setRequestControls(new Control[] { new PagedResultsControl(1000,Control.NONCRITICAL) });
+			
+			
+			do{
 				
+				// Search for objects using the filter
+				NamingEnumeration<SearchResult> fetchData = ldapContext.search(searchBase, searchFilter, searchCtls);
 
-				
-	           
-				if(attributes.get(attrIdsToSearch[2]) == null || attributes.get(attrIdsToSearch[4]) == null)
-				{
-					// Filter out invalid entries where email Id or Employee Id is missing like CN=Markit India CR
-					System.out.println("Email/EmployeeId not found for "+ sr.getName());
-				}
-				else
-				{   
-					String isAdmin ="N";
-					String group =null;
-					Attribute attr = attributes.get(attrIdsToSearch[0]);
-					if(null != attr){
-						NamingEnumeration memberOfEnum = attr.getAll();
-						while (memberOfEnum.hasMore()) {
-							
-							group = (String) memberOfEnum.next();
-							if(adminGroup.equalsIgnoreCase(group)){
-								 isAdmin = "Y";
+				// Loop through the search results
+				while (fetchData.hasMoreElements()) {
+					SearchResult sr = (SearchResult) fetchData.next();
+					Attributes attributes = sr.getAttributes();
+
+					if (attributes.get(attrIdsToSearch[2]) == null || attributes.get(attrIdsToSearch[4]) == null || attributes.get(attrIdsToSearch[5]) == null) {
+						// Filter out invalid entries where email Id or Employee Id
+						// is missing like CN=Markit India CR
+						System.out.println("Email/EmployeeId not found for " + sr.getName());
+					} else {
+						String isAdmin = "N";
+						String group = null;
+						Attribute attr = attributes.get(attrIdsToSearch[0]);
+						if (null != attr) {
+							NamingEnumeration memberOfEnum = attr.getAll();
+							while (memberOfEnum.hasMore()) {
+
+								group = (String) memberOfEnum.next();
+								if (adminGroup.equalsIgnoreCase(group)) {
+									isAdmin = "Y";
+								}
+
 							}
-							
 						}
+						String employeeEmail = attributes.get(attrIdsToSearch[2]).get().toString();
+						String employeeName = attributes.get(attrIdsToSearch[3]).get().toString();
+						String employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
+						String baseLocation = attributes.get(attrIdsToSearch[5]).get().toString();
+						EmployeesDetails empDetails = new EmployeesDetails(employeeName, employeeId, employeeEmail,
+								isAdmin,baseLocation);
+						employeesList.add(empDetails);
 					}
-		            String employeeEmail = attributes.get(attrIdsToSearch[2]).get().toString();
-		            String employeeName = attributes.get(attrIdsToSearch[3]).get().toString();
-		            String employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
-		            EmployeesDetails empDetails = new EmployeesDetails(employeeName,employeeId,employeeEmail,isAdmin);
-		            employeesList.add(empDetails);
-			   }				
-			}
-			System.out.println("Total results "+ totalResults);
-			empDetailsRepository.saveAll(employeesList);
+				}
+				empDetailsRepository.saveAll(employeesList);
+				
+				  // Examine the paged results control response
+		        Control[] controls = ldapContext.getResponseControls();
+		        if (controls != null) {
+		          for (int i = 0; i < controls.length; i++) {
+		            if (controls[i] instanceof PagedResultsResponseControl) {
+		              PagedResultsResponseControl prrc = (PagedResultsResponseControl) controls[i];
+		              total = prrc.getResultSize();
+		              if (total != 0) {
+		                System.out.println("***************** END-OF-PAGE "
+		                    + "(total : " + total + ") *****************\n");
+		              } else {
+		                System.out.println("***************** END-OF-PAGE "
+		                    + "(total: unknown) ***************\n");
+		              }
+		              cookie = prrc.getCookie();
+		            }
+		          }
+		        } else {
+		          System.out.println("No controls were sent from the server");
+		        }
+		        // Re-activate paged results
+		        ldapContext.setRequestControls(new Control[] { new PagedResultsControl(
+		            1000, cookie, Control.CRITICAL) });
+				
+				
+				
+				
+			}while(cookie != null);
+			
+			ldapContext.close();
+			
+			
+
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
