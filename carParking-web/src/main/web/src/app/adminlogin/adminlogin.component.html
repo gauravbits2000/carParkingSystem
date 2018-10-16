@@ -6,35 +6,39 @@
 
     <div class="col-sm-4">
       <div class="container mt-5">
-        <div class="container mb-2"> 
+        <div class="container mb-2">
           <img src="https://sts.ihsmarkit.com/adfs/portal/logo/logo.png" />
         </div>
         <div class="container mb-5">
-            <h5>Parking Allocation Portal</h5>
-          </div>
+          <h5>Parking Allocation Portal</h5>
+        </div>
         <div class="container mb-2">
           <h6>Sign in with your organizational account</h6>
         </div>
 
-        <form name="form" (ngSubmit)="f.form.valid && tryLogin()" #f="ngForm" novalidate>
+        <div class="container">
+          <form name="form" (ngSubmit)="f.form.valid && tryLogin()" #f="ngForm" novalidate>
             <div class="form-group">
-                <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.invalid }" required />
-                <div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
-                    <div *ngIf="username.errors.required">Username is required</div>
-                </div>
+              <input type="text" class="form-control col-md-10" name="username" [(ngModel)]="model.username" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.invalid }"
+                required />
+              <div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
+                <div *ngIf="username.errors.required">Username is required</div>
+              </div>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
-                <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
-                    <div *ngIf="password.errors.required">Password  is required</div>
-                </div>
+              <input type="password" class="form-control col-md-10" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }"
+                required />
+              <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                <div *ngIf="password.errors.required">Password is required</div>
+              </div>
             </div>
-            
+
             <div class="form-group">
-                <button class="btn btn-primary">Sign In</button>
+              <button class="btn btn-primary">Sign In</button>
             </div>
-        </form>
-        
+          </form>
+        </div>
+
       </div>
       <div *ngIf="!isValidLogin">
         <strong style="color: red">Invalid Credentials</strong>

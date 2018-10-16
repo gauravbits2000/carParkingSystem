@@ -1,66 +1,67 @@
-<header class="topnav">
-  <section class="content">
-    <div class="top-nav logo">
-      <a href="/index.html">
-        <img src="https://cdn.ihs.com/www2/a/p/media/images/ihsmarkit.svg" alt="IHS Logo">
-      </a>
-    </div>
-    <nav class="component-menu component-menu0" data-component="true" data-component-id="component-menu0">
-      <div class="drop-down-menu">
-        <div class="clearfix" id="mega-menu">
-          <div class="top-level-nav">
-            <a class="nav-link active" routerLink="/login/submitdetails">ENROLL</a>
-          </div>
-          <div class="top-level-nav">
-            <a class="nav-link" routerLink="/login/listdetails">NOMINATIONS</a>
-          </div>
-          <div *ngIf=isAdmin class="top-level-nav">
-            <a  class="nav-link" routerLink="/login/parkingdraw" target="_self">DRAW</a>
-          </div>
-          <div class="top-level-nav">
-            <a class="nav-link" routerLink="/login/parkinghistory" target="_self">HISTORY</a>
-          </div>
-          <div class="top-level-nav">
+<div class="background">
+  <header class="topnav">
+    <section class="content">
+      <div class="top-nav logo">
+        <a href="/index.html">
+          <img src="https://cdn.ihs.com/www2/a/p/media/images/ihsmarkit.svg" alt="IHS Logo">
+        </a>
+      </div>
+      <nav class="component-menu component-menu0" data-component="true" data-component-id="component-menu0">
+        <div class="drop-down-menu">
+          <div class="clearfix" id="mega-menu">
+            <div class="top-level-nav">
+              <a class="nav-link active" routerLink="/login/submitdetails">ENROLL</a>
+            </div>
+            <div class="top-level-nav">
+              <a class="nav-link" routerLink="/login/listdetails">NOMINATIONS</a>
+            </div>
+            <div *ngIf=isAdmin class="top-level-nav">
+              <a class="nav-link" routerLink="/login/parkingdraw" target="_self">DRAW</a>
+            </div>
+            <div class="top-level-nav">
+              <a class="nav-link" routerLink="/login/parkinghistory" target="_self">HISTORY</a>
+            </div>
+            <div class="top-level-nav">
               <a class="nav-link" routerLink="/" target="_self">LOGOUT</a>
             </div>
+          </div>
+        </div>
+      </nav>
+    </section>
+  </header>
+
+  <div class="row data-container">
+    <div class="data-container-holder">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <section class="footer-content">
+      <div class="footer-logo">
+        <div class="logo">
+          <img src="https://cdn.ihs.com/www2/gps/img/IHSM_Logo_w.svg" alt="IHS Logo">
+        </div>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/IHS" title="Linkedin">
+            <span class="linkedin"></span>
+          </a>
+          <a href="https://twitter.com/ihsmarkit" title="Twitter">
+            <span class="twitter"></span>
+          </a>
+          <a href="https://www.youtube.com/IHSMarkit" title="Youtube">
+            <span class="youtube"></span>
+          </a>
+          <a href="https://www.facebook.com/IHSMarkit" title="Facebook">
+            <span class="facebook"></span>
+          </a>
         </div>
       </div>
-    </nav>
-  </section>
-</header>
-
-<div class="row data-container">
-  <div class="bgbanner">&nbsp;</div>
-  <div class="data-container-holder">
-    <router-outlet></router-outlet>
-  </div>
+    </section>
+    <section class="footer-content">
+      <div class="footer-lower">
+        <div class="footer-copyright">Copyright © 2018 IHS Markit. All Rights Reserved</div>
+      </div>
+    </section>
+  </footer>
 </div>
-
-<footer class="page-footer">
-  <section class="footer-content">
-    <div class="footer-logo">
-      <div class="logo">
-        <img src="https://cdn.ihs.com/www2/gps/img/IHSM_Logo_w.svg" alt="IHS Logo">
-      </div>
-      <div class="footer-social">
-        <a href="https://www.linkedin.com/company/IHS" title="Linkedin">
-          <span class="linkedin"></span>
-        </a>
-        <a href="https://twitter.com/ihsmarkit" title="Twitter">
-          <span class="twitter"></span>
-        </a>
-        <a href="https://www.youtube.com/IHSMarkit" title="Youtube">
-          <span class="youtube"></span>
-        </a>
-        <a href="https://www.facebook.com/IHSMarkit" title="Facebook">
-          <span class="facebook"></span>
-        </a>
-      </div>
-    </div>
-  </section>
-  <section class="footer-content">
-    <div class="footer-lower">
-      <div class="footer-copyright">Copyright © 2018 IHS Markit. All Rights Reserved</div>
-    </div>
-  </section>
-</footer>

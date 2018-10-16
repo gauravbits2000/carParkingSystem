@@ -67,7 +67,10 @@
 	font-weight: 300;
 	font-style: normal
 }
-
+body {
+    overflow-x: hidden;
+    /* background: url('./assets/background.jpg'); */
+}
 header.topnav .logo {
     transform: translate3d(0,0,1px);
     width: 160px;
@@ -113,6 +116,11 @@ header.topnav .logo {
     text-decoration: none;
 }
 
+.active-nav{
+    color: #00AB4A;
+    text-decoration: none;
+}
+
 #mega-menu .top-level-nav:hover a {
     color: #00AB4A;
     border-bottom: 3px solid #00AB4A;
@@ -124,6 +132,7 @@ header.topnav .logo {
     height: 320px;
     width: 100%;
     background-image: url('./assets/ihsbanner.jpg');
+    background-repeat: round;
 }
 
 .center{
@@ -136,10 +145,9 @@ header.topnav .logo {
     color: #B3B3B3;
     padding: 20px 0;
     font-size: 12px;
-    margin-top: 50px;
-    /* position: absolute; */
     width: 100%;
-    /* bottom: 0; */
+    position: absolute;
+    bottom: 0;
 }
 
 .page-footer .footer-logo {
@@ -280,13 +288,19 @@ header.topnav .logo {
 
 .data-container{    
     position: relative;
-    height: 680px;
+}
+
+.background{
+    background: url('./assets/background.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .data-container-holder{
     padding: 2% 5%;
-    top: 80px;
-    position: absolute;
+    margin-top: 5%;
     width: 100%;
 }
 
@@ -310,7 +324,7 @@ header.topnav .logo {
 }
 
 .bg-white{
-    background-color: white;
+    background-color: white !important;
 }
 
 .snapshot-height{
@@ -468,4 +482,31 @@ input[type="text"]:focus {
 
   .error-highlight{
       border : 1px solid red;
+  }
+  
+  table{
+      border : 1px solid gainsboro;
+  }
+  
+  .table th{
+    font-weight: 600;
+  }
+
+  .table-sm td, th{
+      padding-top: .6rem !important;
+      padding-bottom: .6rem !important;
+  }
+
+  .animation {
+    stroke: red;
+    stroke-width: 3;
+    stroke-dasharray: 50, 750;
+    stroke-dashoffset: 0;
+    fill: none;
+    animation: border 5s linear infinite;
+  }
+  @keyframes border {
+    to {
+      stroke-dashoffset: -800;
+    }
   }
