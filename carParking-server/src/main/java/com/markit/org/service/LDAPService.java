@@ -118,12 +118,15 @@ public class LDAPService {
 				email = (String) emailEnum.next();
 				
 			}
-
-			NamingEnumeration displayNameEnum = diaplayNameAttr.getAll();
-			while (displayNameEnum.hasMore()) {
-				displayName = (String) displayNameEnum.next();
-				
+            
+			if(diaplayNameAttr != null){
+				NamingEnumeration displayNameEnum = diaplayNameAttr.getAll();
+				while (displayNameEnum.hasMore()) {
+					displayName = (String) displayNameEnum.next();
+					
+				}
 			}
+			
 
 			NamingEnumeration employeeIDEnum = employeeIDAttr.getAll();
 			while (employeeIDEnum.hasMore()) {
@@ -131,30 +134,43 @@ public class LDAPService {
 				
 			}
 			
-			NamingEnumeration titleEnum = titleAttr.getAll();
-			while (titleEnum.hasMore()){
-				title = (String) titleEnum.next();
+			if(titleAttr != null){
+				NamingEnumeration titleEnum = titleAttr.getAll();
+				while (titleEnum.hasMore()){
+					title = (String) titleEnum.next();
+				}
 			}
 			
-			NamingEnumeration mobileEnum = mobileAttr.getAll();
-			while (mobileEnum.hasMore()){
-				mobile = (String) mobileEnum.next();
+			
+			if(mobileAttr != null){
+				NamingEnumeration mobileEnum = mobileAttr.getAll();
+				while (mobileEnum.hasMore()){
+					mobile = (String) mobileEnum.next();
+				}
 			}
 			
-			NamingEnumeration telephoneNumberEnum = telephoneNumberAttr.getAll();
-			while (telephoneNumberEnum.hasMore()){
-				telephoneNumber = (String) telephoneNumberEnum.next();
+			if(telephoneNumberAttr != null){
+				NamingEnumeration telephoneNumberEnum = telephoneNumberAttr.getAll();
+				while (telephoneNumberEnum.hasMore()){
+					telephoneNumber = (String) telephoneNumberEnum.next();
+				}
 			}
 			
-			NamingEnumeration locationEnum = locationAttr.getAll();
-			while (locationEnum.hasMore()){
-				location = (String) locationEnum.next();
+			if(locationAttr != null){
+				NamingEnumeration locationEnum = locationAttr.getAll();
+				while (locationEnum.hasMore()){
+					location = (String) locationEnum.next();
+				}
 			}
 			
-			NamingEnumeration uidEnum = uidAttr.getAll();
-			while (uidEnum.hasMore()){
-				uid = (String) uidEnum.next();
+			
+			if(uidAttr != null){
+				NamingEnumeration uidEnum = uidAttr.getAll();
+				while (uidEnum.hasMore()){
+					uid = (String) uidEnum.next();
+				}
 			}
+			
 			
 
 			EmployeeRegistration employee = new EmployeeRegistration();
