@@ -425,6 +425,7 @@ header.topnav .logo {
     display: inline-block;
     padding: .4em .7em;
     margin: .2em;
+    width: 100%;
 }
 
 .ml-5{
@@ -489,7 +490,7 @@ input[type="text"]:focus {
   }
   
   .table th{
-    font-weight: 600;
+    font-weight: 400;
   }
 
   .table-sm td, th{
@@ -509,4 +510,14 @@ input[type="text"]:focus {
     to {
       stroke-dashoffset: -800;
     }
+  }
+
+  input.disabled{
+      background-color: white !important;
+      color: darkgray !important;
+      font-weight: 400 !important;
+  }
+
+  .history-title{
+      font-weight: 400;
   }

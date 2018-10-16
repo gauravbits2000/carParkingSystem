@@ -2,68 +2,76 @@
 
   <form class="form-inline" #ParkingDrawForm = "ngForm" >
 
-    <div class="md-form form-group" >
+    <div class="md-form form-group col-md-3" >
       <i class="fa prefix"></i>
       <input mdbInputDirective type="text" 
              [(ngModel)]="model.medicalEmergencySlots" #medicalEmergencySlots = "ngModel" 
       size="14" class="form-control" id="form8" name="medicalEmergencySlots" pattern="[0-9]{0,4}"
       data-error="wrong" data-success="success" (ngModelChange)="valuechange($event)" 
       max = "30" maxlength="30" required >
-      <label for="form8">Emergency Slots</label>
+      <label for="form8" class="pl-3">Medical Emergency</label>
     </div>
 
-    <div class="md-form form-group">
+    <div class="md-form form-group col-md-3">
       <i class="fa prefix"></i>
       <input mdbInputDirective type="number" [(ngModel)]="model.femaleLateShiftSlots" 
       #femaleLateShiftSlots="ngModel" size="15" value="5" class="form-control" id="form9"
        name="femaleLateShiftSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
        (ngModelChange)="valuechange($event)" required>
-      <label for="form9">Female Late-Shit Slots</label>
+      <label for="form9" class="pl-3">Female Night Shift</label>
     </div>
 
-    <div class="md-form form-group">
+    <div class="md-form form-group col-md-3">
       <i class="fa prefix"></i>
       <input mdbInputDirective type="number" size="15"  [(ngModel)]="model.carPoolSlots" value="5" 
       class="form-control" id="form10" name="carPoolSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
       (ngModelChange)="valuechange($event)" required>
-      <label for="form10">Car Pool Slots</label>
-    </div>
-    <div class="md-form form-group">
-       <i class="fa prefix"></i>
-      <input mdbInputDirective type="number" size="15" [(ngModel)]="model.generalSlots" value="10" 
-      class="form-control" id="form11" name="generalSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
-     (ngModelChange)="valuechange($event)" readonly>
-      <label for="form11">General Slots</label>
+      <label for="form10" class="pl-3">Pool Parking</label>
     </div>
 
-    <div class="md-form form-group">
+    <div class="md-form form-group col-md-3">
+      <select name="location" class="pl-2">
+        <option>Noida</option>
+        <option>Gurgaon</option>
+      </select>
+    </div>
+
+    <div class="md-form form-group col-md-3">
       <i class="fa prefix"></i>
       <input mdbInputDirective type="number" size="15" [(ngModel)]="model.reservedSlots" value="5" 
              class="form-control" id="form12" name="reservedSlots" pattern="[0-9]{0,4}" 
              data-error="cannot be less than 0" (ngModelChange)="valuechange($event)"
              required>
-      <label for="form12">Reserved Slots</label>
-    </div>
+      <label for="form12" class="pl-3">Reserved</label>
+    </div>    
 
-    <div class="md-form form-group">
+    <div class="md-form form-group col-md-3">
       <i class="fa prefix"></i>
-      <input   mdbInputDirective type="number" size="15" [(ngModel)]="model.totalSlots" value="30" 
-             class="form-control" id="form13" name="totalSlots" readonly>
-      <label for="form13">Total Slots</label>
-    </div>
+     <input mdbInputDirective type="number" size="15" [(ngModel)]="model.generalSlots" value="10" 
+     class="form-control disabled" id="form11" name="generalSlots" pattern="[0-9]{0,4}" data-error="cannot be less than 0"
+    (ngModelChange)="valuechange($event)" readonly>
+     <label for="form11" class="pl-3">General</label>
+   </div>
 
-    <div class="md-form form-group">
-      <i class="fa prefix"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button mdbBtn color="primary" size="mg" class="waves-light"           
-              mdbWavesEffect [disabled]="startDraw || ParkingDrawForm.invalid" 
-              id="startBtn" (click)="getLuckyDrawResult()">Start Draw</button>
-    </div>
+   <div class="md-form form-group col-md-3">
+    <i class="fa prefix"></i>
+    <input   mdbInputDirective type="number" size="15" [(ngModel)]="model.totalSlots" value="30" 
+           class="form-control disabled" id="form13" name="totalSlots" readonly>
+    <label for="form13" class="pl-3">Total</label>
+  </div>
 
-    <div class="md-form form-group">
-      <i class="fa prefix"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <div class="md-form form-group col-md-3">
+    <i class="fa prefix"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button mdbBtn color="primary" size="mg" class="waves-light btn-success w-50"           
+            mdbWavesEffect [disabled]="startDraw || ParkingDrawForm.invalid" 
+            id="startBtn" (click)="getLuckyDrawResult()">Start Draw</button>
+  </div>
+
+    <div class="md-form form-group col-md-3">
+      <!-- <i class="fa prefix"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <button mdbBtn color="primary" size="mg" class="waves-light"           
               mdbWavesEffect 
-              id="sendEmail" (click)="sendEmail()" >Send Mail</button>
+              id="sendEmail" (click)="sendEmail()" >Send Mail</button> -->
     </div>
 
   </form>
@@ -83,7 +91,7 @@
               <th scope="row" class="th-lg">Employee Id</th>
               <th class="th-lg">Name</th>
               <th class="th-lg">Email</th>
-              <th class="th-lg">Vehicle Registration Number</th>
+              <th class="th-lg">Vehicle Number</th>
             </tr>
           </thead>
           <!--Table head-->

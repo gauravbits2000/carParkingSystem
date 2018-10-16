@@ -1,10 +1,15 @@
 <div class="container col-md-12 p-0 nominations-container">
-  <div class="col-md-12 text-right">
-    <select class="pl-2"  required [(ngModel)]='optionSelected' (change)="submitDetails()">
-      <option *ngFor='let option of options' [value]="option">
-        {{option}}
-      </option>
-    </select>
+  <div class="row col-md-12 mt-1 mb-2">
+    <div class="col-md-10 pt-1">
+      <h4 class="text-center history-title mt-2 ml-4">Quarterly Parking Result</h4>
+    </div>
+    <div class="col-md-2 pt-1">
+      <select class="pl-2 text-center"  required [(ngModel)]='optionSelected' (change)="submitDetails()">
+        <option *ngFor='let option of options' [value]="option">
+          {{option}}
+        </option>
+      </select>
+    </div>
 
   </div>
 
