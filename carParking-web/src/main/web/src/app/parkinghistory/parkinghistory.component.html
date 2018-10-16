@@ -9,7 +9,7 @@
   </div>
 
 
-  <table class="table table-bordred table-striped">
+  <table class="table table-bordred table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -27,7 +27,10 @@
         <td>{{parkingHistory.employeeName}}</td>
         <td>{{parkingHistory.carParkingId}}</td>
         <td>{{parkingHistory.vehicleRegistrationNumber}}</td>
-        <td>{{parkingHistory.requestCategory}}</td>
+        <td *ngIf="parkingHistory.requestCategory === 'medical_emergency'">Medical Emergency</td>
+        <td *ngIf="parkingHistory.requestCategory === 'female_night_shift'">Female Night Shift</td>
+        <td *ngIf="parkingHistory.requestCategory === 'pool_parking'">Pool Parking</td>
+        <td *ngIf="parkingHistory.requestCategory === 'general_parking'">General Parking</td>
         <td *ngIf="parkingHistory.poolEmployeeName !== null">{{parkingHistory.poolEmployeeName}}</td>
         <td *ngIf="parkingHistory.poolEmployeeName === null">--</td>
         <td *ngIf="parkingHistory.poolEmployeeVehicle !== null">{{parkingHistory.poolEmployeeVehicle}}</td>

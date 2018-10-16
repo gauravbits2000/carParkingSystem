@@ -10,6 +10,7 @@ import { Employee } from 'src/app/employee/employee';
 export class ListdetailsComponent implements OnInit {
 
   employeeList : Employee[];
+  page: number = 1;
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
