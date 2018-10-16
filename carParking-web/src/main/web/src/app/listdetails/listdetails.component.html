@@ -24,7 +24,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of employeeList | orderBy: key : reverse | paginate: { itemsPerPage: 6, currentPage: p };  let i = index;">
+      <tr *ngFor="let employee of employeeList | orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p };  let i = index;">
         <th scope="row">{{i+ 1}}</th>
         <td>{{employee.employeeName}}</td>
         <td>{{employee.employeeId}}</td>
@@ -38,7 +38,9 @@
         <td *ngIf="employee.poolEmployeeVehicle !== null">{{employee.poolEmployeeVehicle}}</td>
         <td *ngIf="employee.poolEmployeeVehicle === null">--</td>
       </tr>
-    </tbody>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </tbody>    
   </table>
+  <div *ngIf="dataAvailable" class="text-right">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
 </div>

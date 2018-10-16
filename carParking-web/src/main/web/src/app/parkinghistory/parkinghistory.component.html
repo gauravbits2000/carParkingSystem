@@ -39,7 +39,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let parkingHistory of parkingHistoryList | orderBy: key : reverse | paginate: { itemsPerPage: 6, currentPage: p }; let i = index;">
+      <tr *ngFor="let parkingHistory of parkingHistoryList | orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p }; let i = index;">
         <th scope="row">{{i+ 1}}</th>
         <td>{{parkingHistory.employeeName}}</td>
         <td>{{parkingHistory.carParkingId}}</td>
@@ -54,6 +54,8 @@
         <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
       </tr>
     </tbody>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </table>
+  <div *ngIf="dataAvailable" class="text-right">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
 </div>
