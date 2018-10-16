@@ -18,16 +18,28 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Employee Name</th>
-        <th scope="col">Car Parking Id</th>
-        <th scope="col">Vehicle Number</th>
-        <th scope="col">Request Category</th>
-        <th scope="col">Pool Employee Name</th>
-        <th scope="col">Pool Vehicle Number</th>
+        <th scope="col"  (click)="sort('empname')">Employee Name
+            <span class="glyphicon sort-icon" *ngIf="key =='empname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th scope="col" (click)="sort('parkingid')">Car Parking Id
+            <span class="glyphicon sort-icon" *ngIf="key =='parkingid'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th scope="col" (click)="sort('vehicleno')">Vehicle Number
+            <span class="glyphicon sort-icon" *ngIf="key =='vehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th scope="col" (click)="sort('category')">Request Category
+            <span class="glyphicon sort-icon" *ngIf="key =='category'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th scope="col" (click)="sort('pempname')">Pool Employee Name
+            <span class="glyphicon sort-icon" *ngIf="key =='pempname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
+        <th scope="col" (click)="sort('pvehicleno')">Pool Vehicle Number
+            <span class="glyphicon sort-icon" *ngIf="key =='pvehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let parkingHistory of parkingHistoryList; let i = index;">
+      <tr *ngFor="let parkingHistory of parkingHistoryList | orderBy: key : reverse | paginate: { itemsPerPage: 6, currentPage: p }; let i = index;">
         <th scope="row">{{i+ 1}}</th>
         <td>{{parkingHistory.employeeName}}</td>
         <td>{{parkingHistory.carParkingId}}</td>
@@ -42,5 +54,6 @@
         <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
       </tr>
     </tbody>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </table>
 </div>

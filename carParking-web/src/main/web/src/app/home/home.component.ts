@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   }
 
   employeeLogin(){
-    this.router.navigateByUrl('/login/submitdetails');
+    this.router.navigateByUrl('/parking/submitdetails');
   }
   adminLogin(){
     this.router.navigate(['/adminlogin'])

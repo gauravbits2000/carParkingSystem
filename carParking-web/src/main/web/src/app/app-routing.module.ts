@@ -13,7 +13,7 @@ import { ParkinghistoryComponent } from './parkinghistory/parkinghistory.compone
 
 const appRoutes : Routes = [
     { path : '',component: AdminloginComponent},
-    { path : 'login',component: LoginComponent,children: [
+    { path : 'parking',component: LoginComponent,children: [
         { path : 'submitdetails', component: EmployeeComponent },
         { path : 'listdetails', component: ListdetailsComponent },
         { path : 'parkingdraw', component: LottreyComponent },

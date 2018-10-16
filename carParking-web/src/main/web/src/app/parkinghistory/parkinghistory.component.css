@@ -11,3 +11,7 @@ input.ng-invalid.ng-touched {
 .example-full-width {
   width: 100%;
 }
+
+thead>tr>th {
+  cursor: pointer;
+}

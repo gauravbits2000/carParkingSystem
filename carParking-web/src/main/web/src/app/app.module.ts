@@ -4,6 +4,8 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { Ng2OrderModule } from 'ng2-order-pipe';
 
 import { AppComponent } from './app.component';
 import { EmployeeComponent } from './employee/employee.component';
@@ -47,7 +49,9 @@ export function startupServiceFactory(startupService: StartupService): Function 
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
     MatAutocompleteModule,
-    MatInputModule
+    MatInputModule,
+    NgxPaginationModule,
+    Ng2OrderModule
   ],
   schemas : [NO_ERRORS_SCHEMA],
   providers: [EmployeeService,

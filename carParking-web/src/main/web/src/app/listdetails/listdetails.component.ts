@@ -11,12 +11,13 @@ export class ListdetailsComponent implements OnInit {
 
   employeeList : Employee[];
   page: number = 1;
+  p: number = 1;
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
     setTimeout(()=>{
 
-      this.employeeService.getEmployeeDetails("http://localhost:8080/fetch-employees").subscribe((data: any[]) => {
+      this.employeeService.getEmployeeDetails("/fetch-employees").subscribe((data: any[]) => {
       this.employeeList = <Employee[]>data;
     }, err => {
       console.log(err);
@@ -25,9 +26,17 @@ export class ListdetailsComponent implements OnInit {
     }, 500);
   }
 
+  //sorting
+key: string = 'empname'; //set default
+reverse: boolean = false;
+sort(key){
+  this.key = key;
+  this.reverse = !this.reverse;
+}
+
   viewDetails(){
     console.log("data");
-    this.employeeService.getEmployeeDetails("http://localhost:8080/fetch-employees").subscribe((data: any[]) => {
+    this.employeeService.getEmployeeDetails("/fetch-employees").subscribe((data: any[]) => {
       this.employeeList = <Employee[]>data;
     }, err => {
       console.log(err);

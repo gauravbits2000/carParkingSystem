@@ -144,7 +144,7 @@ changePage(event: any) {
       this.model.totalSlots = 30;
 
     
- 	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080/fetch-employees").subscribe((data: Employee[]) => 
+ 	   this.employeeService.getEmployeeDetailsAll("/fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	     console.log(data);
 	       this.employeeList = data;
@@ -318,8 +318,8 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
 
   getLuckyDrawResult()
   {
-    this.employeeService.startLuckyDraw("http://localhost:8080/markit-car-parking/start-lucky-draw/", this.model).subscribe((data: any[]) => {
-    //  this.employeeService.getParkingDraw("http://localhost:8080/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
+    this.employeeService.startLuckyDraw("/markit-car-parking/start-lucky-draw/", this.model).subscribe((data: any[]) => {
+    //  this.employeeService.getParkingDraw("/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.resultTable = <Employee[]>data;
       this.getTempLuckyDrawResult();
       console.log("Result" + this.resultTable);
@@ -333,7 +333,7 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
 
   sendEmail()
   {
-    this.employeeService.sendEmail("http://localhost:8080/markit-car-parking/send-email").subscribe((data: any[]) => 
+    this.employeeService.sendEmail("/markit-car-parking/send-email").subscribe((data: any[]) => 
     {
     
     }, err => {
