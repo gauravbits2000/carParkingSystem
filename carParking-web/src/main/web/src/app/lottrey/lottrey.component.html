@@ -1,4 +1,4 @@
-<div class="container col-md-12" >
+<div class="container col-md-12 p-0" >
 
   <form class="form-inline" #ParkingDrawForm = "ngForm" >
 
@@ -69,13 +69,13 @@
   </form>
 
   <!--main container which contains all employee data and is displayed initially-->
-  <div class="inner-container">
+  <div class="inner-container-pre">
 
-    <div class="card card-cascade narrower mt-4 card1">
+    <div class="card card-cascade narrower mt-4 card-pre">
 
       <div class="px-4">
         <!--Table-->
-        <table class="table table-striped table-responsive-md mb-0 table1" style="font-size: 20px;">
+        <table class="table table-striped table-responsive-md mb-0 table-pre" style="font-size: 20px;">
 
           <!--Table head-->
           <thead>
@@ -156,21 +156,25 @@
 
     </div>
 
-    <img [src]="imgPath" class="img1">
+    <img [src]="imgPath" class="img-pre">
 
   </div>
 
 
+<!--final big container containing the draw result starts -->
+
+<!--final big container containing the draw result ends -->
+
   <!-- second container which is shown on the right top side in which data from the image will be stored-->
   <!--< second container Begins-->
 
-  <div class="inner-container1">
+  <div class="inner-container-post">
   
-      <div class="card card-cascade narrower mt-4 card2" id = "temp">
+  <div class="card card-cascade narrower mt-4 card-post-temp" id = "temp">
 
         <div class="px-4">
           <!--Table-->
-          <table class="table table-hover table-responsive-md mb-0 table2" id = "temp1" style="font-size: 20px;">
+          <table class="table table-hover table-responsive-md mb-0 table-post-temp" id = "temp1" style="font-size: 20px;">
   
             <!--Table head-->
             <thead>
@@ -211,29 +215,14 @@
         <!--Bottom Table UI-->
   
       </div>
-    
 
-
-    <img [src]="imgPath1" class="img2">
-
-  </div>
-
-
-  <!-- second container Ends-->
-
-
-
-  <!--final Result container begins-->
-
-  <!-- This conatiner shows final result of the lucky draw-->
-
-  <div class="inner-container1">
   
-      <div class="card card-cascade narrower mt-4 card2" id = "final">
+  
+  <div class="card card-cascade narrower mt-4 card-post-final" id = "final">
 
         <div class="px-4">
           <!--Table-->
-          <table class="table table-striped table-responsive-md mb-0 table2 final1" style="font-size: 20px;">
+          <table class="table table-striped table-responsive-md mb-0 table-post-final final1" style="font-size: 20px;">
   
             <!--Table head-->
             <thead>
@@ -267,7 +256,7 @@
         <hr class="my-0">               
   
         <!--Bottom Table UI-->
-        <div class="d-flex justify-content-end lower-div" style="padding:0; ">
+        <div class="d-flex justify-content-start lower-div" style="padding:0; ">
 
           <!--Pagination -->
           <nav class="my-4 pt-1">
@@ -317,34 +306,19 @@
         <!--Bottom Table UI-->
   
       </div>
-    
 
 
-    <img [src]="imgPath1" class="img2">
-
-  </div>
-
-  <!-- final Result container ends-->
-
-  <!--Temp result container Begins-->
-  <!-- This container is behind the image from where 5 rows of result will be animated and moved 
-    to second container -->
-
-  <div class="inner-container2">
-
-    <div class="card card-cascade narrower mt-4 card3">
+  <div class="card card-cascade narrower mt-4 card-post-img">
 
       <div class="px-4">
         <!--Table-->
-        <table class="table table-hover table-responsive-md mb-0 table3" style="font-size: 20px;">
+        <table class="table table-hover table-responsive-md mb-0 table-post-img" style="font-size: 20px;">
 
           <!--Table head-->
           <thead>
               <tr>
                 <th scope="row" class="th-lg">Employee Id</th>
                 <th class="th-lg">Name</th>
-                <th class="th-lg">Email</th>
-                <th class="th-lg">Vehicle Registration Number</th>
               </tr>
             </thead>
             <!--Table head-->
@@ -355,8 +329,7 @@
               <tr *ngFor="let data of resultTempTable let i = index">
                   <td px-3 *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex" scope="row">{{data.employeeId}}</td>
                   <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.employeeName}}</td>
-                  <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.email}}</td>
-                  <td *ngIf="(i+1) >= firstVisibleIndex && (i+1) <= lastVisibleIndex">{{data.vehicleRegistrationNumber}}</td>
+                 
     
                
   
@@ -377,15 +350,28 @@
       </div>
       <!--Bottom Table UI-->
 
+      <img [src]="imgPath1" class="img-post">
+
     </div>
 
-    <img [src]="imgPath1" class="img2">
 
-  </div>
-
+  <!-- second container Ends-->
 
 
+
+  <!--final Result container begins-->
+
+  <!-- This conatiner shows final result of the lucky draw-->
+  <!-- final Result container ends-->
+
+  <!--Temp result container Begins-->
+  <!-- This container is behind the image from where 5 rows of result will be animated and moved 
+    to second container -->
   <!-- Temp result container Ends-->
 
+   
+  </div>
 </div>
+
+
 

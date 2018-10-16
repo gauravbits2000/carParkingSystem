@@ -143,6 +143,7 @@ changePage(event: any) {
      this.model.reservedSlots = 5;
       this.model.totalSlots = 30;
 
+    
  	   this.employeeService.getEmployeeDetailsAll("http://localhost:8080/fetch-employees").subscribe((data: Employee[]) => 
 	 	   {
 	 	     console.log(data);
@@ -187,11 +188,14 @@ changePage(event: any) {
     this.imgPath1 = "../assets/gift_marvel.gif";
 
 
-    var table1 = $(".card1");
-    var table2 = $(".card2");
-    var table3 = $(".card3");
+    var cardPre = $(".card-pre"); //1
+    var cardPostTemp = $(".card-post-temp");  //2
+    var cardPostFinal = $(".card-post-final");  //4
+    var cardPostImg = $(".card-post-img");  //5
+    
 
-   $('#final').css("display","none");  
+
+   //$('#final').css("display","none");  
   
     let firstVisibleIndex = this.firstVisibleIndex;
     let lastVisibleIndex = this.lastVisibleIndex;
@@ -212,85 +216,90 @@ if (this.resultTable.length % this.itemsPerPage1 === 0) {
     }
 
       
-      table1.addClass('inner-container-animate1').delay(3000).queue(function () {
-      table1.addClass('inner-container-animate2').delay(3000).queue(function () {
-      table2.addClass('inner-container-animate1');
-      table2.addClass('inner-container-animate3');
+      cardPre.addClass('inner-container-animate1').delay(3000).queue(function () {
+      cardPre.addClass('inner-container-animate2').delay(3000).queue(function () {
 
-      table3.addClass('inner-container-animate1');
-      table3.addClass('inner-container-animate4');
+      cardPostTemp.addClass('inner-container-animate1');
+      cardPostTemp.addClass('inner-container-animate3');
+
+      cardPostFinal.addClass('inner-container-animate1');
+      cardPostFinal.addClass('inner-container-animate3');
+
+      cardPostImg.addClass('inner-container-animate1');
+      cardPostImg.addClass('inner-container-animate4');
+
+              
         
-        
-        $('.img1').animate({ opacity: '1' }, 1000, function () {          
+        $('.img-pre').animate({ opacity: '1' }, 1000, function () {          
           for (var i = firstVisibleIndex,j=1; i <= lastVisibleIndex; i++,j++) {
             (function (i) {
               console.log(i);
                 window.setTimeout(function () {
-                $('.table1 tr:nth-child(' + i + ') td:nth-child(2)').addClass("text-bold1");                 
+                $('.table-pre tr:nth-child(' + i + ') td:nth-child(2)').addClass("text-bold1");                 
               }, j * 1000);
             }(i));
           } 
 
           setTimeout(function(){        
-            table1.css({opacity:'0'},1000);
-            //table1.fadeOut(1000);
-            $('.inner-container1').fadeIn(2000);
+            $('.inner-container-pre').css({display:'none'});
+            $('.inner-container-post').fadeIn(2000);
 
-           //$('.inner-container1').css({opacity:'1'});           
-            table2.css({opacity:'1'});
+             //$('.inner-container1').css({display:'block'});
 
-            $('.img1').css({opacity:0});
-            $('.img2').css({opacity:1});
+            //$('.img1').css({opacity:0});
+            $('.img-post').css({opacity:1});
             
             
-            var pos1 = $('.table2 tr:nth-child(1) td:nth-child(2)').offset();
-                     var pos2 = $('.table3 tr:nth-child(1) td:nth-child(2)').offset();
-                     var final_pos_top = (pos2.top-pos1.top) + pos1.top -75;
+            var pos1 = $('.table-post-temp tr:nth-child(1) td:nth-child(2)').offset();
+                     var pos2 = $('.table-post-img tr:nth-child(1) td:nth-child(2)').offset();
+                     console.log("pos1 " + pos1.top + "pos2 " + pos2.top);
+                     
+                     var final_pos_top = (pos2.top-pos1.top)*2;
+                     console.log("final " + final_pos_top);
                      console.log(pos1.left);
                      console.log(pos2.left);
-                      var final_pos_left =  (pos1.left-pos2.left)+ pos1.left;                      
-                      console.log(final_pos_left);
+                      var final_pos_left =  (pos1.left-pos2.left)*2;                     
+                      console.log("final left " + final_pos_left);
 
             for (var i = 1; i <= result_temp.length; i++) {
               (function (i) {
                 console.log(i);
                   window.setTimeout(function () {   
                     //console.log($('.table3 tr:nth-child(' + i + ') td:nth-child(2)').html());
-                  $('.table3 tr:nth-child(' + i + ') td:nth-child(2)').css({"position":"relative",'visibility':'visible'})
-                  .animate({bottom: '+=' +  final_pos_top + 'px'},1000).animate({left: '750px'},1000);
+                  $('.table-post-img tr:nth-child(' + i + ') td:nth-child(2)').css({"position":"relative",'visibility':'visible'})
+                  .animate({bottom: '+=' + final_pos_top + 'px'},1000).animate({left: '+=' + final_pos_left + 'px'},1000);
                 }, i * 1000);
               }(i));
-            } 
+            }  
 
             window.setTimeout(function(){
-              $('img').animate({ opacity: '0' },"slow"); 
+              //$('.img-post').animate({ opacity: '0' },"slow"); 
+              $
               this.isFinal = false;
 
-              $('.table3 td:nth-child(2)').css({'visibility':'hidden'});
+              $('.table-post-img td:nth-child(2)').css({'visibility':'hidden'});
               
 
               //$("#temp").css({"visibility":"hidden"});
                  //$("#final").css({"visibility":"visible"});
 
-                 $("#temp").fadeOut(2000,function(){
-                   //$("#temp").css({"display":"none"});
-                    $('.table2 td:nth-child(1)').css({color:"black"});
-                $('.table2 td:nth-child(2)').css({color:"black"});
-                $('.table2 td:nth-child(3)').css({color:"black"});
-                $('.table2 td:nth-child(4)').css({color:"black"}); 
+                 cardPostTemp.fadeOut(2000,function(){
+                   cardPostImg.css({display:'none'});
+                    cardPostFinal.fadeIn(3000,function()
+                    {
+
+                      $('.table-post-final td:nth-child(1)').css({color:"black"});
+                 $('.table-post-final td:nth-child(2)').css({color:"black"});
+                 $('.table-post-final td:nth-child(3)').css({color:"black"});
+                 $('.table-post-final td:nth-child(4)').css({color:"black"}); 
+
+                
+                 cardPostFinal.addClass('element-animation');
+                    });
                    
                  });                 
 
-              $("#final").fadeIn(3000,function(){
-                //$("#final").css({"visibility":"visible"});
-                $('.table2 td:nth-child(1)').css({color:"black"});
-                $('.table2 td:nth-child(2)').css({color:"black"});
-                $('.table2 td:nth-child(3)').css({color:"black"});
-                $('.table2 td:nth-child(4)').css({color:"black"}); 
-                $("#final").addClass('element-animation');
-              //$("#final").animate({width: '400px',height:'700px'},1000);
-              });
-              
+             
             },result_temp.length*2000);
           },j*1500);          
         });
