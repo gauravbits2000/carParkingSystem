@@ -51,7 +51,7 @@ public class ParkingDrawService {
 			return carPoolWinnersList;
 		}
 
-		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Pool Parking");
+		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("pool_parking");
 		
 		// If car Pool Slots are more than applied, no need for random selection
 		if (carPoolSlots > poolParkingRegistrationList.size()) {
@@ -125,7 +125,7 @@ public class ParkingDrawService {
 			return winnersList;
 		}
 
-		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Medical Emergency");
+		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("medical_emergency");
 		
 		// If medical Emergency Slots are more than applied, no need for random selection
 		if (medicalEmergencySlots > medicalEmergencyRegistrationList.size()) {
@@ -164,7 +164,7 @@ public class ParkingDrawService {
 			return winnersList;
 		}
 		
-		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("Female Night Shift");
+		List<CarParkingDetails> carParkingDetails = carParkingDetailsMap.get("female_night_shift");
 
 		// If Female Slots are more than applied, no need for random selection
 		if (femaleLateShiftSlots > femaleLateShiftRegistrationList.size()) {
