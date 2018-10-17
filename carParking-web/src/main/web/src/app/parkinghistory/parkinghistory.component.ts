@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ParkingHistoryService } from 'src/app/parkinghistory/parkinghistory.service';
 import { ParkingHistory } from 'src/app/parkinghistory/parkinghistory';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-parkinghistory',
@@ -12,6 +13,7 @@ export class ParkinghistoryComponent implements OnInit {
   parkingHistoryList : ParkingHistory[];
   p: number = 1;
   dataAvailable : boolean = false;
+  toolTipSring : string;
   
   constructor(private parkinghistoryService: ParkingHistoryService) { }
 
@@ -40,6 +42,7 @@ submitDetails(){
       console.log(this.parkingHistoryList.length);
       if(this.parkingHistoryList.length > 0){
         this.dataAvailable = true;
+        this.populateFloorPlan(this.parkingHistoryList);
       }else{
         this.dataAvailable = false;
       }
@@ -49,5 +52,31 @@ submitDetails(){
       console.log(err);
     })
 }
+
+
+populateFloorPlan(parkingHistoryList : ParkingHistory[]){
+
+  $('.parkingslot').each(function(key,value){
+
+    console.log(key);
+
+    if(parkingHistoryList[key] === undefined){
+      $(value).addClass('nonmarkit_parking');
+      $(value).children().text('Accenture');
+      $(value).children('img').attr('src','./assets/no-parking-sign.svg')
+    }else{
+      $(value).addClass(parkingHistoryList[key].requestCategory);
+      $(value).children('.parkingID').text('MKT-'+parkingHistoryList[key].carParkingId);
+      $(value).attr('data-placement','top');
+      $(value).attr('data-toggle','tooltip');
+      $(value).attr('title',parkingHistoryList[key].employeeName + " ("+parkingHistoryList[key].vehicleRegistrationNumber+")");
+      
+    }
+    
+    
+  });
+  
+}
+
 
 }

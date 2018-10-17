@@ -529,3 +529,71 @@ input[type="text"]:focus {
       padding: 5% 5%;
       text-align: center;
   }
+
+  .parkingslot{
+      border : 1px solid black; 
+      font-weight: 450;
+      text-align: center;
+  }
+
+  .parkingslot span{
+    margin-top: 5px;
+    display: block;
+    font-size: 10px; 
+   }
+
+  .greyed{
+    background : lightgray;
+    padding: 2%;
+  }
+
+  .lift{
+    background : gray;
+    padding: 2%;
+    font-weight: 400;
+  }
+
+  .upper{
+      border-bottom: none !important;
+      border : 2px solid green;
+  }
+
+  .lower{
+    border-top: none !important;
+    border : 2px solid green;
+}
+
+.pillar{
+    background : lightgray;
+    padding: 2%;
+}
+
+.medical_emergency{
+    background: #ec4a4a;
+    padding: 2%;
+    /* border : 2px solid red; */
+}
+
+.female_night_shift{
+    background:lightpink;
+    padding: 2%;
+    /* border : 2px solid pink; */
+}
+
+.pool_parking{
+    background: lightsteelblue;
+    padding: 2%;
+    /* border : 2px solid blue; */
+}
+
+.general_parking{
+    background: #bed0ea;
+    padding: 2%;
+    /* border : 2px solid blue; */
+}
+
+.nonmarkit_parking{
+    background: #BED0BA;
+    padding: 2%;
+    /* border : 2px solid blue; */
+}

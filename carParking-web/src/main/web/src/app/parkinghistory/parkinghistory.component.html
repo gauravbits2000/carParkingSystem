@@ -4,7 +4,7 @@
       <h4 class="text-center history-title mt-2 ml-4">Quarterly Parking Result</h4>
     </div>
     <div class="col-md-2 pt-1">
-      <select class="pl-2 text-center"  required [(ngModel)]='optionSelected' (change)="submitDetails()">
+      <select class="pl-2 text-center" required [(ngModel)]='optionSelected' (change)="submitDetails()">
         <option *ngFor='let option of options' [value]="option">
           {{option}}
         </option>
@@ -13,49 +13,504 @@
 
   </div>
 
-
-  <table class="table table-bordred table-striped table-sm">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col"  (click)="sort('empname')">Employee Name
+  <div hidden>
+    <table class="table table-bordred table-striped table-sm" hidden>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" (click)="sort('empname')">Employee Name
             <span class="glyphicon sort-icon" *ngIf="key =='empname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th scope="col" (click)="sort('parkingid')">Car Parking Id
+          </th>
+          <th scope="col" (click)="sort('parkingid')">Car Parking Id
             <span class="glyphicon sort-icon" *ngIf="key =='parkingid'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th scope="col" (click)="sort('vehicleno')">Vehicle Number
+          </th>
+          <th scope="col" (click)="sort('vehicleno')">Vehicle Number
             <span class="glyphicon sort-icon" *ngIf="key =='vehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th scope="col" (click)="sort('category')">Request Category
+          </th>
+          <th scope="col" (click)="sort('category')">Request Category
             <span class="glyphicon sort-icon" *ngIf="key =='category'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th scope="col" (click)="sort('pempname')">Pool Employee Name
+          </th>
+          <th scope="col" (click)="sort('pempname')">Pool Employee Name
             <span class="glyphicon sort-icon" *ngIf="key =='pempname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-        <th scope="col" (click)="sort('pvehicleno')">Pool Vehicle Number
+          </th>
+          <th scope="col" (click)="sort('pvehicleno')">Pool Vehicle Number
             <span class="glyphicon sort-icon" *ngIf="key =='pvehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let parkingHistory of parkingHistoryList | orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p }; let i = index;">
-        <th scope="row">{{((p-1)*10 + i+ 1)}}</th>
-        <td>{{parkingHistory.employeeName}}</td>
-        <td>{{parkingHistory.carParkingId}}</td>
-        <td>{{parkingHistory.vehicleRegistrationNumber}}</td>
-        <td *ngIf="parkingHistory.requestCategory === 'medical_emergency'">Medical Emergency</td>
-        <td *ngIf="parkingHistory.requestCategory === 'female_night_shift'">Female Night Shift</td>
-        <td *ngIf="parkingHistory.requestCategory === 'pool_parking'">Pool Parking</td>
-        <td *ngIf="parkingHistory.requestCategory === 'general_parking'">General Parking</td>
-        <td *ngIf="parkingHistory.poolEmployeeName !== null">{{parkingHistory.poolEmployeeName}}</td>
-        <td *ngIf="parkingHistory.poolEmployeeName === null">--</td>
-        <td *ngIf="parkingHistory.poolEmployeeVehicle !== null">{{parkingHistory.poolEmployeeVehicle}}</td>
-        <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="dataAvailable" class="text-right">
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let parkingHistory of parkingHistoryList | orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p }; let i = index;">
+          <th scope="row">{{((p-1)*10 + i+ 1)}}</th>
+          <td>{{parkingHistory.employeeName}}</td>
+          <td>{{parkingHistory.carParkingId}}</td>
+          <td>{{parkingHistory.vehicleRegistrationNumber}}</td>
+          <td *ngIf="parkingHistory.requestCategory === 'medical_emergency'">Medical Emergency</td>
+          <td *ngIf="parkingHistory.requestCategory === 'female_night_shift'">Female Night Shift</td>
+          <td *ngIf="parkingHistory.requestCategory === 'pool_parking'">Pool Parking</td>
+          <td *ngIf="parkingHistory.requestCategory === 'general_parking'">General Parking</td>
+          <td *ngIf="parkingHistory.poolEmployeeName !== null">{{parkingHistory.poolEmployeeName}}</td>
+          <td *ngIf="parkingHistory.poolEmployeeName === null">--</td>
+          <td *ngIf="parkingHistory.poolEmployeeVehicle !== null">{{parkingHistory.poolEmployeeVehicle}}</td>
+          <td *ngIf="parkingHistory.poolEmployeeVehicle === null">--</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="dataAvailable" class="text-right">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
   </div>
+
+  <div class="col-md-12 container">
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 parkingslot" data-toggle="tooltip" data-placement="top" title="Entity is an On-The-Run or Off-The-Run Index constituent.  To identify which Indices the constituent belongs too, please see Indices module and enter the Markit Ticker">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+    </div>
+    <!--First Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+    </div>
+    <!--Second Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+    </div>
+    <!--greyed Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+
+      <div class="col-md-1 lift upper">
+        <span>Lift</span>
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+    </div>
+    <!--Third Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot ">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+
+      <div class="col-md-1 lift lower">
+        <span>Lobby</span>
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+    </div>
+    <!--Fourth Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+    </div>
+    <!--greyed Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+    </div>
+    <!--Five Row-->
+
+    <div class="row col-md-12">
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+      <div class="col-md-1 greyed">
+        <span>&nbsp;</span>
+      </div>
+
+
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+      <div class="col-md-1 parkingslot">
+        <img src="./assets/car.svg" />
+        <span class="parkingID">#CP-1</span>
+
+      </div>
+
+    </div>
+    <!--Six Row-->
+
+
+  </div>
+
+
+
 </div>
