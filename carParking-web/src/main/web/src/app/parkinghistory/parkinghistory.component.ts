@@ -10,12 +10,12 @@ import * as $ from 'jquery';
 })
 export class ParkinghistoryComponent implements OnInit {
 
-  parkingHistoryList : ParkingHistory[];
+  parkingHistoryList: ParkingHistory[];
   p: number = 1;
-  dataAvailable : boolean = false;
-  toolTipSring : string;
-  view : string = 'list';
-  
+  dataAvailable: boolean = false;
+  toolTipSring: string;
+  view: string = 'list';
+
   constructor(private parkinghistoryService: ParkingHistoryService) { }
 
   ngOnInit() {
@@ -24,62 +24,74 @@ export class ParkinghistoryComponent implements OnInit {
     this.submitDetails();
   }
 
-options = ["Q1", "Q2", "Q3","Q4"];
-optionSelected: string;
+  options = ["Q1", "Q2", "Q3", "Q4"];
+  optionSelected: string;
 
-//sorting
-key: string = 'empname'; //set default
-reverse: boolean = false;
-sort(key){
-  this.key = key;
-  this.reverse = !this.reverse;
-}
+  //sorting
+  key: string = 'empname'; //set default
+  reverse: boolean = false;
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
 
-submitDetails(){
-  console.log(this.optionSelected);
+  submitDetails() {
+    console.log(this.optionSelected);
 
-  this.parkinghistoryService.getParkingHistory("http://localhost:8080/markit-car-parking/car-parking-results/"+this.optionSelected).subscribe((data: any[]) => {
-    this.parkingHistoryList = null;
+    this.parkinghistoryService.getParkingHistory("http://localhost:8080/markit-car-parking/car-parking-results/" + this.optionSelected).subscribe((data: any[]) => {
+      this.parkingHistoryList = null;
       this.parkingHistoryList = <ParkingHistory[]>data;
       console.log(this.parkingHistoryList.length);
-      if(this.parkingHistoryList.length > 0){
+      if (this.parkingHistoryList.length > 0) {
         this.dataAvailable = true;
         this.populateFloorPlan(this.parkingHistoryList);
-      }else{
+      } else {
         this.dataAvailable = false;
-      }      
+        this.removeParkingCategories();
+        $('.parkingslot').addClass('unallocated');
+        $('.parkingslot').children('.parkingID').text('Unallocated');
+      }
     }, err => {
       console.log(err);
     })
-}
+  }
 
 
-populateFloorPlan(parkingHistoryList : ParkingHistory[]){
+  populateFloorPlan(parkingHistoryList: ParkingHistory[]) {
 
-  $('.parkingslot').each(function(key,value){
+    this.removeParkingCategories();
 
-     if(parkingHistoryList[key] === undefined){
-      $(value).addClass('nonmarkit_parking');
-      $(value).children().text('Accenture');
-      $(value).children('img').attr('src','./assets/no-parking-sign.svg')
-    }else{
-      $(value).addClass(parkingHistoryList[key].requestCategory);
-      $(value).children('.parkingID').text('MKT-'+parkingHistoryList[key].carParkingId);
-      $(value).attr('data-placement','top');
-      $(value).attr('data-toggle','tooltip');
-      $(value).attr('title',parkingHistoryList[key].employeeName + " ("+parkingHistoryList[key].vehicleRegistrationNumber+")");
-      
-    }
-    
-    
-  });
-  
-}
+    $('.parkingslot').each(function (key, value) {
 
-handleView(view){
-  this.view = view;
-  this.submitDetails();
-}
+      if (parkingHistoryList[key] === undefined) {
+        $(value).addClass('nonmarkit_parking');
+        $(value).children().text('Accenture');
+        $(value).children('img').attr('src', './assets/no-parking-sign.svg')
+      } else {
+        $(value).addClass(parkingHistoryList[key].requestCategory);
+        $(value).children('.parkingID').text('MKT-' + parkingHistoryList[key].carParkingId);
+        $(value).attr('data-placement', 'top');
+        $(value).attr('data-toggle', 'tooltip');
+        $(value).attr('title', parkingHistoryList[key].employeeName + " (" + parkingHistoryList[key].vehicleRegistrationNumber + ")");
+
+      }
+
+
+    });
+
+  }
+
+  handleView(view) {
+    this.view = view;
+    this.submitDetails();
+  }
+
+  removeParkingCategories() {
+    $('.parkingslot').removeClass('general_parking');
+    $('.parkingslot').removeClass('pool_parking');
+    $('.parkingslot').removeClass('female_night_shift');
+    $('.parkingslot').removeClass('unallocated');
+  }
 
 
 }
