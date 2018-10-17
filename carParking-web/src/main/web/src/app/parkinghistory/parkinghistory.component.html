@@ -1,20 +1,22 @@
 <div class="container col-md-12 p-0 nominations-container">
   <div class="row col-md-12 mt-1 mb-2">
-    <div class="col-md-10 pt-1">
+    <div class="col-md-9 pt-1">
       <h4 class="text-center history-title mt-2 ml-4">Quarterly Parking Result</h4>
     </div>
-    <div class="col-md-2 pt-1">
+    <div class="col-md-3 pt-1">
       <select class="pl-2 text-center" required [(ngModel)]='optionSelected' (change)="submitDetails()">
         <option *ngFor='let option of options' [value]="option">
           {{option}}
         </option>
       </select>
+      <img class="icons mr-1 mb-1" src="./assets/list.svg" (click)="handleView('list')" />
+      <img class="icons mr-1 mb-1" src="./assets/menu.svg" (click)="handleView('grid')"/>
     </div>
 
   </div>
 
-  <div hidden>
-    <table class="table table-bordred table-striped table-sm" hidden>
+  <div *ngIf="view === 'list'">
+    <table class="table table-bordred table-striped table-sm">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -60,7 +62,7 @@
     </div>
   </div>
 
-  <div class="col-md-12 container">
+  <div class="col-md-12 container" *ngIf="view === 'grid'">
 
     <div class="row col-md-12">
 
@@ -125,6 +127,7 @@
     <!--First Row-->
 
     <div class="row col-md-12">
+      
 
       <div class="col-md-1 parkingslot">
         <img src="./assets/car.svg" />

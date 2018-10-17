@@ -14,6 +14,7 @@ export class ParkinghistoryComponent implements OnInit {
   p: number = 1;
   dataAvailable : boolean = false;
   toolTipSring : string;
+  view : string = 'list';
   
   constructor(private parkinghistoryService: ParkingHistoryService) { }
 
@@ -38,6 +39,7 @@ submitDetails(){
   console.log(this.optionSelected);
 
   this.parkinghistoryService.getParkingHistory("http://localhost:8080/markit-car-parking/car-parking-results/"+this.optionSelected).subscribe((data: any[]) => {
+    this.parkingHistoryList = null;
       this.parkingHistoryList = <ParkingHistory[]>data;
       console.log(this.parkingHistoryList.length);
       if(this.parkingHistoryList.length > 0){
@@ -45,9 +47,7 @@ submitDetails(){
         this.populateFloorPlan(this.parkingHistoryList);
       }else{
         this.dataAvailable = false;
-      }
-      
-      
+      }      
     }, err => {
       console.log(err);
     })
@@ -58,9 +58,7 @@ populateFloorPlan(parkingHistoryList : ParkingHistory[]){
 
   $('.parkingslot').each(function(key,value){
 
-    console.log(key);
-
-    if(parkingHistoryList[key] === undefined){
+     if(parkingHistoryList[key] === undefined){
       $(value).addClass('nonmarkit_parking');
       $(value).children().text('Accenture');
       $(value).children('img').attr('src','./assets/no-parking-sign.svg')
@@ -76,6 +74,11 @@ populateFloorPlan(parkingHistoryList : ParkingHistory[]){
     
   });
   
+}
+
+handleView(view){
+  this.view = view;
+  this.submitDetails();
 }
 
 
