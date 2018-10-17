@@ -11,7 +11,7 @@ Features of Car Parking Selection and Allocation Automated system
 Different views based on role – Employee & Admin View
 </li>
 <li>
-Authorization/Authentication – IHSMarkit’s Active Directory.
+Authorization/Authentication – LDAP using Azure's Active Directory.
 </li>
 <li>
 Simplified enrolment process – Name, location etc are pre-filled.
