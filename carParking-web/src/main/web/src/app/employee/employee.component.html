@@ -1,13 +1,13 @@
-<div class="container col-md-12">
-	<div class=" row table-data-header">
+<div class="container col-md-12 col-lg-12 col-xl-12">
+	<div class=" row table-data-header col-md-12 col-lg-12 col-xl-12">
 		<h2 class="offset-md-2 employee-title">{{employee.employeeName}}</h2>
 	</div>
-	<div class=" row bg-white">
-		<div class="col-md-2 profile-img-container">
+	<div class=" row bg-white col-md-12 col-lg-12 col-xl-12">
+		<div class="col-md-2 col-lg-2 col-xl-2 profile-img-container">
 			<img [src]="employee.imageUrl" onerror="this.src='./assets/profile_place_holder.png';" />
 		</div>
-		<div class=" row col-md-10 offset-md-2">
-			<div class="col-md-6 pd-2">
+		<div class=" row col-md-10 col-lg-10 col-xl-10 offset-md-2">
+			<div class="col-md-6 col-lg-6 col-xl-6 pd-2">
 				<div class="dot-border">
 					<img class="icons mr-1 mb-1" src="./assets/mail.svg" />
 					<span>{{employee.email}}</span>
@@ -21,7 +21,7 @@
 					<span>{{employee.location}}</span>
 				</div>
 			</div>
-			<div class="col-md-6 pd-2">
+			<div class="col-md-6 col-lg-6 col-xl-6  pd-2">
 				<div class="dot-border">
 					<img class="icons mr-1 mb-1" src="./assets/telephone.svg" />
 					<span>{{employee.telephoneNumber}}</span>
@@ -39,48 +39,48 @@
 	</div>
 
 	<div class="row bg-white">
-		<div class="row col-md-12 offset-md-1">
-			<div class="col-md-6 pd-2">
-				<div class="col-md-12">
+		<div class="row col-md-12 col-lg-12 col-xl-12 offset-md-1">
+			<div class="col-md-6 col-lg-6 col-xl-6  pd-2">
+				<div class="col-md-12 col-lg-12 col-xl-12">
 					<input type="radio" name="parking-request" value="medical_emergency" [(ngModel)]="employee.requestCategory" class="form-radio">
 					<span class="ml-2">Medical Emergency </span>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-12 col-lg-12 col-xl-12">
 					<input type="radio" name="parking-request" value="female_night_shift" [(ngModel)]="employee.requestCategory" class="form-radio">
 					<span class="ml-2">Female Night Shift </span>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-12 col-lg-12 col-xl-12">
 					<input type="radio" name="parking-request" value="pool_parking" [(ngModel)]="employee.requestCategory" class="form-radio">
 					<span class="ml-2">Pool Parking </span>
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-12 col-lg-12 col-xl-12">
 					<input type="radio" name="parking-request" value="general_parking" [(ngModel)]="employee.requestCategory" class="form-radio">
 					<span class="ml-2">General Parking </span>
 				</div>
-				<div class="col-md-12 mt-2 ml-2 col-md-6">
+				<div class="col-md-12 col-lg-12 col-xl-12 mt-2 ml-2 col-md-6">
 					<input [className]="validationFailed ? 'error-highlight col-md-6' :'col-md-6' " class="col-md-6" type="textbox" [(ngModel)]="employee.vehicleRegistrationNumber" placeholder="Vehicle Registration Number">
 				</div>
 			</div>
 
-			<div class="col-md-6 pd-2">
+			<div class="col-md-6 col-lg-6 col-xl-6 pd-2">
 				
-				<div class="row col-md-12 pd-2" id="medical_emergency_container" *ngIf="employee.requestCategory === 'medical_emergency'">
-					<div class="mb-1">Please upload relevant medical documents </div>
-					<div>
+				<div class="row col-md-12 col-lg-12 col-xl-12 pd-2" id="medical_emergency_container" *ngIf="employee.requestCategory === 'medical_emergency'">
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-1">Please upload relevant medical documents </div>
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-1">
 						<input type="file" name="med_doc" id="med_doc"/>
 					</div>
 				</div>
 				<!--medical_emergency_container-->
 
-				<div class="row col-md-12 pd-2" id="female_night_shift_container" *ngIf="employee.requestCategory === 'female_night_shift'">
-					<div class="mb-1">Please upload your managers approval mail </div>
-					<div>
+				<div class="row col-md-12 col-lg-12 col-xl-12 pd-2" id="female_night_shift_container" *ngIf="employee.requestCategory === 'female_night_shift'">
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-1">Please upload your managers approval mail </div>
+					<div class="col-md-12 col-lg-12 col-xl-12 mb-1">
 						<input type="file" name="mail" id="mail"/>
 					</div>
 				</div>
 				<!--female_night_shift_container-->
 
-				<div class="row col-md-12" id="pool_parking_container" *ngIf="employee.requestCategory === 'pool_parking'">
+				<div class="row col-md-12 col-lg-12 col-xl-12" id="pool_parking_container" *ngIf="employee.requestCategory === 'pool_parking'">
 						<div *ngIf="employee.isCarPool === null" class="col-md-7">
 							<form class="example-form">
 								<mat-form-field class="example-full-width">
@@ -94,11 +94,11 @@
 								</mat-form-field>
 							</form>
 						</div>
-						<div *ngIf="employee.isCarPool === null" class="col-md-12">
-							<input class="col-md-6" type="textbox" [(ngModel)]="employee.poolEmployeeVehicle" placeholder="Vehicle Registration Number">
+						<div *ngIf="employee.isCarPool === null" class="col-md-12 col-lg-12 col-xl-12">
+							<input class="col-md-6 col-lg-6 col-xl-6" type="textbox" [(ngModel)]="employee.poolEmployeeVehicle" placeholder="Vehicle Registration Number">
 						</div>
 	
-						<div *ngIf="employee.isCarPool === 'true'" class="col-md-6">
+						<div *ngIf="employee.isCarPool === 'true'" class="col-md-6 col-lg-6 col-xl-6">
 							<div class="ml-1">Your Pool Partner </div>
 							<div class="tag" data-id="web">{{employee.poolEmployee}}
 								<button type="button" class="close" aria-label="Close">
@@ -110,7 +110,7 @@
 					<!--pool_parking_container end-->
 
 
-				<div class="row col-md-12 pd-2" id="general_shift_container" *ngIf="employee.requestCategory === 'general_parking'">
+				<div class="row col-md-12 col-lg-12 col-xl-12 pd-2" id="general_shift_container" *ngIf="employee.requestCategory === 'general_parking'">
 					<!-- General Parking -->
 				</div>
 				<!--general_shift_container-->
@@ -120,15 +120,15 @@
 
 		</div>
 
-		<div ng-if="validationFailed === true" class="col-md-12 mt-2 center text-danger">
+		<div ng-if="validationFailed === true" class="col-md-12 col-lg-12 col-xl-12 mt-2 center text-danger">
 			<span class="ml-2">{{errorText}}</span>
 		</div>
 
-		<div class="col-md-12 mt-2 center">
+		<div class="col-md-12 col-lg-12 col-xl-12 mt-2 center">
 			<input type="checkbox" name="terms" [(ngModel)]="terms" class="form-checkbox" />
 			<span class="ml-2">I do hereby declare that the information provided above is true and correct to the best of my knowledge and belief</span>
 		</div>
-		<div class="col-md-12 mt-2 center">
+		<div class="col-md-12 col-lg-12 col-xl-12 mt-2 center">
 			<button type="button" class="btn btn-success btn-lg" (click)="submitDetails()">Enroll</button>
 		</div>
 	</div>

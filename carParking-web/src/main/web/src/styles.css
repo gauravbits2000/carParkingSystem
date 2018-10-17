@@ -289,6 +289,7 @@ header.topnav .logo {
 
 .data-container{    
     position: relative;
+    min-height: 80vh;
 }
 
 .background{
@@ -334,7 +335,7 @@ header.topnav .logo {
 
 .profile-img-container{
     position: absolute;
-    top: 5%;
+    top: -25%;
 }
 
 .profile-img-container img{

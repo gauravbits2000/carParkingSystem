@@ -1,3 +1,6 @@
+<div class="col-md-12">
+  <h4 class="text-center ">Nominations</h4>
+</div>
 <div class="container col-md-12 p-0 nominations-container">
   <table class="table table-bordred table-striped table-sm">
     <thead>
@@ -25,7 +28,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let employee of employeeList | orderBy: key : reverse | paginate: { itemsPerPage: 10, currentPage: p };  let i = index;">
-        <th scope="row">{{i+ 1}}</th>
+        <th scope="row">{{((p-1)*10 + i+ 1)}}</th>
         <td>{{employee.employeeName}}</td>
         <td>{{employee.employeeId}}</td>
         <td>{{employee.vehicleRegistrationNumber}}</td>
