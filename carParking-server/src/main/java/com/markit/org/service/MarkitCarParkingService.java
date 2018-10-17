@@ -194,14 +194,17 @@ public class MarkitCarParkingService {
 			return;
 		}
 		
-		quarterParkingResultList.forEach(i -> {
+		String emailTo = "Hari.Gupta@ihsmarkit.com,nikhil.chitranshi@markit.com,parag.garg@ihsmarkit.com,Gaurav.Agarwal@ihsmarkit.com";
+		new EmailSender(emailTo, null, null, "Q4");
+		
+		/*quarterParkingResultList.forEach(i -> {
 			String emailTo = i.getEmail();
 			if(RequestCategory.POOL_PARKING.getCategory().equals(i.getRequestCategory())) {
 				emailTo = i.getEmail()+","+ i.getPoolEmployeeEmailId();
 			}
 			
 			new EmailSender(emailTo, i.getEmployeeName(), i.getPoolEmployeeName(), i.getIdentity().getQuarter());
-		});
+		});*/
 	}
 
 	enum RequestCategory{

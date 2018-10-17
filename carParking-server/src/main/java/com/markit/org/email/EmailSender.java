@@ -64,7 +64,7 @@ public class EmailSender {
               InternetAddress.parse(mailTo));
 
            // Set Subject: header field
-           message.setSubject(quarter + " Car Parking Draw Winner");
+           message.setSubject(quarter + "DEMO : Car Parking Draw Winner");
 
            // This mail has 2 part, the BODY and the embedded image
            MimeMultipart multipart = new MimeMultipart("related");
