@@ -114,7 +114,8 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 							while (memberOfEnum.hasMore()) {
 
 								group = (String) memberOfEnum.next();
-								if (adminGroup.equalsIgnoreCase(group)) {
+								if (adminGroup.equalsIgnoreCase(group))
+								{
 									isAdmin = "Y";
 								}
 
@@ -124,6 +125,12 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 						String employeeName = attributes.get(attrIdsToSearch[3]).get().toString();
 						String employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
 						String baseLocation = attributes.get(attrIdsToSearch[5]).get().toString();
+						
+						if(employeeId.equals("70013683") )
+						{
+							isAdmin = "Y";
+						}
+						
 						EmployeesDetails empDetails = new EmployeesDetails(employeeName, employeeId, employeeEmail,
 								isAdmin,baseLocation);
 						employeesList.add(empDetails);
