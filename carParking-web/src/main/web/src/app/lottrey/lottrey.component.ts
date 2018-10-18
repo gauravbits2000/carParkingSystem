@@ -316,6 +316,8 @@ export class LottreyComponent implements OnInit {
   }
 
   getLuckyDrawResult() {
+
+    this.resultTable = null;
     this.employeeService.startLuckyDraw("http://localhost:8080/markit-car-parking/start-lucky-draw/", this.model).subscribe((data: any[]) => {
       //  this.employeeService.getParkingDraw("/markit-car-parking/lucky-draw/").subscribe((data: any[]) => {
       this.resultTable = <Employee[]>data;
