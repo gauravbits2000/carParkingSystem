@@ -37,5 +37,4 @@ export class AdminloginComponent implements OnInit {
       console.log(err);
     });
   }
-
 }

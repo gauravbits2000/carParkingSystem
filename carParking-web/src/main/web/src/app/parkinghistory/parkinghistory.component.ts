@@ -43,8 +43,8 @@ export class ParkinghistoryComponent implements OnInit {
       this.parkingHistoryList = <ParkingHistory[]>data;
       console.log(this.parkingHistoryList.length);
       if (this.parkingHistoryList.length > 0) {
-        this.dataAvailable = true;
         this.populateFloorPlan(this.parkingHistoryList);
+        this.dataAvailable = true;
       } else {
         this.dataAvailable = false;
         this.removeParkingCategories();
@@ -64,9 +64,8 @@ export class ParkinghistoryComponent implements OnInit {
     $('.parkingslot').each(function (key, value) {
 
       if (parkingHistoryList[key] === undefined) {
-        $(value).addClass('nonmarkit_parking');
-        $(value).children().text('Accenture');
-        $(value).children('img').attr('src', './assets/no-parking-sign.svg')
+        $(value).addClass('unallocated');
+        $(value).children('.parkingID').text('Unallocated');
       } else {
         $(value).addClass(parkingHistoryList[key].requestCategory);
         $(value).children('.parkingID').text('MKT-' + parkingHistoryList[key].carParkingId);

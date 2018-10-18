@@ -230,14 +230,14 @@
    55% {left:120%;top:0px;transform:scale(4,4);font-weight: bold;}
    60% {left:120%;top:0px;transform:scale(4,4);font-weight: bold;}
    65% {left:120%;top:0px;transform:scale(4,4);font-weight: bold;}
-   70% {left:120%;top:50px;transform:scale(4,4);font-weight: bold;}
-   75% {left:120%;top:150px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
-   80% {left:120%;top:150px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
-   85% {left:120%;top:200px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
-   90% {left:120%;top:250px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
-   95% {left:120%;top:300px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
-   99% {left:120%;top:350px;transform:scale(4,4) rotate(90deg);font-weight: bold;}
-   100% {left:120%;top:500px;transform:scale(4,4) rotate(90deg);visibility: hidden;}
+   70% {left:125%;top:50px;transform:scale(4,4);font-weight: bold;}
+   75% {left:125%;top:150px;transform:scale(4,4) ;font-weight: lighter;}
+   80% {left:125%;top:150px;transform:scale(3.5,3.5) ;font-weight: lighter;}
+   85% {left:125%;top:200px;transform:scale(3,3) ;font-weight: lighter;}
+   90% {left:125%;top:250px;transform:scale(2.5,2.5) ;font-weight: lighter;}
+   95% {left:125%;top:300px;transform:scale(2,2) ;font-weight: lighter;}
+   99% {left:125%;top:350px;transform:scale(1.5,1.5) ;font-weight: lighter;}
+   100% {left:125%;top:500px;transform:scale(1,1) ;visibility: hidden;}
 }
 
 @keyframes text-bold-animation1{

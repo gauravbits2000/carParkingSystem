@@ -1,28 +1,31 @@
-<div class="col-md-12">
-  <h4 class="text-center ">Nominations</h4>
-</div>
 <div class="container col-md-12 p-0 nominations-container">
+  
+  <div _ngcontent-c2="" class="col-md-12 pt-2 text-center table-data-header">
+    <h5 _ngcontent-c2="" class="history-title mt-2 ml-4">Current Quarter Nominations</h5>
+  </div>
+
+
   <table class="table table-bordred table-striped table-sm">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col" (click)="sort('empname')">Employee Name
-            <span class="glyphicon sort-icon" *ngIf="key =='empname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <span class="glyphicon sort-icon" *ngIf="key =='empname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
         <th scope="col" (click)="sort('empid')">Employee ID
-            <span class="glyphicon sort-icon" *ngIf="key =='empid'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <span class="glyphicon sort-icon" *ngIf="key =='empid'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
         <th scope="col" (click)="sort('vehicleno')">Vehicle Number
-            <span class="glyphicon sort-icon" *ngIf="key =='vehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <span class="glyphicon sort-icon" *ngIf="key =='vehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
         <th scope="col" (click)="sort('category')">Request Category
-            <span class="glyphicon sort-icon" *ngIf="key =='category'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <span class="glyphicon sort-icon" *ngIf="key =='category'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
         <th scope="col" (click)="sort('pempname')">Pool Employee Name
-            <span class="glyphicon sort-icon" *ngIf="key =='pempname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <span class="glyphicon sort-icon" *ngIf="key =='pempname'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
         <th scope="col" (click)="sort('pvehicleno')">Pool Vehicle Number
-            <span class="glyphicon sort-icon" *ngIf="key =='pvehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+          <span class="glyphicon sort-icon" *ngIf="key =='pvehicleno'" [ngClass]="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
         </th>
       </tr>
     </thead>
@@ -41,7 +44,7 @@
         <td *ngIf="employee.poolEmployeeVehicle !== null">{{employee.poolEmployeeVehicle}}</td>
         <td *ngIf="employee.poolEmployeeVehicle === null">--</td>
       </tr>
-    </tbody>    
+    </tbody>
   </table>
   <div *ngIf="dataAvailable" class="text-right">
     <pagination-controls (pageChange)="p = $event"></pagination-controls>

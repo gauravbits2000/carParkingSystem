@@ -10,16 +10,16 @@
         <div class="drop-down-menu">
           <div class="clearfix" id="mega-menu">
             <div class="top-level-nav">
-              <a class="nav-link active" routerLink="/parking/submitdetails">ENROLL</a>
+              <a class="nav-link active-nav" routerLink="/parking/submitdetails" (click)="handleNavigation($event)">ENROLL</a>
             </div>
             <div class="top-level-nav">
-              <a class="nav-link" routerLink="/parking/listdetails">NOMINATIONS</a>
+              <a class="nav-link" routerLink="/parking/listdetails" (click)="handleNavigation($event)">NOMINATIONS</a>
             </div>
             <div *ngIf=isAdmin class="top-level-nav">
-              <a class="nav-link" routerLink="/parking/parkingdraw" target="_self">DRAW</a>
+              <a class="nav-link" routerLink="/parking/parkingdraw" (click)="handleNavigation($event)" target="_self">DRAW</a>
             </div>
             <div class="top-level-nav">
-              <a class="nav-link" routerLink="/parking/parkinghistory" target="_self">ARCHIVES</a>
+              <a class="nav-link" routerLink="/parking/parkinghistory" (click)="handleNavigation($event)" target="_self">ARCHIVES</a>
             </div>
             <div class="top-level-nav">
               <a class="nav-link" routerLink="/" target="_self">LOGOUT</a>

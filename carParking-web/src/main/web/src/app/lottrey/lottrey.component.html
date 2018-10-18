@@ -4,7 +4,7 @@
 
     <div class="md-form form-group col-md-3" >
       <i class="fa prefix"></i>
-      <input mdbInputDirective type="text" 
+      <input mdbInputDirective type="number" 
              [(ngModel)]="model.medicalEmergencySlots" #medicalEmergencySlots = "ngModel" 
       size="14" class="form-control" id="form8" name="medicalEmergencySlots" pattern="[0-9]{0,4}"
       data-error="wrong" data-success="success" (ngModelChange)="valuechange($event)" 
