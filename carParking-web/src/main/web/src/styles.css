@@ -585,7 +585,7 @@ input[type="text"]:focus {
 }
 
 .pool_parking{
-    background: lightsteelblue;
+    background: rgb(128, 170, 224);
     padding: 2%;
     /* border : 2px solid blue; */
 }
