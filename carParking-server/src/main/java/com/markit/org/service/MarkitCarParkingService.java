@@ -102,8 +102,7 @@ public class MarkitCarParkingService {
 		return employeeRegistrationRepository.findAll();
 	}
 
-	public List<EmployeeRegistration> doCarParkingDraw(CarParkingSlots carParkingSlots)
-	{	
+	public List<EmployeeRegistration> doCarParkingDraw(CarParkingSlots carParkingSlots){	
 		log.info("Getting all registered Employees");
 
 		Integer medicalEmergencySlots = carParkingSlots.getMedicalEmergencySlots();	// Default 5
@@ -118,6 +117,8 @@ public class MarkitCarParkingService {
 		Map<String, List<EmployeeRegistration>> allEmployeeRegistrationMap = parkingDrawService.getEmployeeRegistrationBasedOnCategory();
 		List<EmployeeRegistration> generalParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.GENERAL_PARKING.getCategory());
 		
+		parkingDrawService.init(totalSlots, (totalSlots-reservedSlots));
+		
 		//Car Pool Draw
 		if(carPoolSlots != null && carPoolSlots > 0) {
 			List<EmployeeRegistration> poolParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.POOL_PARKING.getCategory());
@@ -125,12 +126,9 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(poolParkingWinnersList);
 		}else {
 			List<EmployeeRegistration> poolParkingRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.POOL_PARKING.getCategory());
-			if(poolParkingRegistrationList != null && poolParkingRegistrationList.size() > 0)
-			{
+			if(poolParkingRegistrationList != null && poolParkingRegistrationList.size() > 0){
 				generalParkingRegistrationList.addAll(poolParkingRegistrationList);
 			}
-			
-			parkingDrawService.addSlotsToGeneralPool(RequestCategory.POOL_PARKING.getCategory());
 		}
 		
 		//Female Draw
@@ -140,11 +138,9 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(femaleLateShiftWinnersList);
 		}else {
 			List<EmployeeRegistration> femaleLateShiftRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
-			if(femaleLateShiftRegistrationList != null && femaleLateShiftRegistrationList.size() > 0)
-			{
+			if(femaleLateShiftRegistrationList != null && femaleLateShiftRegistrationList.size() > 0){
 				generalParkingRegistrationList.addAll(femaleLateShiftRegistrationList);
 			}			
-			parkingDrawService.addSlotsToGeneralPool(RequestCategory.FEMALE_NIGHT_SHIFT.getCategory());
 		}
 		
 		//Medical Emergency
@@ -154,11 +150,9 @@ public class MarkitCarParkingService {
 			finalWinnersList.addAll(medicalEmergencyWinnersList);
 		}else {
 			List<EmployeeRegistration> medicalEmergencyRegistrationList = allEmployeeRegistrationMap.get(RequestCategory.MEDICAL_EMERGENCY.getCategory());
-			if(medicalEmergencyRegistrationList != null && medicalEmergencyRegistrationList.size() > 0)
-			{
+			if(medicalEmergencyRegistrationList != null && medicalEmergencyRegistrationList.size() > 0){
 				generalParkingRegistrationList.addAll(medicalEmergencyRegistrationList);
 			}			
-			parkingDrawService.addSlotsToGeneralPool(RequestCategory.MEDICAL_EMERGENCY.getCategory());
 		}
 		
 		//General Draw
@@ -167,7 +161,7 @@ public class MarkitCarParkingService {
 		
 		quarterParkingResultList = quarterResultService.saveQuarterResults(finalWinnersList, "Q4");
 		
-		log.info("returning all lucky winners");
+		log.info("returning all lucky winners, Total Employee number : " +finalWinnersList.size());
 		return finalWinnersList;
 	}
 
