@@ -47,7 +47,7 @@ public class LDAPService {
 
 	private static final String MEMBER_OF = "memberOf";
 	private static final String[] attrIdsToSearch = new String[] { MEMBER_OF, "uid", "mail", "displayName",
-			"employeeID", "title", "mobile", "telephoneNumber", "l", "uid"};
+			"employeeID", "title", "mobile", "telephoneNumber", "l", "uid","employeeNumber"};
 	public static final String SEARCH_BY_ACCOUNT_NAME = "(sAMAccountName=%s)";
 	public static final String SEARCH_GROUP_BY_GROUP_CN = "(&(objectCategory=group)(cn={0}))";
 	private static String userBase = "DC=markit,DC=partners";
@@ -105,6 +105,7 @@ public class LDAPService {
 			Attribute telephoneNumberAttr = attrs.get(attrIdsToSearch[7]);
 			Attribute locationAttr = attrs.get(attrIdsToSearch[8]);
 			Attribute uidAttr = attrs.get(attrIdsToSearch[9]);
+			Attribute employeeNumberAttr = attrs.get(attrIdsToSearch[10]);
 			
 			
 			
@@ -127,12 +128,22 @@ public class LDAPService {
 				}
 			}
 			
-
-			NamingEnumeration employeeIDEnum = employeeIDAttr.getAll();
-			while (employeeIDEnum.hasMore()) {
-				employeeID = (String) employeeIDEnum.next();
-				
-			}
+           if(employeeIDAttr != null){
+	        	   NamingEnumeration employeeIDEnum = employeeIDAttr.getAll();
+	   			while (employeeIDEnum.hasMore()) {
+	   				employeeID = (String) employeeIDEnum.next();
+	   				
+	   			} 
+           }
+           
+           if(employeeNumberAttr != null){
+        	   NamingEnumeration employeeNumberEnum = employeeNumberAttr.getAll();
+   			while (employeeNumberEnum.hasMore()) {
+   				employeeID = (String) employeeNumberEnum.next();
+   				
+   			} 
+       }
+			
 			
 			if(titleAttr != null){
 				NamingEnumeration titleEnum = titleAttr.getAll();
@@ -310,12 +321,25 @@ public class LDAPService {
 	
 	private String generateImageUrl(String uid){
 		
+		
+		if(null != uid && uid.equalsIgnoreCase("hari.gupta")){
+			return "./assets/hari_gupta.jpg";
+		}
+		if(null != uid && uid.equalsIgnoreCase("gaurav.agarwal")){
+			return "./assets/gaurav.agarwal.jpg";
+		}
+		if(null != uid && uid.equalsIgnoreCase("parag.garg")){
+			return "./assets/Parag_Garg.jpeg";
+		}
+
+		
 		if(null != uid && !"".equalsIgnoreCase(uid)){
 			
 			String name[] = uid.split("\\.");
 			return "http://mysites.markit.partners/User%20Photos/Profile%20Pictures/markit_"+name[0]+"_"+name[1]+"_MThumb.jpg";
 		}
 		
+				
 		return "./assets/profile_place_holder.png";
 		
 	}

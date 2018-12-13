@@ -50,7 +50,7 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 
 		final String MEMBER_OF = "memberOf";
 		final String[] attrIdsToSearch = new String[] { MEMBER_OF, "uid", "mail", "displayName",
-				"employeeID", "l" };
+				"employeeID", "l","employeeNumber" };
 		String adminGroup ="CN=gsg-PARKING_ADMIN_GROUP,OU=Global Security Groups,OU=Standard Accounts,DC=markit,DC=partners";
 		//String userBase = "DC=markit,DC=partners";
 		Hashtable<String, String> env = new Hashtable<String, String>();
@@ -101,13 +101,14 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 					SearchResult sr = (SearchResult) fetchData.next();
 					Attributes attributes = sr.getAttributes();
 
-					if (attributes.get(attrIdsToSearch[2]) == null || attributes.get(attrIdsToSearch[4]) == null || attributes.get(attrIdsToSearch[5]) == null) {
+					if (attributes.get(attrIdsToSearch[2]) == null  || attributes.get(attrIdsToSearch[5]) == null) {
 						// Filter out invalid entries where email Id or Employee Id
 						// is missing like CN=Markit India CR
 						System.out.println("Email/EmployeeId not found for " + sr.getName());
 					} else {
 						String isAdmin = "N";
 						String group = null;
+						String employeeId = "";
 						Attribute attr = attributes.get(attrIdsToSearch[0]);
 						if (null != attr) {
 							NamingEnumeration memberOfEnum = attr.getAll();
@@ -123,7 +124,13 @@ public class MarkitCarParkingSystemApplication implements ApplicationRunner  {
 						}
 						String employeeEmail = attributes.get(attrIdsToSearch[2]).get().toString();
 						String employeeName = attributes.get(attrIdsToSearch[3]).get().toString();
-						String employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
+						if(attributes.get(attrIdsToSearch[4]) != null){
+							employeeId = attributes.get(attrIdsToSearch[4]).get().toString();
+						}
+						if(attributes.get(attrIdsToSearch[6]) != null){
+							employeeId = attributes.get(attrIdsToSearch[6]).get().toString();
+						}
+						
 						String baseLocation = attributes.get(attrIdsToSearch[5]).get().toString();
 						
 						if(employeeId.equals("70013683") )

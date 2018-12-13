@@ -25,6 +25,7 @@ export class EmployeeComponent implements OnInit {
   validationFailed : boolean = false;
   errorText : string;
   terms : boolean = false;
+  isDisabled : boolean = true;
 
   constructor(private router: Router, private employeeService: EmployeeService, private startupService: StartupService) { }
 
