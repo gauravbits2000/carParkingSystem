@@ -85,6 +85,10 @@ export class ParkinghistoryComponent implements OnInit {
     this.submitDetails();
   }
 
+  downloadPdf(){
+    
+  }
+
   removeParkingCategories() {
     $('.parkingslot').removeClass('general_parking');
     $('.parkingslot').removeClass('pool_parking');
